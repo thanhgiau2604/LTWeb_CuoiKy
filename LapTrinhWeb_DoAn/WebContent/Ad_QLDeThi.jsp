@@ -194,7 +194,7 @@
     				</button>
     			</div>
     			<div class="modal-body">
-    				<p>Bạn có chắc chắn muốn xóa bài đăng này không?</p>
+    				<p>Bạn có chắc chắn muốn xóa đề thi này không?</p>
     			</div>
     			<div class="modal-footer">
     				<button type="button" class="btn btn-secondary" data-dismiss="modal">Có</button>

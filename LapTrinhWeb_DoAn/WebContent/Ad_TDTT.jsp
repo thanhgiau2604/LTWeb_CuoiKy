@@ -75,20 +75,20 @@
 				<form action="#" method="post" id="formtdtt">
 					<div class="pom-agile">
 						<span class="field">Tên đăng nhập:</span>
-						<input name="Username" class="user" type="text" value="annguyen123" readonly="true">
+						<input name="Username" class="user" type="text" value="giaunguyen123" readonly="true">
 						<span class="icon1"><i class="fa fa-user" aria-hidden="true"></i></span>
 					</div>
 
 					<!-- Họ tên -->
 					<div class="pom-agile">
 						<span class="field">Họ tên:</span>
-						<input  name="Fullname" class="Infor" type="text" value="Nguyễn Văn An">
+						<input  name="Fullname" class="Infor" type="text" value="Nguyễn Thanh Giàu">
 						<span class="icon2"><i class="fa fa-address-card" aria-hidden="true"></i></span>
 					</div>
 					<!-- email -->
 					<div class="pom-agile">
 						<span class="field">Email:</span>
-						<input  name="email" class="Infor" type="email" value="anan123@gmail.com">
+						<input  name="email" class="Infor" type="email" value="nguyengiau123@gmail.com">
 						<span class="icon2"><i class="fa fa-envelope" aria-hidden="true"></i></span>
 					</div>
 					<!-- Số điện thoại -->

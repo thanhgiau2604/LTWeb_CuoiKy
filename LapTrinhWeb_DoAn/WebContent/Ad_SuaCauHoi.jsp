@@ -19,7 +19,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
 	<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i" rel="stylesheet">
-	<script type="text/javascript" src="file/js/jqTLPH.js"></script>
+	<script type="text/javascript" src="file/js/jqCauHoi.js"></script>
 	<script type="text/javascript" src="file/js/jqMenu.js"></script>
 	<!-- Custom Fonts -->
 	<link href="file/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">

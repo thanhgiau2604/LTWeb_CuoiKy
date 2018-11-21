@@ -67,7 +67,7 @@
 			<div class="container">
 			<div class="qlybd text-center">
 				<h3>DANH SÁCH ĐỀ THI</h3>
-				<div class="btn btn-default nutwrite"><a href="Ad_ThemDeThi_TT.jsp">Tạo đề thi mới</a></div> 
+				<div class="btn btn-default nutwrite"><a href="GV_ThemDT_TT.jsp">Tạo đề thi mới</a></div> 
 				<div class="row">
 					<div class="col-xs-0 col-sm-0 col-md-1 col-lg-1"></div>
 					<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">

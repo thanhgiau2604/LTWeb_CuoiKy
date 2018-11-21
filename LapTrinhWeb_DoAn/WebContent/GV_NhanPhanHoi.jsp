@@ -90,7 +90,7 @@
 										<a href="#" style="text-decoration: none">Chi tiết</a></div>
 									</td>
 									<td><div class="btn btn-default nutvaothi">
-										<a href="#" style="text-decoration: none">Trả lời</a></div>
+										<a href="GV_TraLoiPH.jsp" style="text-decoration: none">Trả lời</a></div>
 									</td>
 								</tr>
 								<tr class="chan">

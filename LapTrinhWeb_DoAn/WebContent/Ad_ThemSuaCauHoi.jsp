@@ -31,7 +31,7 @@
 				<!-- start khung -->
 				<div class="khung">
 					<button class="nuttt">
-						<img src="file/file/Images/Admin.png" alt="avatar" class="ava">
+						<img src="file/Images/Admin.png" alt="avatar" class="ava">
 						Nguyen Giau
 					</button>	
 					<div class="danhmuctt">
