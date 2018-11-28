@@ -115,32 +115,25 @@
 								</tr>
 							</thead>
 							<tbody>
+							<c:forEach var="NguoiDung" items="${listND}">
 								<tr>
-									<td>annguyen123</td>
-									<td>Nguyễn Văn An</td>
-									<td><div class="btn btn-success nutTDTT"><a href="Ad_TDTT.jsp">Thay đổi thông tin</a></div></td>
-									<td><div class="btn btn-danger nutXoaAcc" data-toggle="modal" data-target="#ModalXoa">
-										<a href="#"">Xóa tài khoản</a></div></td>
+									<td><c:out value="${NguoiDung.TenDN}" /></td>
+									<td><c:out value="${NguoiDung.MatKhau}" /></td>
+									<td><c:out value="${NguoiDung.MatKhauC2}" /></td>
+									<td><c:out value="${NguoiDung.Email}" /></td>
+									<td><c:out value="${NguoiDung.HoTen}" /></td>
+									<td><c:out value="${NguoiDung.SDT}" /></td>
+									<td><c:out value="${NguoiDung.DiaChi}" /></td>
+									<td><div class="btn btn-success nutTDTT">
+											<a href="Ad_TDTT.jsp">Thay đổi thông tin</a>
+										</div></td>
+									<td><div class="btn btn-danger nutXoaAcc"
+											data-toggle="modal">
+											<a href="">Xóa tài khoản</a>
+										</div></td>
 								</tr>
-								<tr class="chan">
-									<td>quanguyen</td>
-									<td>Nguyễn Hoài Quân</td>
-									<td><div class="btn btn-success nutTDTT"><a href="#"">Thay đổi thông tin</a></div></td>
-									<td><div class="btn btn-danger nutXoaAcc" data-toggle="modal" data-target="#ModalXoa"><a href="#">Xóa tài khoản</a></div></td>
-								</tr>
-								<tr>
-									<td>tulethi98</td>
-									<td>Lê Thị Cẩm Tú</td>
-									<td><div class="btn btn-success nutTDTT"><a href="#">Thay đổi thông tin</a></div></td>
-									<td><div class="btn btn-danger nutXoaAcc" data-toggle="modal" data-target="#ModalXoa"><a href="#">Xóa tài khoản</a></div></td>
-								</tr>
-								<tr class="chan">
-									<td>minhkhanhtr</td>
-									<td>Trịnh Minh Khánh</td>
-									<td><div class="btn btn-success nutTDTT"><a href="#">Thay đổi thông tin</a></div></td>
-									<td><div class="btn btn-danger nutXoaAcc" data-toggle="modal" data-target="#ModalXoa"><a href="#">Xóa tài khoản</a></div></td>
-								</tr>
-							</tbody>
+							</c:forEach>
+						</tbody>
 						</table>
 					</div>
 				</div>
