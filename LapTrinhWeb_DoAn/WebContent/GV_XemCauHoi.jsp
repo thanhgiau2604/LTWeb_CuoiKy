@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.CauHoidao"%>
+<%@ page import="java.sql.ResultSet" %>
+<%@page import="javax.servlet.*" %>
+<%
+getServletContext().setAttribute("id",request.getParameter("id"));
+getServletContext().setAttribute("chucNang", "Xem");
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -72,9 +80,15 @@
 					<h2>QUẢN LÝ CÂU HỎI</h2>
 					<h3>XEM CÂU HỎI</h3>
 				</div>
+				<%
+					String id = request.getParameter("id");
+					CauHoidao chdao = new CauHoidao();
+					ResultSet rs = chdao.LayCauHoiTheoMaCH(id);
+					while (rs.next()){
+				%>
 				<div class="col-md-1 col-sm-0 col-xs-0"></div>
 				<div class="col-md-10 col-sm-12 col-xs-12">
-					<form method="post" id="formtlph">
+					<form method="post" id="formtlph" action="ThemSuaXoa">
 						<div class="form-group ">
 							<label class="control-label " for="text">
 								Mã câu hỏi
@@ -82,8 +96,8 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="text" name="text" type="text" readonly="true" 
-							value="CH-01" 
+							<input class="form-control" id="text" name="maCH" type="text" readonly="true" 
+							value="<%out.print(rs.getString(1));%>" 
 							/>
 						</div>
 						<div class="form-group ">
@@ -93,8 +107,8 @@
 									*
 								</span>
 							</label>
-							<textarea class="form-control" cols="40" id="textarea" name="noidungtl" placeholder="Nội dung" rows="10"
-							readonly="true">Tàu Titanic chìm vào năm nào?</textarea>
+							<textarea class="form-control" cols="40" id="textarea" name="noiDung" placeholder="Nội dung" rows="10"
+							readonly="true"><%out.print(rs.getString(2));%></textarea>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="text1">
@@ -103,8 +117,8 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="text1" name="text1" placeholder="" type="text" readonly="true" 
-							value="1912" />
+							<input class="form-control" id="text1" name="luaChonA" placeholder="" type="text" readonly="true" 
+							value="<%out.print(rs.getString(3));%>" />
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="text1">
@@ -113,8 +127,8 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="text1" name="text1" placeholder="" type="text" readonly="true" 
-							value="1913"/>
+							<input class="form-control" id="text1" name="luaChonB" placeholder="" type="text" readonly="true" 
+							value="<%out.print(rs.getString(4));%>"/>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="text1">
@@ -123,7 +137,8 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="text1" name="text1" placeholder="" type="text" value="1914" 
+							<input class="form-control" id="text1" name="luaChonC" placeholder="" type="text" 
+							value="<%out.print(rs.getString(5));%>" 
 							readonly="true" 
 							/>
 						</div>
@@ -134,8 +149,8 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="text1" name="text1" placeholder="" type="text" readonly="true" 
-							value="1219" />
+							<input class="form-control" id="text1" name="luaChonD" placeholder="" type="text" readonly="true" 
+							value="<%out.print(rs.getString(6));%>" />
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="text1">
@@ -144,9 +159,22 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="text1" name="text1" placeholder="" type="text" readonly="true" 
-							value="A" />
+							<input class="form-control" id="text1" name="dapAn" placeholder="" type="text" readonly="true" 
+							value="<%out.print(rs.getString(7));%>" />
 						</div>
+						<div class="form-group ">
+							<label class="control-label requiredField" for="text1">
+								Người tạo
+								<span class="asteriskField">
+									*
+								</span>
+							</label>
+							<input class="form-control" id="text1" name="nguoiTao" placeholder="" type="text" readonly="true" 
+							value="<%out.print(rs.getString(8));%>" />
+						</div>
+						<%
+							}
+						%>
 						<div class="form-group nutsubmit">
 							<div>
 								<button class="btn btn-primary btnsubmit" name="submit" type="submit">

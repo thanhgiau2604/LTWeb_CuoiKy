@@ -47,5 +47,4 @@ public class ServletDanhSachNguoiDung extends HttpServlet {
 		RequestDispacher dispatcher = request.getRequestDispatcher("AD_QLND_DS.jsp");       
 		dispatcher.forward(request, response);
     }
-
 }

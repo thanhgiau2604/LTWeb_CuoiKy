@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	getServletContext().setAttribute("id",request.getParameter("id"));
+	getServletContext().setAttribute("chucNang", "Them");
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -74,7 +78,7 @@
 				</div>
 				<div class="col-md-1 col-sm-0 col-xs-0"></div>
 				<div class="col-md-10 col-sm-12 col-xs-12">
-					<form method="post" id="formtlph">
+					<form method="post" id="formtlph" action="ThemSuaXoa">
 						<div class="form-group ">
 							<label class="control-label " for="text">
 								Mã câu hỏi
@@ -82,7 +86,7 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="text" name="text" type="text"/>
+							<input class="form-control" id="text" name="maCH" type="text"/>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="textarea">
@@ -91,7 +95,7 @@
 									*
 								</span>
 							</label>
-							<textarea class="form-control" cols="40" id="textarea" name="noidung" placeholder="Nội dung" rows="10"></textarea>
+							<textarea class="form-control" cols="40" id="textarea" name="noiDung" placeholder="Nội dung" rows="10"></textarea>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="text1">
@@ -100,7 +104,7 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="textA" name="textA" placeholder="" type="text"/>
+							<input class="form-control" id="textA" name="luaChonA" placeholder="" type="text"/>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="text1">
@@ -109,7 +113,7 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="textB" name="textB" placeholder="" type="text"/>
+							<input class="form-control" id="textB" name="luaChonB" placeholder="" type="text"/>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="text1">
@@ -118,7 +122,7 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="textC" name="textC" placeholder="" type="text"/>
+							<input class="form-control" id="textC" name="luaChonC" placeholder="" type="text"/>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="text1">
@@ -127,7 +131,7 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="textD" name="textD" placeholder="" type="text"/>
+							<input class="form-control" id="textD" name="luaChonD" placeholder="" type="text"/>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="text1">
@@ -136,7 +140,16 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="textkey" name="textkey" placeholder="" type="text"/>
+							<input class="form-control" id="textkey" name="dapAn" placeholder="" type="text"/>
+						</div>
+						<div class="form-group ">
+							<label class="control-label requiredField" for="text1">
+								Người tạo
+								<span class="asteriskField">
+									*
+								</span>
+							</label>
+							<input class="form-control" id="textkey" name="nguoiTao" placeholder="" type="text"/>
 						</div>
 						<div class="form-group nutsubmit">
 							<div>

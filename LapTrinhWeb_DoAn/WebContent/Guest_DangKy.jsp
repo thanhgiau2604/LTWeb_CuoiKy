@@ -14,7 +14,7 @@
 	<!-- Bootstrap Core CSS -->
 	<link href="file/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>\
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
 	<!-- js -->
@@ -31,7 +31,7 @@
 <body data-spy="scroll" data-target=".navbar-fixed-top" data-offset="90">
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container dt" id="idtrangchu">
-				<div class="btn-btn-default nutlogin"><a href="dangnhap.jsp">Đăng nhập</a></div>
+				<div class="btn-btn-default nutlogin"><a href="Guest_DangNhap.jsp">Đăng nhập</a></div>
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 						<span class="sr-only">Toggle navigation</span>
@@ -59,7 +59,7 @@
 			<div class="wthree-pro">
 				<h2>Đăng ký tài khoản</h2>
 			</div>
-			<form action="#" method="post" id="formdangky">
+			<form action="ServletDangKyTaiKhoan" method="post" id="formdangky">
 				<div class="pom-agile">
 				<!-- tên đăng nhập -->
 					<input placeholder="*Tên đăng nhập" name="username" class="user" type="text">
@@ -100,10 +100,14 @@
 					<input  placeholder="*Địa chỉ" name="address" class="Infor" type="text">
 					<span class="icon1"><i class="fa fa-address-book"></i></span>
 				</div>
+				<div class="pom-agile" style="padding-left: 20%; font-size: 17px">
+					<input class="Infor" type="radio" name="radiogv">Giáo viên
+					<input class="Infor" type="radio" name="radiots">Thí sinh
+				</div>
 				<div class="sub-w3l">
-					<h6>Chưa có tài khoản? <a href="dangky.jsp" class="dky">Đăng ký ngay</a></h6> 
+					<h6>Đã có tài khoản? <a href="dangky.jsp" class="dky">Đăng nhập</a></h6> 
 					<div class="right-w3l">
-						<input type="submit" value="Đăng nhập">
+						<input type="submit" value="Đăng ký">
 					</div>
 				</div>
 			</form>

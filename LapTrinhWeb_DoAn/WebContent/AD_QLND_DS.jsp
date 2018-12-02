@@ -1,3 +1,6 @@
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.NDdao"%>
+<%@ page import="java.sql.ResultSet" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -101,8 +104,12 @@
 					</div>
 				</div>
 				 </div>
-				
-				<div class="row tbDTGV">
+				 
+			<%
+				NDdao nd = new NDdao();
+				ResultSet rs = nd.LayDanhSachNguoiDung();
+			%>
+			<div class="row tbDTGV">
 					<div class="col-xs-0 col-sm-0 col-md-1 col-lg-1"></div>
 					<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
 						<table class="table table-bordered">
@@ -115,24 +122,23 @@
 								</tr>
 							</thead>
 							<tbody>
-							<c:forEach var="NguoiDung" items="${listND}">
+							<%
+								while(rs.next()){
+							%>
 								<tr>
-									<td><c:out value="${NguoiDung.TenDN}" /></td>
-									<td><c:out value="${NguoiDung.MatKhau}" /></td>
-									<td><c:out value="${NguoiDung.MatKhauC2}" /></td>
-									<td><c:out value="${NguoiDung.Email}" /></td>
-									<td><c:out value="${NguoiDung.HoTen}" /></td>
-									<td><c:out value="${NguoiDung.SDT}" /></td>
-									<td><c:out value="${NguoiDung.DiaChi}" /></td>
+									<td><%=rs.getString(1) %></td>
+									<td><%=rs.getString(4) %></td>
 									<td><div class="btn btn-success nutTDTT">
 											<a href="Ad_TDTT.jsp">Thay đổi thông tin</a>
 										</div></td>
 									<td><div class="btn btn-danger nutXoaAcc"
-											data-toggle="modal">
-											<a href="">Xóa tài khoản</a>
+											data-toggle="modal" data-target="#ModalXoa">
+											<a href="#">Xóa tài khoản</a>
 										</div></td>
 								</tr>
-							</c:forEach>
+								<%
+									}
+								%>
 						</tbody>
 						</table>
 					</div>

@@ -34,7 +34,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Student.png" alt="avatar" class="ava">
-						Nguyen Giau
+						<%=getServletContext().getAttribute("tenDN")%>
 					</button>	
 					<div class="danhmuctt">
 						<a href="TS_ChonDeThi.jsp">Vào Thi</a>
