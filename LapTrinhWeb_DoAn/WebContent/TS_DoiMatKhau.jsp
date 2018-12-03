@@ -71,10 +71,12 @@
 			 		<div class="wthree-pro text-center">
 			 			<h2>ĐỔI MẬT KHẨU</h2>
 			 		</div>
-			 		<form action="#" method="post" id="formdoimatkhau">
+			 		<%
+			 		%>
+			 		<form action="ServletDoiMatKhau" method="post" id="formdoimatkhau">
 			 			<div class="pom-agile">
 			 				<span class="field">Tên đăng nhập:</span>
-			 				<input name="Username" class="user" type="text" readonly="true" value="giaunguyen">
+			 				<input name="Username" class="username" type="text" readonly="true" value="<%=getServletContext().getAttribute("tenDN")%>">
 			 				<span class="icon1"><i class="fa fa-user" aria-hidden="true"></i></span>
 			 			</div>
 
@@ -82,21 +84,21 @@
 
 						<div class="pom-agile">
 							<span class="field">Nhập mật khẩu cũ:</span>
-							<input  placeholder="" name="PasswordOld" class="oldpass" type="password" required="">
+							<input  placeholder="" name="passwordold" class="oldpass" type="password" required="">
 							<span class="icon1"><i class="fa fa-unlock" aria-hidden="true"></i></span>
 						</div>
 						<!-- Mật khẩu mới -->
 
                         <div class="pom-agile">
                         	<span class="field">Nhập mật khẩu mới:</span>
-							<input  placeholder="" name="PasswordNew" class="newpass" type="password" required="" id="PasswordNew">
+							<input  placeholder="" name="passwordnew" class="newpass" type="password" required="" id="PasswordNew">
 							<span class="icon1"><i class="fa fa-unlock" aria-hidden="true"></i></span>
 						</div>
 
 						<!-- Xác nhận mật khẩu mới -->
 						<div class="pom-agile">
 							<span class="field">Nhập lại mật khẩu mới:</span>
-							<input  placeholder="" name="Repassword" class="repass" type="password" required="">
+							<input  placeholder="" name="repassword" class="repass" type="password" required="">
 							<span class="icon1"><i class="fa fa-unlock" aria-hidden="true"></i></span>
 						</div>
 

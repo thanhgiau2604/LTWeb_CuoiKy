@@ -88,6 +88,25 @@ public class NDdao implements ObjectDAO{
 		ResultSet rs = dbc.selectData(sql);
 		return rs;
 	}
+	public boolean CapNhatMatKhau(String matKhau, String tenDN)
+	{
+		String sql="EXECUTE CapNhatMatKhau '"+matKhau+"','"+tenDN+"'";
+		try {
+			new DBConnect().excuteSQL(sql);		
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
+	public ResultSet KiemTraMatKhau(String TenDN, String MatKhau) throws Exception
+	{
+		String sql = "SELECT DBO.fn_KiemTraMatKhau('"+TenDN+"','"+MatKhau+"')";
+		DBConnect dbc = new DBConnect();
+		ResultSet rs = dbc.selectData(sql);
+		return rs;
+	}
 	@Override
 	public boolean add(Object obj) {
 		NguoiDung nd = (NguoiDung) obj;
