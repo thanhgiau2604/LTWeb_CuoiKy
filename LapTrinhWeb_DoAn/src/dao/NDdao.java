@@ -88,9 +88,9 @@ public class NDdao implements ObjectDAO{
 		ResultSet rs = dbc.selectData(sql);
 		return rs;
 	}
-	public boolean CapNhatMatKhau(String matKhau, String tenDN)
+	public boolean CapNhatMatKhau(String MatKhau, String TenDN)
 	{
-		String sql="EXECUTE CapNhatMatKhau '"+matKhau+"','"+tenDN+"'";
+		String sql="EXECUTE CapNhatMatKhau '"+MatKhau+"','"+TenDN+"'";
 		try {
 			new DBConnect().excuteSQL(sql);		
 			return true;
