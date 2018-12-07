@@ -43,6 +43,7 @@ public class ThemSuaXoa extends HttpServlet {
 			String nguoiTao = request.getParameter("nguoiTao");
 			CauHoi ch = new CauHoi(maCH,noiDung,luaChonA,luaChonB,luaChonC,luaChonD,dapAn,nguoiTao);
 			new CauHoidao().edit(ch, maCH);
+			getServletContext().removeAttribute("chucNang");
 			response.sendRedirect("GV_QLCauHoi.jsp");  
 		}
 		else
@@ -58,12 +59,14 @@ public class ThemSuaXoa extends HttpServlet {
 				String nguoiTao = request.getParameter("nguoiTao");
 				CauHoi ch = new CauHoi(maCH,noiDung,luaChonA,luaChonB,luaChonC,luaChonD,dapAn,nguoiTao);
 				new CauHoidao().add(ch);
+				getServletContext().removeAttribute("chucNang");
 				response.sendRedirect("GV_QLCauHoi.jsp"); 
 			}
 			else
 
 				if (chucNang.equals("Xem"))
 				{
+					getServletContext().removeAttribute("chucNang");
 					response.sendRedirect("GV_QLCauHoi.jsp"); 
 				}   	
 	}

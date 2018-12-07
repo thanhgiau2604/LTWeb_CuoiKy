@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="vi">
@@ -29,7 +29,7 @@
 <body data-spy="scroll" data-target=".navbar-fixed-top" data-offset="90">
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container dt" id="idtrangchu">
-                <div class="btn-btn-default nutlogin"><a href="Guest_DangNhap.html">Đăng nhập</a></div>
+                <div class="btn-btn-default nutlogin"><a href="Guest_DangNhap.jsp">Đăng nhập</a></div>
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                         <span class="sr-only">Toggle navigation</span>
@@ -42,8 +42,8 @@
                 <div class="navbar-collapse navbar-ex1-collapse collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right menu">
                          <!-- <li class="hidden"><a href="#page-top"></a> </li> -->
-                        <li ><a class="btnTC" href="TrangChu.html#idtrangchu">TRANG CHỦ</a></li>
-                        <li ><a class="btnGT" href="TrangChu.html#gioithieu">GIỚI THIỆU</a></li>                    
+                        <li ><a class="btnTC" href="TrangChu.jsp#idtrangchu">TRANG CHỦ</a></li>
+                        <li ><a class="btnGT" href="TrangChu.jsp#gioithieu">GIỚI THIỆU</a></li>                    
                     </ul>
                 </div><!-- /.navbar-collapse -->
                 <!-- duong ke -->
@@ -56,16 +56,16 @@
                     <div class="wthree-pro text-center">
                         <h2>QUÊN MẬT KHẨU</h2>
                     </div>
-                    <form action="ServletQuenMatKhau"method="post" id="formquenmk" data-toggle="modal">
+                    <form action="ServletQuenMatKhau" method="post" id="formquenmk">
                         <div class="pom-agile">
                             <span class="field">Tên đăng nhập:</span>
-                            <input name="username" class="user" type="text">
+                            <input name="Username" class="user" type="text">
                             <span class="icon1"><i class="fa fa-user" aria-hidden="true"></i></span>
                         </div>
                         <!-- Mật khẩu cũ -->
                         <div class="pom-agile">
                             <span class="field">Mật khẩu cấp 2:</span>
-                            <input  placeholder="" name="matkhauc2" class="oldpass" type="password" required="">
+                            <input  placeholder="" name="PasswordC2" class="oldpass" type="password" required="">
                             <span class="icon1"><i class="fa fa-unlock" aria-hidden="true"></i></span>
                         </div>
                         <div class="sub-w3l">
@@ -108,10 +108,10 @@
                         <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2"></div>
                         <div class="col-xs-4 col-sm-4 col-md-5 col-lg-5">
                             <ul class="shortlink">
-                                <li><a href="TrangChu.html">Trang chủ</a></li>
-                                <li><a href="TrangChu.html#baidang">Bài đăng</a></li>
-                                <li><a href="TrangChu.html#gioithieu">Giới thiệu</a></li>
-                                <li><a href="TrangChu.html#chucnang">Chức năng</a></li>
+                                <li><a href="TrangChu.jsp">Trang chủ</a></li>
+                                <li><a href="TrangChu.jsp#baidang">Bài đăng</a></li>
+                                <li><a href="TrangChu.jsp#gioithieu">Giới thiệu</a></li>
+                                <li><a href="TrangChu.jsp#chucnang">Chức năng</a></li>
                             </ul>
                         </div>
                          <div class="col-xs-4 col-sm-4 col-md-5 col-lg-5">
@@ -136,44 +136,5 @@
             </div>
         </div>
     </footer> <!-- end footer -->
-
-
-
-      <!-- Modal -->
-<div class="modal fade" id="modalquenmk" role="dialog" aria-labelledby="myModalLabel" >
-  <div class="modal-dialog form-dark" role="document">
-    <!--Content-->
-    <div class="modal-content card card-image" style="background: blue">
-      <div class="text-white rgba-stylish-strong py-5 px-5 z-depth-4">
-        <!--Header-->
-        <div class="modal-header text-center pb-4 tieude">
-          <h3 class="modal-title w-100 white-text font-weight-bold" id="myModalLabel">
-            <strong>ĐỔI MẬT KHẨU MỚI</strong></h3>
-          <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close" id="nuttat">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <!--Body-->
-        <form action="" id="laylaimk" class="">
-            <!--Body-->
-            <div class="md-form mb-5 newpass">
-                <label data-error="wrong" data-success="right" for="Form-email5">Mật khẩu mới:</label>
-                <input type=password id="Form-email5" class="form-control validate white-text" name="newpass">    
-            </div>
-
-            <div class="md-form pb-3 repass">
-                <label data-error="wrong" data-success="right" for="Form-pass5">Nhập lại mật khẩu</label>
-                <input type="password" id="Form-pass5" class="form-control validate white-text" name="repass"> 
-            </div>
-            <!--Grid row-->
-            <input type="submit" value="Đổi mật khẩu" class="nutdoimk" > 
-        </form>
-        </div>
-      </div>
-    </div>
-    <!--/.Content-->
-  </div>
-</div>
-<!-- end modal -->
 </body>
 </html>

@@ -33,7 +33,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Teacher.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="GV_ThayDoiTT.jsp">Thay Đổi Thông Tin</a>
@@ -92,8 +92,7 @@
 							<%
 								while(rs.next()){
 							%>
-								<tr>
-								
+								<tr>								
 									<td><%=rs.getString(1) %></td>
 									<td><%=rs.getString(2) %></td>
 									<td><div class="btn btn-success nutXem"><a href="GV_XemCauHoi.jsp?id=<%=rs.getString(1)%>">Xem</a></div></td>

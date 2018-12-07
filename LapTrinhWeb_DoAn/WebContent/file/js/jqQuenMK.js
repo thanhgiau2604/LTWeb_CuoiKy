@@ -1,10 +1,5 @@
 ﻿$(function(){
 
-
-   /* $('.btnGT').click(function(){
-        if ($("label#Username-error").display)
-    }*/
-
 	$("#formquenmk").validate({
             rules: {
                 Username: {
@@ -51,12 +46,4 @@
                 },
             },
          })
-
-    $("#formquenmk").on('submit',function(e){
-        if ((!$('#Username-error').is(':visible')) && (!$('#PasswordC2-error').is(':visible')))
-        {
-            e.preventDefault();   
-            $('#modalquenmk').modal("show");
-        }
-    })
 });

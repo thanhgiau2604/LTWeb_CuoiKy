@@ -5,8 +5,8 @@
 <%@ page import="java.sql.ResultSet" %>
 <%@page import="javax.servlet.*" %>
 <%
-getServletContext().setAttribute("id",request.getParameter("id"));
-getServletContext().setAttribute("chucNang", "Xem");
+	getServletContext().setAttribute("id",request.getParameter("id"));
+	getServletContext().setAttribute("chucNang", "Xem");
 %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -40,7 +40,7 @@ getServletContext().setAttribute("chucNang", "Xem");
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Teacher.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="GV_ThayDoiTT.jsp">Thay Đổi Thông Tin</a>

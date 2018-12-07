@@ -1,3 +1,6 @@
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.CauHoidao"%>
+<%@ page import="java.sql.ResultSet" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -31,7 +34,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Admin.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="Ad_TDTT.jsp">Thay Đổi Thông Tin</a>
@@ -66,7 +69,10 @@
 				<div class="duongke"></div>
 			</div> 
 		</nav>
-
+		<%
+				CauHoidao ch = new CauHoidao();
+				ResultSet rs = ch.LayDanhSachCauHoi();
+		%>
 		<div class="container">
 			<div class="qlybd text-center">
 				<h3>DANH SÁCH CÂU HỎI</h3>
@@ -85,50 +91,23 @@
 								</tr>
 							</thead>
 							<tbody>
+							<%
+								while(rs.next()){
+							%>
 								<tr>
-									<td>CH-01</td>
-									<td>Tàu Titanic chìm vào năm nào ?</td>
+									<td><%=rs.getString(1)%></td>
+									<td><%=rs.getString(2)%></td>
 									<td></td>
-									<td><div class="btn btn-success nutXem"><a href="AD_XemCH.jsp">Xem</a></div></td>
-									<td><div class="btn btn-warning nutSua"><a href="Ad_SuaCauHoi.jsp">Sửa</a></div></td>
+									<td><div class="btn btn-success nutXem"><a href="AD_XemCH.jsp?id=<%=rs.getString(1)%>">Xem</a></div></td>
+									<td><div class="btn btn-warning nutSua"><a href="Ad_SuaCauHoi.jsp?id=<%=rs.getString(1)%>">Sửa</a></div></td>
 									<td>
-										<div class="btn btn-danger nutXoa" data-toggle="modal" data-target="#ModalXoa"
-										><a href="#"">Xóa</a></div>
+										<div class="btn btn-danger nutXoa"> <!-- data-toggle="modal" data-target="#ModalXoa" -->
+									<a href="ThemSuaXoa?id=<%=rs.getString(1)%>&chucNang=Xoa">Xóa</a></div>
 									</td>
 								</tr>
-								<tr class="chan">
-									<td>CH-02</td>
-									<td>Bác Hồ sinh vào năm nào ?</td>
-									<td></td>
-									<td><div class="btn btn-success nutXem"><a href="#"">Xem</a></div></td>
-									<td><div class="btn btn-warning nutSua"><a href="#"">Sửa</a></div></td>
-									<td>
-										<div class="btn btn-danger nutXoa" data-toggle="modal" data-target="#ModalXoa"
-										><a href="#"">Xóa</a></div>
-									</td>
-								</tr>
-								<tr>
-									<td>CH-03</td>
-									<td>Bác Hồ đọc bản tuyên ngôn độc lập vào ngày tháng năm nào ?</td>
-									<td></td>
-									<td><div class="btn btn-success nutXem"><a href="#"">Xem</a></div></td>
-									<td><div class="btn btn-warning nutSua"><a href="#"">Sửa</a></div></td>
-									<td>
-										<div class="btn btn-danger nutXoa" data-toggle="modal" data-target="#ModalXoa"
-										><a href="#"">Xóa</a></div>
-									</td>
-								</tr>
-								<tr class="chan">
-									<td>CH-04</td>
-									<td>Năm kết thúc cuộc kháng chiến chống Mỹ cứu nước ?</td>
-									<td></td>
-									<td><div class="btn btn-success nutXem"><a href="#"">Xem</a></div></td>
-									<td><div class="btn btn-warning nutSua"><a href="#"">Sửa</a></div></td>
-									<td>
-										<div class="btn btn-danger nutXoa" data-toggle="modal" data-target="#ModalXoa"
-										><a href="#"">Xóa</a></div>
-									</td>
-								</tr>
+								<%
+									}
+								%>
 							</tbody>
 						</table>
 					</div>
