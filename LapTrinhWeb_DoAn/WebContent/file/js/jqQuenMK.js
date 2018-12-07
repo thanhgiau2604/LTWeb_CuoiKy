@@ -1,4 +1,4 @@
-$(function(){
+﻿$(function(){
 
 
    /* $('.btnGT').click(function(){
@@ -51,4 +51,12 @@ $(function(){
                 },
             },
          })
+
+    $("#formquenmk").on('submit',function(e){
+        if ((!$('#Username-error').is(':visible')) && (!$('#PasswordC2-error').is(':visible')))
+        {
+            e.preventDefault();   
+            $('#modalquenmk').modal("show");
+        }
+    })
 });

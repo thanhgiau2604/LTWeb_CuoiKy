@@ -36,7 +36,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Student.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="TS_ChonDeThi.jsp">Vào Thi</a>
@@ -74,7 +74,7 @@
 			<div class="posTDTT text-center">
 				<div class="wthree-pro"><h3 >THAY ĐỔI THÔNG TIN</h3></div>
 				<%
-					String tenDN = (String)getServletContext().getAttribute("tenDN");
+					String tenDN = (String)session.getAttribute("tenDN");
 					System.out.println(tenDN);
 					NDdao nd = new NDdao();
 					ResultSet rs = nd.LayNguoiDungTheoTenDN(tenDN);
@@ -90,8 +90,8 @@
 					</div>
 					<div class="pom-agile">
 						<span class="field">Mật khẩu C2:</span>
-						<input name="mkc2" class="user" type="text" value="<%out.print(rs.getString(3));%>" readonly="true">
-						<span class="icon1"><i class="fa fa-unclock" aria-hidden="true"></i></span>
+						<input  name="mkc2" class="Infor" type="text" value="<%out.print(rs.getString(3));%>" style="margin-left:60px">
+						<span class="icon2"><i class="fa fa-unlock" aria-hidden="true"></i></span>
 					</div>
 					<!-- Họ tên -->
 					<div class="pom-agile">

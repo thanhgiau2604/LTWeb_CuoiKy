@@ -107,6 +107,13 @@ public class NDdao implements ObjectDAO{
 		ResultSet rs = dbc.selectData(sql);
 		return rs;
 	}
+	public ResultSet KiemTraMatKhauC2(String TenDN, String MatKhauC2) throws Exception
+	{
+		String sql = "SELECT DBO.fn_KiemTraMatKhauC2('"+TenDN+"','"+MatKhauC2+"')";
+		DBConnect dbc = new DBConnect();
+		ResultSet rs = dbc.selectData(sql);
+		return rs;
+	}
 	@Override
 	public boolean add(Object obj) {
 		NguoiDung nd = (NguoiDung) obj;

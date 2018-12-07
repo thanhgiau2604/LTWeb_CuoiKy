@@ -32,7 +32,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Student.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="TS_ChonDeThi.jsp">Vào Thi</a>
@@ -71,13 +71,12 @@
 			 		<div class="wthree-pro text-center">
 			 			<h2>ĐỔI MẬT KHẨU</h2>
 			 		</div>
-			 		<%
-			 		%>
+
 			 		<form action="ServletDoiMatKhau" method="post" id="formdoimatkhau">
 			 		<!-- Tên đăng nhập -->
 			 			<div class="pom-agile">
 			 				<span class="field">Tên đăng nhập:</span>
-			 				<input name="Username" class="username" type="text" readonly="true" value="<%=getServletContext().getAttribute("tenDN")%>">
+			 				<input name="username" class="username" type="text" readonly="true" value="${sessionScope.tenDN}">
 			 				<span class="icon1"><i class="fa fa-user" aria-hidden="true"></i></span>
 			 			</div>
 
@@ -112,6 +111,7 @@
 			 	</div>
 			 </div>
 		</div> <!-- end doi pass -->
+		
 		  <!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">

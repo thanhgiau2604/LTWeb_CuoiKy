@@ -478,3 +478,6 @@ label#Form-email5-error {
 label#Form-pass5-error {
   color: red;
 }
+#modalquenmk {
+    transition: all 1s;
+}

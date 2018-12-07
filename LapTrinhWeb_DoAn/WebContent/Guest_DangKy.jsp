@@ -105,7 +105,7 @@
 					<input class="Infor" type="radio" name="radiots">Thí sinh
 				</div>
 				<div class="sub-w3l">
-					<h6>Đã có tài khoản? <a href="dangky.jsp" class="dky">Đăng nhập</a></h6> 
+					<h6>Đã có tài khoản? <a href="Guest_DangNhap.jsp" class="dky">Đăng nhập</a></h6> 
 					<div class="right-w3l">
 						<input type="submit" value="Đăng ký">
 					</div>

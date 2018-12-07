@@ -1,6 +1,9 @@
 package controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +24,7 @@ public class ServletDangKyTaiKhoan extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
 		String tenDN = request.getParameter("username");
 		String matKhau = request.getParameter("password");
 		String matKhauC2 = request.getParameter("passwordc2");
@@ -38,11 +42,27 @@ public class ServletDangKyTaiKhoan extends HttpServlet {
 		boolean sucess= new NDdao().add(nd);
 		if (sucess==false)
 		{
-			System.out.println("Kh鬾g th阭 dc");
+			out.println("<script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.all.js\"></script>");
+			out.println("<script type=\"text/javascript\" src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>");
+			out.println("<script>");
+			out.println("$(document).ready(function(){");
+			out.println("swal(\"Th么ng b谩o\",\"膼膬ng k媒 kh么ng th脿nh c么ng!!\",\"error\")");
+			out.println("});");
+			out.println("</script>");
+			RequestDispatcher rd = request.getRequestDispatcher("Guest_DangKy.jsp");
+			rd.include(request, response);
 		}
 		else
 		{
-			response.sendRedirect("Guest_DangNhap.jsp");
+			out.println("<script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.all.js\"></script>");
+			out.println("<script type=\"text/javascript\" src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>");
+			out.println("<script>");
+			out.println("$(document).ready(function(){");
+			out.println("swal(\"Th么ng b谩o\",\"膼膬ng k媒 t脿i kho岷 th脿nh c么ng!!\",\"error\")");
+			out.println("});");
+			out.println("</script>");
+			RequestDispatcher rd = request.getRequestDispatcher("Guest_DangNhap.jsp");
+			rd.include(request, response);
 		}
 		
 	}
