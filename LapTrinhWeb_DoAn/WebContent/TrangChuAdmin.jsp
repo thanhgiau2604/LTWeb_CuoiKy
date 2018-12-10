@@ -38,7 +38,7 @@
 					</button>	
 					<div class="danhmuctt">
 						<a href="Ad_TDTT.jsp">Thay Đổi Thông Tin</a>
-						<a href="Ad_DoiMatKhau">Đổi Mật Khẩu</a>
+						<a href="Ad_DoiMatKhau.jsp">Đổi Mật Khẩu</a>
 						<a href="TrangChu.jsp">Đăng Xuất</a>
 					</div>
 				</div> <!-- end khung -->

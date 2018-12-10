@@ -35,7 +35,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Student.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="TS_ChonDeThi.jsp">Vào Thi</a>
@@ -79,13 +79,13 @@
 			 			<div class="thumbnail">
 			 				<img src="file/Images/teacherCre.png" width="70%" alt="" >
 			 				<div class="ngtao">
-			 					<h3>GV tạo</h3>
+			 					<h3>Giáo viên</h3>
 			 				</div>
 			 			</div>
 			 			<figcaption>
 			 				<div class="figcaption-wrap">
 			 					<div class="btn btn-danger nutchon"><a href="TS_DeThiGV.jsp">Chọn</a></div> 
-			 					<h3>GV tạo</h3>
+			 					<h3>Giáo viên</h3>
 			 				</div>
 			 			</figcaption>
 			 		</figure>		
@@ -95,14 +95,14 @@
 			 			<div class="thumbnail">
 			 				<img src="file/Images/AdCre.png" width="70%" alt="" >
 			 				<div class="ngtao"">
-			 					<h3>Admin tạo</h3>
+			 					<h3>Admin</h3>
 
 			 				</div>
 			 			</div>	
 			 			<figcaption>
 			 				<div class="figcaption-wrap">
 			 					<div class="btn btn-danger nutchon"><a href="TS_DeThiAD.jsp">Chọn</a></div> 
-			 					<h3>Admin tạo</h3>
+			 					<h3>Admin</h3>
 			 				</div>
 			 			</figcaption>
 			 		</figure>	

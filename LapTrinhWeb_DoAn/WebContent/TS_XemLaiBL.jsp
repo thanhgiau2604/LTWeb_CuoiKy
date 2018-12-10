@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.VaoThidao"%>
+<%@ page import="java.sql.ResultSet" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -29,7 +32,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Student.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="TS_ChonDeThi.jsp">Vào Thi</a>
@@ -38,7 +41,7 @@
 						<a href="TrangChu.jsp">Đăng Xuất</a>
 					</div>
 				</div> <!-- end khung -->
-
+			
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 						<span class="sr-only">Toggle navigation</span>
@@ -63,6 +66,15 @@
 			</div> 
 		</nav>
 		</nav>
+		
+		<%
+				VaoThidao vt = new VaoThidao();
+				String TenDN = (String)session.getAttribute("tenDN");
+				String MaDT = (String)session.getAttribute("MaDT");
+				int LuotThi = (Integer)session.getAttribute("LuotThi");
+				ResultSet rs = vt.LayThongTinBaiLam(TenDN, MaDT, LuotThi);
+		%>
+		
 		<!-- content -->
 		<div class="container">
 			<div class="row vaothi">
@@ -74,38 +86,43 @@
 						<div class="boxlist">
 							<p class="td text-center">THÔNG TIN BÀI THI</p>
 						</div>
-						<ul class="thongtin">
+					<%
+					while (rs.next())
+					{
+					%>
+					<ul class="thongtin">
 							<li class="dm">
 								<img src="file/Images/id.svg" alt="" height="30" class="anhicon">
 								Mã đề thi:
-								<b>GV01_HIS1</b>
+								<b><%=rs.getString(1)%></b>
 							</li>
 							<li class="dm">
 								<img src="file/Images/kythi.svg" alt="" height="30" class="anhicon">
 								Kì thi:
-								<b>Kiểm tra 15 phút</b>
+								<b><%=rs.getString(2)%></b>
 							</li>
 							<li class="dm">
 								<img src="file/Images/monthi.svg" alt="" height="30" class="anhicon">
 								Môn thi:
-								<b>LỊCH SỬ</b>
+								<b><%=rs.getString(3)%></b>
 							</li>
 							<li class="dm">
 								<img src="file/Images/soluong.svg" alt="" height="30" class="anhicon">
 								Số câu hỏi:
-								<b>10</b>
+								<b><%=rs.getString(4)%></b>
 							</li>
 							<li class="dm">
 								<img src="file/Images/time.svg" alt="" height="30" class="anhicon">
 								Thời gian:
-								<b>15 phút</b>
+								<b><%=rs.getString(5)%></b>
 							</li>
 							<li class="dm">
 								<img src="file/Images/score.svg" alt="" height="30" class="anhicon">
 								Điểm đạt được:
-								<b>7</b>
+								<b><%=rs.getString(6)%></b>
 							</li>
 						</ul>
+						<%} %>
 						<div class="btn btn-warning nutnop"><a href="TS_GuiPhanHoi.jsp">Gửi phản hồi</a></div> 
 						<div class="btn btn-warning nutnop"><a href="TrangChuTS.jsp">Về Trang chủ</a></div> 
 					</div>

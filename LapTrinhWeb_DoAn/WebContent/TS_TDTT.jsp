@@ -117,12 +117,12 @@
 						<input name="address" class="Address" type="text" value="<%out.print(rs.getString(7));%>">
 						<span class="icon1"><i class="fa fa-address-book"></i></span>
 					</div>
+					<% } %>
 					<div class="sub-w3l">
 						<div class="right-w3l">
 							<input type="submit" value="Lưu">
 						</div>
 					</div>
-					<% } %>
 				</form>
 			</div>
 		</div>

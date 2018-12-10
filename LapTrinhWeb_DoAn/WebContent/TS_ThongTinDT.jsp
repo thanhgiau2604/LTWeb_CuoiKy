@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.VaoThidao"%>
+<%@ page import="java.sql.ResultSet" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -31,7 +34,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Student.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="TS_ChonDeThi.jsp">Vào Thi</a>
@@ -64,19 +67,38 @@
 				<div class="duongke"></div>
 			</div> 
 		</nav>
+		<%
+				VaoThidao vt = new VaoThidao();
+				String madt = request.getParameter("mdt");
+				ResultSet rs = vt.LayDeThi(madt);
+		%>
 				   <!-- nội dung  -->  
 		<div class="container">
 			<div class="row ttdt text-center">
 				<h3>THÔNG TIN ĐỀ THI</h3>
-                <p class="ThongtinDT">Đề thi môn: Toán </br>
-                	Thời gian làm bài: 15 phút </br>
-                	Mã đề thi: GV_TO03 </br>
-                	Số câu hỏi: 15 câu </br>
+				<%
+					while (rs.next())
+					{
+			               session.setAttribute("SoCauHoi",rs.getInt(4));
+			               session.setAttribute("MaDT",rs.getString(1));
+			               session.setAttribute("time",rs.getInt(5));
+			               
+			               new VaoThidao().ResetCauHoi(rs.getString(1));
+				%>
+                <p class="ThongtinDT">Đề thi môn: <%=rs.getString(3)%> </br>
+                	Thời gian làm bài:<%=rs.getInt(5)%> </br>
+                	Mã đề thi: <%=rs.getString(1)%> </br>
+                	Số câu hỏi: <%=rs.getInt(4)%> câu </br>
                 </p>
 			</div>
-			<div class="btn btn-default nutlambai"><a href="TS_VaoThi.jsp">Bắt đầu làm bài</a></div> 
-			
+			<div class="btn btn-default nutlambai"><a href="TS_VaoThi.jsp?mdt=<%=rs.getString(1)%>">Bắt đầu làm bài</a></div> 
+			 <%
+				}
+              %>
 		</div> <!-- end nội dung -->
+		<script type="text/javascript">
+			sessionStorage.setItem("time",<%=session.getAttribute("time")%>*60); 
+	    </script>
 	  <!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">
@@ -126,6 +148,18 @@
                 </div>
             </div>
         </div>
+        <%
+        	session.setAttribute("stt",1);
+        	String MaDeThi = (String)session.getAttribute("MaDT");
+        	String TenDN = (String)session.getAttribute("tenDN");
+        	System.out.println("MaDT="+MaDeThi+"|TenDN="+TenDN);
+        	VaoThidao vaothi = new VaoThidao();
+        	ResultSet rsLuotThi = vaothi.LayLuotThi(MaDeThi, TenDN);
+        	while (rsLuotThi.next())
+        	{
+        		session.setAttribute("LuotThi", rsLuotThi.getInt(1)+1);
+        	}
+        %>
         <div class="footer-below">
             <div class="container">
                 <div class="row">

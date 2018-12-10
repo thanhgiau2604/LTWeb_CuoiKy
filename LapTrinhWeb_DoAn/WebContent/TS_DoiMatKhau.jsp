@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.NDdao"%>
+<%@ page import="java.sql.ResultSet" %>
+<%@page import="javax.servlet.*" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -65,7 +69,16 @@
 				<div class="duongke"></div>
 			</div> 
 		</nav>
-		
+		<%
+					String tenDN = (String)session.getAttribute("tenDN");
+					System.out.println(tenDN);
+					NDdao nd = new NDdao();
+					ResultSet rs = nd.LayNguoiDungTheoTenDN(tenDN);
+					while (rs.next()){
+						getServletContext().setAttribute("laGiaoVien",rs.getInt(8));
+						getServletContext().setAttribute("laAdmin",rs.getInt(9));
+					}
+		%>
 		<div class="main-content-agile doimk">
 			<div class="sub-main-w3">
 			 		<div class="wthree-pro text-center">

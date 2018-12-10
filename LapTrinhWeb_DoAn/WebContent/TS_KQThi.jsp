@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.VaoThidao"%>
+<%@ page import="java.sql.ResultSet" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -30,7 +33,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Student.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="TS_ChonDeThi.jsp">Vào Thi</a>
@@ -53,9 +56,9 @@
 				<div class="collapse navbar-collapse navbar-ex1-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-right menu">
 						<li ><a class="btnTC" href="#idtrangchu">TRANG CHỦ</a></li>
-						<li ><a class="btnTC" href="">VÀO THI</a></li>
-						<li ><a class="btnTC" href="">LỊCH SỬ</a></li>
-						<li ><a class="btnTC" href="">THÔNG BÁO</a></li>
+					    <li ><a class="btnTC" href="TS_ChonDeThi.jsp">VÀO THI</a></li>
+						<li ><a class="btnTC" href="TS_LichSuThi.jsp">LỊCH SỬ</a></li>
+						<li ><a class="btnTC" href="TS_ThongBao.jsp">THÔNG BÁO</a></li>
 						<li ><a class="btnGT" href="#idgioithieu">GIỚI THIỆU</a></li>					
 					</ul>
 				</div><!-- /.navbar-collapse -->
@@ -63,17 +66,27 @@
 				<div class="duongke"></div>
 			</div> 
 		</nav>
+		<%
+			String TenDN = (String)session.getAttribute("tenDN");
+			String MaDT = (String)session.getAttribute("MaDT");
+			int LuotThi = (Integer)session.getAttribute("LuotThi");	
+			ResultSet rs = new VaoThidao().LayKetQuaThi(TenDN, MaDT, LuotThi);
+		%>
 				   <!-- nội dung  -->  
 		<div class="container">
 			<div class="row ttdt text-center">
 				<h3>KẾT QUẢ THI</h3>
-                <p class="ThongtinDT">Đề thi môn: Lịch sử </br>
-                	Thời gian làm bài: 15 phút </br>
-                	Mã đề thi: GV_TO03 </br>
-                	Số câu hỏi: 15 câu </br>
-                	Số câu đúng: 12/15 câu </br> 
-                	Điểm thi đạt được <strong style="color: red">8.0</strong> 
+				<%
+					while (rs.next())
+					{
+				%>
+                <p class="ThongtinDT">Đề thi môn:<%=rs.getString(1)%></br>
+                	Thời gian đã làm bài: <%=rs.getString(2)%> giây </br>
+                	Mã đề thi:<%=rs.getString(3)%> </br>
+                	Số câu hỏi:<%=rs.getString(4)%> câu </br>
+                	Điểm thi đạt được: <strong style="color: red"><%=rs.getString(5)%></strong> 
                 </p>
+                <%} %>
 			</div>
 			<div class="btn btn-default nutlambai"><a href="TS_XemLaiBL.jsp">Xem lại bài làm</a></div> 
 			<div class="btn btn-default nutlambai" style="margin-top:0px; background: orange; border: none">

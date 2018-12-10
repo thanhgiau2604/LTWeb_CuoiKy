@@ -1,3 +1,6 @@
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.VaoThidao"%>
+<%@ page import="java.sql.ResultSet" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -31,7 +34,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Student.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="TS_ChonDeThi.jsp">Vào Thi</a>
@@ -68,6 +71,10 @@
 			<div class="nenslide" >
 			
 		</div>
+		<%
+				VaoThidao vt = new VaoThidao();
+				ResultSet rs = vt.LayDanhSachDeThiGiaoVien();
+		%>
 		<!-- content -->
 			<div class="container">
 			<div class="tbDeThi_GV text-center">
@@ -80,48 +87,27 @@
 								<tr>
 									<th>Mã giáo viên</th>
 									<th>Mã đề thi</th>
+									<th>Kì thi</th>
 									<th>Môn</th>
 									<th>Thời gian thi</th>
 									<th>Thao tác</th>
 								</tr>
 							</thead>
 							<tbody>
+							<%
+								while(rs.next()){
+							%>
 								<tr>
-									<td>GV_HIS_01</td>
-									<td>HIS03_GV</td>
-									<td>Lịch sử</td>
-									<td>15</td>
+									<td><%=rs.getString(1)%></td>
+									<td><%=rs.getString(2)%></td>
+									<td><%=rs.getString(3)%></td>
+									<td><%=rs.getString(4)%></td>
+									<td><%=rs.getString(6)%></td>
 									<td><div class="btn btn-default nutvaothi">
-										<a href="TS_VaoThi.jsp" style="text-decoration: none">Vào thi</a></div>
+										<a href="TS_ThongTinDT.jsp?mdt=<%=rs.getString(2)%>" style="text-decoration: none">Chọn</a></div>
 									</td>
 								</tr>
-								<tr class="chan">
-									<td>GV_AV_02</td>
-									<td>AV01_GV</td>
-									<td>Tiếng Anh</td>
-									<td>20</td>
-									<td><div class="btn btn-default nutvaothi">
-										<a href="#" style="text-decoration: none">Vào thi</a></div>
-									</td>
-								</tr>
-								<tr>
-									<td>GV_HO_02</td>
-									<td>HO03_GV</td>
-									<td>Hóa Học</td>
-									<td>45</td>
-									<td><div class="btn btn-default nutvaothi">
-										<a href="#" style="text-decoration: none">Vào thi</a></div>
-									</td>
-								</tr>
-								<tr class="chan">
-									<td>GV_VL_02</td>
-									<td>VL01_GV</td>
-									<td>Vật Lý</td>
-									<td>20</td>
-									<td><div class="btn btn-default nutvaothi">
-										<a href="#" style="text-decoration: none">Vào thi</a></div>
-									</td>
-								</tr>
+								<%} %>
 							</tbody>
 						</table>
 					</div>

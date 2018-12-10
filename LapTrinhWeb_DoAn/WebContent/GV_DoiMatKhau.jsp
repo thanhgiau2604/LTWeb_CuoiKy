@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.NDdao"%>
+<%@ page import="java.sql.ResultSet" %>
+<%@page import="javax.servlet.*" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -32,7 +36,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Teacher.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="GV_ThayDoiTT.jsp">Thay Đổi Thông Tin</a>
@@ -65,37 +69,46 @@
 				<div class="duongke"></div>
 			</div> 
 		</nav>
-
-			<div class="main-content-agile doimk">
+	<%
+		String tenDN = (String) session.getAttribute("tenDN");
+		System.out.println(tenDN);
+		NDdao nd = new NDdao();
+		ResultSet rs = nd.LayNguoiDungTheoTenDN(tenDN);
+		while (rs.next()) {
+			getServletContext().setAttribute("laGiaoVien", rs.getInt(8));
+			getServletContext().setAttribute("laAdmin", rs.getInt(9));
+		}
+	%>
+	<div class="main-content-agile doimk">
 			<div class="sub-main-w3">
 			 		<div class="wthree-pro text-center">
 			 			<h2>ĐỔI MẬT KHẨU</h2>
 			 		</div>
-			 		<form action="#" method="post" id="formdoimatkhau">
+			 		<form action="ServletDoiMatKhau" method="post" id="formdoimatkhau">
 			 			<div class="pom-agile">
 			 				<span class="field">Tên đăng nhập:</span>
-			 				<input name="Username" class="user" type="text" readonly="true" value="giaunguyen">
+			 				<input name="username" class="user" type="text" readonly="true" value="${sessionScope.tenDN}">
 			 				<span class="icon1"><i class="fa fa-user" aria-hidden="true"></i></span>
 			 			</div>
 
 						<!-- Mật khẩu cũ -->
 						<div class="pom-agile">
 							<span class="field">Nhập mật khẩu cũ:</span>
-							<input  placeholder="" name="PasswordOld" class="oldpass" type="password" required="">
+							<input  placeholder="" name="passwordold" class="oldpass" type="password" required="">
 							<span class="icon1"><i class="fa fa-unlock" aria-hidden="true"></i></span>
 						</div>
 						<!-- Mật khẩu mới -->
 
                         <div class="pom-agile">
                         	<span class="field">Nhập mật khẩu mới:</span>
-							<input  placeholder="" name="PasswordNew" class="newpass" type="password" required="" id="PasswordNew">
+							<input  placeholder="" name="passwordnew" class="newpass" type="password" required="" id="PasswordNew">
 							<span class="icon1"><i class="fa fa-unlock" aria-hidden="true"></i></span>
 						</div>
 
 						<!-- Xác nhận mật khẩu mới -->
 						<div class="pom-agile">
 							<span class="field">Nhập lại mật khẩu mới:</span>
-							<input  placeholder="" name="Repassword" class="repass" type="password" required="">
+							<input  placeholder="" name="repassword" class="repass" type="password" required="">
 							<span class="icon1"><i class="fa fa-unlock" aria-hidden="true"></i></span>
 						</div>
 

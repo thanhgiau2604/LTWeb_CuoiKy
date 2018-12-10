@@ -1,8 +1,10 @@
 eclipse.preferences.version=1
 encoding//WebContent/Guest_DoiMatKhauMoi.jsp=UTF-8
+encoding//src/controllers/ServletChamDiemBaiThi.java=UTF-8
 encoding//src/controllers/ServletDangKyTaiKhoan.java=UTF-8
 encoding//src/controllers/ServletDangNhap.java=UTF-8
 encoding//src/controllers/ServletDoiMatKhau.java=UTF-8
 encoding//src/controllers/ServletDoiMatKhauMoi.java=UTF-8
 encoding//src/controllers/ServletQuenMatKhau.java=UTF-8
 encoding//src/controllers/ServletThayDoiThongTin.java=UTF-8
+encoding//src/controllers/ServletXuLyVaoThi.java=UTF-8

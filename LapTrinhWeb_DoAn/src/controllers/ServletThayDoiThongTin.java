@@ -48,8 +48,8 @@ public class ServletThayDoiThongTin extends HttpServlet {
 			out.println("swal(\"Thông báo\",\"Cập nhật thông tin thành công!\",\"success\")");
 			out.println("});");
 			out.println("</script>");
-			RequestDispatcher rd = request.getRequestDispatcher("TrangChuGV.jsp");
-			rd.forward(request, response);
+			RequestDispatcher rd = request.getRequestDispatcher("GV_ThayDoiTT.jsp");
+			rd.include(request, response);
 		}
 		else
 			if (laAdmin==1)
@@ -61,8 +61,8 @@ public class ServletThayDoiThongTin extends HttpServlet {
 				out.println("swal(\"Thông báo\",\"Cập nhật thông tin thành công!\",\"success\")");
 				out.println("});");
 				out.println("</script>");
-				RequestDispatcher rd = request.getRequestDispatcher("TrangChuAdmin.jsp");
-				rd.forward(request, response);
+				RequestDispatcher rd = request.getRequestDispatcher("Ad_TDTT.jsp");
+				rd.include(request, response);
 			}
 			else
 				if (laGV==0 && laAdmin==0)

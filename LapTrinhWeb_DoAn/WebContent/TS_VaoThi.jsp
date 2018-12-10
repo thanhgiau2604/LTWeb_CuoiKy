@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.VaoThidao"%>
+<%@ page import="java.sql.ResultSet" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -21,6 +24,27 @@
 	<link href="file/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i" rel="stylesheet">
+	<script type="text/javascript">
+	    console.log();
+		var second=sessionStorage.getItem("time");
+		function SecondPassed() {
+			var minu = Math.round((second - 30) / 60);
+			var remainSecond = second % 60;
+			if (remainSecond < 10) {
+				remainSecond = "0" + remainSecond;
+			}
+			document.getElementById("thoigian").innerHTML = minu
+			+ ":" + remainSecond;
+			if (second == 0) {
+				clearInterval(countdownTimer);
+				document.getElementById("nutnop").click();
+			} else {
+				second--;
+ 				sessionStorage.setItem("time",second);
+			}
+		}
+		var countdownTimer = setInterval('SecondPassed()', 1000);
+	</script> 
 	<link rel="stylesheet" type="text/css" href="file/css/TS_VaoThi.css">
 </head>
 <body>
@@ -30,7 +54,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Student.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="TS_ChonDeThi.jsp">Vào Thi</a>
@@ -65,6 +89,11 @@
 		</nav>
 		</nav>
 		<!-- content -->
+		<%
+				VaoThidao vt = new VaoThidao();
+				String madt = (String)session.getAttribute("MaDT");
+				ResultSet rs = vt.LayDeThi(madt);
+		%>
 		<div class="container">
 			<div class="row vaothi">
 				<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
@@ -73,36 +102,41 @@
 						<div class="boxlist">
 							<p class="td text-center">THÔNG TIN BÀI THI</p>
 						</div>
-						<ul class="thongtin">
+					<%
+					while (rs.next())
+					{
+						
+					%>
+					<ul class="thongtin">
 							<li class="dm">
 								<img src="file/Images/id.svg" alt="" height="30" class="anhicon">
 								Mã đề thi:
-								<b>GV01_TOAN1</b>
+								<b><%=rs.getString(1)%></b>
 							</li>
 							<li class="dm">
 								<img src="file/Images/kythi.svg" alt="" height="30" class="anhicon">
 								Kì thi:
-								<b>Kiểm tra 15 phút</b>
+								<b><%=rs.getString(2)%></b>
 							</li>
 							<li class="dm">
 								<img src="file/Images/monthi.svg" alt="" height="30" class="anhicon">
 								Môn thi:
-								<b>0</b>
+								<b><%=rs.getString(3)%></b>
 							</li>
 							<li class="dm">
 								<img src="file/Images/soluong.svg" alt="" height="30" class="anhicon">
 								Số câu hỏi:
-								<b>10</b>
+								<b><%=rs.getString(4)%></b>
 							</li>
 							<li class="dm">
 								<img src="file/Images/time.svg" alt="" height="30" class="anhicon">
 								Thời gian:
-								<b>15 phút</b>
+								<b><%=rs.getString(5)%></b>
 							</li>
-							<div class="btn btn-warning nutnop" data-toggle="modal" data-target="#ModalXoa">
-							<a href="#">Nộp bài thi</a></div>
+							<div class="btn btn-warning nutnop"> <!-- data-toggle="modal" data-target="#ModalXoa" -->
+							<a href="ServletXuLyVaoThi?ok=true" id="nopbai">Nộp bài thi</a></div>
 						</ul>
-						 
+					<%} %> 
 					</div>
 				</div>
 				<div class="col-xs-11 col-sm-11 col-md-6 col-lg-6 col-xs-push-1 col-sm-push-1">
@@ -110,31 +144,124 @@
 						<div class="boxtenbl">
 							<h2 class="tenbl">
 								<img src="file/Images/exam.svg" alt="" height="30" class="anhicon">
-								THỜI GIAN CÒN LẠI:
-								<b>10:25</b>
-							</h2>
+								THỜI GIAN:
+								<span id="thoigian" class="timer"></span>						
+						    </h2>
+							<%
+							    int stt = (Integer)session.getAttribute("stt"); 
+								System.out.println("STT="+stt);
+							    String MaDeThi = (String)session.getAttribute("MaDT");
+							    System.out.println("MaDT="+MaDeThi);
+								ResultSet rsLayCH = new VaoThidao().LayCauHoiTheoSTT(MaDeThi, stt);
+								String TraLoi="";
+							    boolean empty = false;
+							    
+								if (!rsLayCH.isBeforeFirst())
+								{
+									empty = true;
+								}
+								System.out.println("empty="+empty);
+								if (empty==true)
+								{								
+									VaoThidao vthi = new VaoThidao();
+									ResultSet rsChon = vthi.ChonCauHoi(madt);
+									String maCH=null; 
+									while (rsChon.next()){
+										maCH = rsChon.getString(1);
+									}
+									rsLayCH = vthi.LayCauHoi(maCH,stt); 
+									
+								}
+								else
+								{
+									String TenDN = (String)session.getAttribute("tenDN");
+									int LuotThi = (Integer)session.getAttribute("LuotThi"); 
+									VaoThidao vthi = new VaoThidao();
+									ResultSet rsCTL = vthi.LayCauTraLoi(TenDN, madt,stt, LuotThi);
+									while (rsCTL.next())
+									{
+										TraLoi= rsCTL.getString(1);
+									}
+								}
+								System.out.println("TraLoi===="+TraLoi);
+							%>
 							<h3>
-								Câu số:
+								Câu số:<%=stt%>
 							</h3>
 						</div>
+						<%
+							while (rsLayCH.next())
+							{ 
+								getServletContext().setAttribute("dapan", rsLayCH.getString(7));
+								getServletContext().setAttribute("MaCH", rsLayCH.getString(1));
+								System.out.println(rsLayCH.getString(7));
+						%>
+						<form action="ServletXuLyVaoThi" method="post">
 						<div class="noidungch">
-							<p class="cauhoi">Ai là người đầu tiên blala ?</p>
+							<p class="cauhoi"><%=rsLayCH.getString(2)%></p>
 							<div class="radio">
-								<label><input type="radio" name="optradio" checked>Option 1</label>
+							  <% if (TraLoi.equals("A")) {%>
+								<label><input type="radio" name="luachon" value="A" checked><%=rsLayCH.getString(3)%></label>
+							  <% } else {%>
+							  	<label><input type="radio" name="luachon" value="A"><%=rsLayCH.getString(3)%></label>
+							  <% } %>
 							</div>
 							<div class="radio">
-								<label><input type="radio" name="optradio">Option 2</label>
+							  <% if (TraLoi.equals("B")) {%>
+								<label><input type="radio" name="luachon" value="B" checked><%=rsLayCH.getString(4)%></label>
+							  <% } else {%>
+							  	<label><input type="radio" name="luachon" value="B"><%=rsLayCH.getString(4)%></label>
+							  <% } %>
 							</div>
 							<div class="radio">
-								<label><input type="radio" name="optradio">Option 3</label>
+							  <% if (TraLoi.equals("C")) {%>
+								<label><input type="radio" name="luachon" value="C" checked><%=rsLayCH.getString(5)%></label>
+							  <% } else {%>
+							  	<label><input type="radio" name="luachon" value="C"><%=rsLayCH.getString(5)%></label>
+							  <% } %>
 							</div>
 							<div class="radio">
-								<label><input type="radio" name="optradio">Option 4</label>
+							  <% if (TraLoi.equals("D")) {%>
+								<label><input type="radio" name="luachon" value="D" checked><%=rsLayCH.getString(6)%></label>
+							  <% } else {%>
+							  	<label><input type="radio" name="luachon" value="D"><%=rsLayCH.getString(6)%></label>
+							  <% } %>
 							</div>
 						</div>
-						<div class="btn btn-danger btnthaotac btntt"><a href="">Tiếp theo</a></div> 
-						<div class="btn btn-danger btnthaotac btntruoc"><a href="">Trước đó</a></div> 
+						<div> 
+						  <% 
+							int SoCH = (Integer)(session).getAttribute("SoCauHoi");
+						    if (stt<SoCH) {
+						  %>
+							<input type="submit" value="Tiếp theo" name="nutsau" class="btn btn-danger btnthaotac btntt">
+					      <%
+					    	} else
+					    	{
+					       %>
+					    	<input type="submit" value="Tiếp theo" name="nutsau" class="btn btn-danger btnthaotac btntt" disabled>
+						   <%} %>
+						</div>
+						<div>
+						   <%
+							if (stt!=1) {
+						   %>
+						<input type="submit" value="Trước đó" name="nuttruoc" class="btn btn-danger btnthaotac btntruoc">
+						   <%
+							} else
+							{
+								System.out.println("Zo dis");
+						   %>
+						<input type="submit" value="Trước đó" name="nuttruoc" class="btn btn-danger btnthaotac btntruoc" disabled>
+						   <%  } %>
+						</div>
+						   <%
+							 } 
+						   %>
 					</div>
+					<div> 
+						<input id="nutnop" type="submit" value="Nộp bài thi" name="nutnop" class="btn btn-warning nutnop" style="margin-left:50%">
+					</div>
+					 </form>
 					
 				</div>
 			</div>
@@ -198,8 +325,10 @@
             </div>
         </div>
     </footer> <!-- end footer -->
-
-     <!-- modal -->
+    <form name="leadForm" method="post" action="/confirm"> 
+    	<input type="hidden" name="tg" /> 
+     </form>
+	<!-- modal -->
     <div class="modal fade" id="ModalXoa" tabindex="-1" role="dialog" aria-labelledby="ModalXoaLabel" aria-hidden="true">
     	<div class="modal-dialog" role="document">
     		<div class="modal-content">

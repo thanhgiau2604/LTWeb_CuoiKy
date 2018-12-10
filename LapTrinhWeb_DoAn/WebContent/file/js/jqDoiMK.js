@@ -1,30 +1,30 @@
 $(function(){
 	$("#formdoimatkhau").validate({
             rules: {
-                PasswordOld: {
+                passwordold: {
                     required: true,
                     minlength: 6
                 },
-                PasswordNew: {
+                passwordnew: {
                     required: true,
                     minlength: 6
                 },
-                Repassword: {
+                repassword: {
                     required: true,
                     equalTo: "#PasswordNew",
                 },
             },
             messages: {
-                PasswordOld: {
+            	passwordold: {
                     required: "Bạn phải nhập mật khẩu hiện tại",
                     minlength: "Mật khẩu phải có ít nhất 6 ký tự",
 
                 },
-                PasswordNew: {
+                passwordnew: {
                     required: "Bạn phải nhập mật khẩu mới", 
                     minlength: "Mật khẩu phải có ít nhất 6 ký tự"
                 },
-                 Repassword: {
+                 repassword: {
                     required: "Bạn phải nhập lại mật khẩu mới", 
                     equalTo: "Mật khẩu không khớp"
                 }

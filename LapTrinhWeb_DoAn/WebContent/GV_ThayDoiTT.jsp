@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.NDdao"%>
+<%@ page import="java.sql.ResultSet" %>
+<%@page import="javax.servlet.*" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -32,7 +36,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Teacher.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="GV_ThayDoiTT.jsp">Thay Đổi Thông Tin</a>
@@ -69,37 +73,51 @@
 			<div class="container">
 			<div class="posTDTT text-center">
 				<div class="wthree-pro"><h3 >THAY ĐỔI THÔNG TIN</h3></div>
-				<form action="#" method="post" id="formtdtt">
+				<%
+					String tenDN = (String)session.getAttribute("tenDN");
+					System.out.println(tenDN);
+					NDdao nd = new NDdao();
+					ResultSet rs = nd.LayNguoiDungTheoTenDN(tenDN);
+					while (rs.next()){
+						getServletContext().setAttribute("laGiaoVien",rs.getInt(8));
+						getServletContext().setAttribute("laAdmin",rs.getInt(9));
+				%>
+				<form action="ServletThayDoiThongTin" method="post" id="formtdtt">
 					<div class="pom-agile">
 						<span class="field">Tên đăng nhập:</span>
-						<input name="Username" class="user" type="text" value="annguyen123" readonly="true">
+						<input name="username" class="user" type="text" value="<%out.print(rs.getString(1));%>" readonly="true">
 						<span class="icon1"><i class="fa fa-user" aria-hidden="true"></i></span>
 					</div>
-
+					<div class="pom-agile">
+						<span class="field">Mật khẩu C2:</span>
+						<input  name="mkc2" class="Infor" type="text" value="<%out.print(rs.getString(3));%>" style="margin-left:60px">
+						<span class="icon2"><i class="fa fa-unlock" aria-hidden="true"></i></span>
+					</div>
 					<!-- Họ tên -->
 					<div class="pom-agile">
 						<span class="field">Họ tên:</span>
-						<input  name="Fullname" class="Infor" type="text" value="Nguyễn Văn An">
+						<input  name="fullname" class="Infor" type="text" value="<%out.print(rs.getString(4));%>">
 						<span class="icon2"><i class="fa fa-address-card" aria-hidden="true"></i></span>
 					</div>
 					<!-- email -->
 					<div class="pom-agile">
 						<span class="field">Email:</span>
-						<input  name="email" class="Infor" type="email" value="anan123@gmail.com">
+						<input  name="email" class="Infor" type="email" value="<%out.print(rs.getString(5));%>">
 						<span class="icon2"><i class="fa fa-envelope" aria-hidden="true"></i></span>
 					</div>
 					<!-- Số điện thoại -->
 					<div class="pom-agile">
 						<span class="field">Số điện thoại:</span>
-						<input name="Telenum" class="Tele" type="text" value="0989342543">
+						<input name="telenum" class="Tele" type="text" value="<%out.print(rs.getString(6));%>">
 						<span class="icon2"><i class="fa fa-phone" aria-hidden="true"></i></span>
 					</div>
 					<!-- Địa chỉ -->
 					<div class="pom-agile">
 						<span class="field">Địa chỉ:</span>
-						<input name="Address" class="Address" type="text" value="HCMCity">
+						<input name="address" class="Address" type="text" value="<%out.print(rs.getString(7));%>">
 						<span class="icon1"><i class="fa fa-address-book"></i></span>
 					</div>
+					<% } %>
 					<div class="sub-w3l">
 						<div class="right-w3l">
 							<input type="submit" value="Lưu">
