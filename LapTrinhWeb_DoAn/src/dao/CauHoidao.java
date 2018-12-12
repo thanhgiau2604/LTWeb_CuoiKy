@@ -45,6 +45,13 @@ public class CauHoidao implements ObjectDAO {
 		ResultSet rs = dbc.selectData(sql);
 		return rs;
 	}
+ 	public ResultSet LayCauHoiTheoTenDN(String TenDN) throws Exception
+	{
+		String sql = "EXEC LayDanhSachCauHoiTheoTenDN '"+TenDN+"'";
+		DBConnect dbc = new DBConnect();
+		ResultSet rs = dbc.selectData(sql);
+		return rs;
+	}
 	
  	public static void main(String[] args) {
 		CauHoidao chdao = new CauHoidao();

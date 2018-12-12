@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.VaoThidao"%>
+<%@ page import="java.sql.ResultSet" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -31,7 +34,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Admin.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="Ad_TDTT.jsp">Thay Đổi Thông Tin</a>
@@ -66,7 +69,15 @@
 				<div class="duongke"></div>
 			</div> 
 		</nav>
-
+		<%
+				int SoCauHoi=0;
+				VaoThidao vt = new VaoThidao();
+				String MaDT=null;
+				MaDT = request.getParameter("id"); 
+				if (MaDT==null) MaDT = (String)session.getAttribute("MaDT");
+				session.setAttribute("MaDT",MaDT); 
+				ResultSet rs = vt.LayDeThi(MaDT);
+		%>
 	<!-- content -->
 		<div class="container">
 			<div class="row vaothi">
@@ -77,33 +88,40 @@
 							<p class="td text-center">THÔNG TIN BÀI THI</p>
 						</div>
 						<ul class="thongtin">
+								<%
+					while (rs.next())
+					{
+						SoCauHoi = rs.getInt(4); 
+					%>
 							<li class="dm">
 								<img src="file/Images/id.svg" alt="" height="30" class="anhicon">
 								Mã đề thi:
-								<b>GV01_HIS1</b>
+								<b><%=rs.getString(1)%></b>
 							</li>
 							<li class="dm">
 								<img src="file/Images/kythi.svg" alt="" height="30" class="anhicon">
 								Kì thi:
-								<b>Kiểm tra 15 phút</b>
+								<b><%=rs.getString(2)%></b>
 							</li>
 							<li class="dm">
 								<img src="file/Images/monthi.svg" alt="" height="30" class="anhicon">
 								Môn thi:
-								<b>LỊCH SỬ</b>
+								<b><%=rs.getString(3)%></b>
 							</li>
 							<li class="dm">
 								<img src="file/Images/soluong.svg" alt="" height="30" class="anhicon">
 								Số câu hỏi:
-								<b>10</b>
+								<b><%=rs.getString(4)%></b>
 							</li>
 							<li class="dm">
 								<img src="file/Images/time.svg" alt="" height="30" class="anhicon">
 								Thời gian:
-								<b>15 phút</b>
+								<b><%=rs.getString(5)%></b>
 							</li>
+						<%} %>
 						</ul>
-						<div class="btn btn-warning nutsua"><a href="Ad_SuaDeThi_TT.jsp">Sửa</a></div> 
+						<div class="btn btn-warning" style="margin-left:23%; margin-bottom:10px;"><a href="GV_SuaDeThi_TT.jsp?id=<%=MaDT%>" style="color:white; text-decoration:none">Sửa</a></div> 
+						<div class="btn btn-warning" style="margin-bottom:10px"><a href="GV_QLDeThi.jsp" style="color:white; text-decoration:none">QL đề thi</a></div> 
 					</div>
 				</div>
 				<div class="col-xs-11 col-sm-11 col-md-6 col-lg-6 col-xs-push-1 col-sm-push-1">
@@ -113,29 +131,89 @@
 								<img src="file/Images/exam.svg" alt="" height="30" class="anhicon">
 								CHI TIẾT CÂU HỎI
 							</h2>
+							<%
+							    int stt = (Integer)session.getAttribute("stt"); 
+								//System.out.println("STT="+stt);
+								ResultSet rsLayCH = new VaoThidao().LayCauHoiTheoSTT(MaDT, stt);
+								String TraLoi="";
+							    boolean empty = false;
+							    
+								if (!rsLayCH.isBeforeFirst())
+								{
+									empty = true;
+								}
+								System.out.println("empty="+empty);
+								if (empty==true)
+								{								
+									VaoThidao vthi = new VaoThidao();
+									ResultSet rsChon = vthi.ChonCauHoi(MaDT);
+									String maCH=null; 
+									while (rsChon.next()){
+										maCH = rsChon.getString(1);
+									}
+									rsLayCH = vthi.LayCauHoi(maCH,stt); 								
+								}
+							%>
 							<h3>
-								Câu số:
+								Câu số:<%=stt%>
 							</h3>
 						</div>
+						<%
+							while (rsLayCH.next())
+							{ 
+								String DapAn = rsLayCH.getString(7);
+								getServletContext().setAttribute("MaCH", rsLayCH.getString(1));
+						%>
+						<form action="ServletXemDeThi" method="post">
 						<div class="noidungch">
-							<p class="cauhoi">Ai là người đầu tiên blala ?</p>
+							<p class="cauhoi"><%=rsLayCH.getString(2)%></p>
 							<div class="radio">
-								<label><input type="radio" name="optradio" checked>Option 1</label>
+							<%if (DapAn.equals("A")) {%>
+								<b>A: <%=rsLayCH.getString(3)%></b><%} else {%>
+								 A: <%=rsLayCH.getString(3)%> <%} %>
 							</div>
 							<div class="radio">
-								<label><input type="radio" name="optradio">Option 2</label>
+								<%if (DapAn.equals("B")) {%>
+								<b>B: <%=rsLayCH.getString(4)%></b><%} else {%>
+								 B: <%=rsLayCH.getString(4)%> <%} %>
 							</div>
 							<div class="radio">
-								<label><input type="radio" name="optradio">Option 3</label>
+								<%if (DapAn.equals("C")) {%>
+								<b>C: <%=rsLayCH.getString(5)%></b><%} else {%>
+								 C: <%=rsLayCH.getString(5)%> <%} %>
 							</div>
 							<div class="radio">
-								<label><input type="radio" name="optradio">Option 4</label>
+								<%if (DapAn.equals("D")) {%>
+								<b>D: <%=rsLayCH.getString(6)%></b><%} else {%>
+								 D: <%=rsLayCH.getString(6)%> <%} %>
 							</div>
 						</div>
-						<div class="btn btn-danger btnthaotac btntt"><a href="">Tiếp theo</a></div> 
-						<div class="btn btn-danger btnthaotac btntruoc"><a href="">Trước đó</a></div> 
+						<div>
+						 <% 
+						    if (stt<SoCauHoi) {
+						  %>
+							<input type="submit" value="Tiếp theo" name="nutsau" class="btn btn-danger btnthaotac btntt">
+					      <%
+					    	} else
+					    	{
+					       %>
+					    	<input type="submit" value="Tiếp theo" name="nutsau" class="btn btn-danger btnthaotac btntt" disabled>
+						   <%} %>
+						</div>
+						<div>
+						   <%
+							if (stt!=1) {
+						   %>
+						<input type="submit" value="Trước đó" name="nuttruoc" class="btn btn-danger btnthaotac btntruoc">
+						   <%
+							} else
+							{
+						   %>
+						<input type="submit" value="Trước đó" name="nuttruoc" class="btn btn-danger btnthaotac btntruoc" disabled>
+						   <%  } %>
+						<%} %>		
 					</div>
-					
+					</form>
 				</div>
 			</div>
 		</div>

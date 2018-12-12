@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.VaoThidao"%>
+<%@ page import="java.sql.ResultSet" %>
+<%
+	new VaoThidao().ResetAll(); 
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -31,7 +37,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Admin.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="Ad_TDTT.jsp">Thay Đổi Thông Tin</a>
@@ -66,7 +72,11 @@
 				<div class="duongke"></div>
 			</div> 
 		</nav>
-
+		<%
+				VaoThidao vt = new VaoThidao();
+				String TenDN = (String)session.getAttribute("tenDN");
+				ResultSet rs = vt.LayDeThiNguoiTao(TenDN);
+		%>
 		<div class="container">
 			<div class="qlybd text-center">
 				<h3>DANH SÁCH ĐỀ THI</h3>
@@ -88,41 +98,34 @@
 								</tr>
 							</thead>
 							<tbody>
+								<%
+							while (rs.next())
+							{				
+							%>
 								<tr>
-									<td>HIS01</td>
-									<td>Kiểm tra giữa kỳ</td>
-									<td>Lịch sử</td>
-									<td>10</td>
-									<td>20 phút</td>
-									<td>10</td>
-									<td><div class="btn btn-success nutXem"><a href="AD_XemDeThi.jsp">Xem</a></div></td>
-									<td><div class="btn btn-warning nutSua"><a href="Ad_SuaDeThi_TT.jsp">Sửa</a></div></td>
+									<td><%=rs.getString(1)%></td>
+									<td><%=rs.getString(2)%></td>
+									<td><%=rs.getString(3)%></td>
+									<td><%=rs.getString(4)%></td>
+									<td><%=rs.getString(5)%> phút</td>
+									<td><%=rs.getString(6)%></td>
+									<td><div class="btn btn-success nutXem"><a href="GV_XemDeThi.jsp?id=<%=rs.getString(1)%>">Xem</a></div></td>
+									<td><div class="btn btn-warning nutSua"><a href="GV_SuaDeThi_TT.jsp?id=<%=rs.getString(1)%>">Sửa</a></div></td>
 									<td>
 										<div class="btn btn-danger nutXoa" data-toggle="modal" data-target="#ModalXoa"
 										><a href="#"">Xóa</a></div>
 									</td>
 								</tr>
-								<tr class="chan">
-									<td>HIS01</td>
-									<td>Kiểm tra 15 phút</td>
-									<td>Lịch sử</td>
-									<td>15</td>
-									<td>15 phút</td>
-									<td>10</td>
-									<td><div class="btn btn-success nutXem"><a href="#"">Xem</a></div></td>
-									<td><div class="btn btn-warning nutSua"><a href="#"">Sửa</a></div></td>
-									<td>
-										<div class="btn btn-danger nutXoa" data-toggle="modal" data-target="#ModalXoa"
-										><a href="#"">Xóa</a></div>
-									</td>
-								</tr>
+								<%} %>
 							</tbody>
 						</table>
 					</div>
 				</div>
 			</div>
 		</div>
-		
+		 <%
+        	session.setAttribute("stt",1);
+        %>
 		<!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">

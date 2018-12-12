@@ -89,6 +89,7 @@
 					<%
 					while (rs.next())
 					{
+						session.setAttribute("SoCauHoi",rs.getInt(4));
 					%>
 					<ul class="thongtin">
 							<li class="dm">
@@ -127,6 +128,7 @@
 						<div class="btn btn-warning nutnop"><a href="TrangChuTS.jsp">Về Trang chủ</a></div> 
 					</div>
 				</div>
+				
 				<div class="col-xs-11 col-sm-11 col-md-6 col-lg-6 col-xs-push-1 col-sm-push-1">
 					<div class="khungbl">
 						<div class="boxtenbl">
@@ -135,28 +137,158 @@
 								THỜI GIAN HOÀN THÀNH:
 								<b>12:35</b>
 							</h3>
+							<%
+							    int stt = (Integer)session.getAttribute("stt"); 
+								//System.out.println("STT="+stt);
+								ResultSet rsLayCH = new VaoThidao().LayCauHoiTheoSTT(MaDT, stt);
+								String TraLoi="";
+									VaoThidao vthi = new VaoThidao();
+									ResultSet rsCTL = vthi.LayCauTraLoi(TenDN, MaDT,stt, LuotThi);
+									while (rsCTL.next())
+									{
+										TraLoi= rsCTL.getString(1);
+									}
+								System.out.println("TraLoi===="+TraLoi);
+							%>
 							<h3>
-								Câu số:
+								Câu số:<%=stt%>
 							</h3>
 						</div>
+					<%
+							while (rsLayCH.next())
+							{ 
+								getServletContext().setAttribute("dapan", rsLayCH.getString(7));
+								getServletContext().setAttribute("MaCH", rsLayCH.getString(1));
+								String DapAn = rsLayCH.getString(7);
+								//System.out.println(rsLayCH.getString(7));
+						%>
+						<form action="ServletXemLaiBaiLam" method="post">
 						<div class="noidungch">
-							<p class="cauhoi">Ai là người Việt Nam đầu tiên đi lên mặt trăng</p>
+							<p class="cauhoi"><%=rsLayCH.getString(2)%></p>
 							<div class="radio">
-								<label><input type="radio" name="optradio" checked>Phạm Tuân</label>
+							  <% if (TraLoi.equals("A")) {%>
+								<label>
+									<input type="radio" name="luachon" value="A" checked>
+									<%if (DapAn.equals("A")) 
+									  {%>
+										<b><%=rsLayCH.getString(3)%></b>
+									  <%} else 
+									  {%>
+										<%=rsLayCH.getString(3)%>
+									  <%}%>
+								</label>
+							  <% } else {%>
+							  	<label><input type="radio" name="luachon" value="A">
+							  	<%if (DapAn.equals("A")) 
+									  {%>
+										<b><%=rsLayCH.getString(3)%></b>
+									  <%} else 
+									  {%>
+										<%=rsLayCH.getString(3)%>
+									  <%}%>
+							  	</label>			  	
+							  <% } %>
 							</div>
 							<div class="radio">
-								<label><input type="radio" name="optradio">Nguyễn Tuân</label>
+							  <% if (TraLoi.equals("B")) {%>
+								<label><input type="radio" name="luachon" value="B" checked>
+								<%if (DapAn.equals("B")) 
+									  {%>
+										<b><%=rsLayCH.getString(4)%></b>
+									  <%} else 
+									  {%>
+										<%=rsLayCH.getString(4)%>
+									  <%}%>
+								</label>
+							  <% } else {%>
+							  	<label><input type="radio" name="luachon" value="B">
+							  	<%if (DapAn.equals("B")) 
+									  {%>
+										<b><%=rsLayCH.getString(4)%></b>
+									  <%} else 
+									  {%>
+										<%=rsLayCH.getString(4)%>
+									  <%}%>
+							  	</label>
+							  <% } %>
 							</div>
 							<div class="radio">
-								<label><input type="radio" name="optradio">Hồ Chí Minh</label>
+							  <% if (TraLoi.equals("C")) {%>
+								<label><input type="radio" name="luachon" value="C" checked>
+								<%if (DapAn.equals("C")) 
+									  {%>
+										<b><%=rsLayCH.getString(5)%></b>
+									  <%} else 
+									  {%>
+										<%=rsLayCH.getString(5)%>
+									  <%}%>
+								</label>
+							  <% } else {%>
+							  	<label><input type="radio" name="luachon" value="C">
+							  	<%if (DapAn.equals("C")) 
+									  {%>
+										<b><%=rsLayCH.getString(5)%></b>
+									  <%} else 
+									  {%>
+										<%=rsLayCH.getString(5)%>
+									  <%}%>
+							  	</label>
+							  <% } %>
 							</div>
 							<div class="radio">
-								<label><input type="radio" name="optradio">Chú cuội</label>
+							  <% if (TraLoi.equals("D")) {%>
+								<label><input type="radio" name="luachon" value="D" checked>
+								<%if (DapAn.equals("D")) 
+									  {%>
+										<b><%=rsLayCH.getString(6)%></b>
+									  <%} else 
+									  {%>
+										<%=rsLayCH.getString(6)%>
+									  <%}%>
+								</label>
+							  <% } else {%>
+							  	<label><input type="radio" name="luachon" value="D">
+							  	<%if (DapAn.equals("D")) 
+									  {%>
+										<b><%=rsLayCH.getString(6)%></b>
+									  <%} else 
+									  {%>
+										<%=rsLayCH.getString(6)%>
+									  <%}%>
+							  	</label>
+							  <% } %>
 							</div>
 						</div>
-						<div class="btn btn-danger btnthaotac btntt"><a href="">Tiếp theo</a></div> 
-						<div class="btn btn-danger btnthaotac btntruoc"><a href="">Trước đó</a></div> 
-					</div>
+						<div> 
+						  <% 
+							int SoCH = (Integer)(session).getAttribute("SoCauHoi");
+						    if (stt<SoCH) {
+						  %>
+							<input type="submit" value="Tiếp theo" name="nutsau" class="btn btn-danger btnthaotac btntt">
+					      <%
+					    	} else
+					    	{
+					       %>
+					    	<input type="submit" value="Tiếp theo" name="nutsau" class="btn btn-danger btnthaotac btntt" disabled>
+						   <%} %>
+						</div>
+						<div>
+						   <%
+							if (stt!=1) {
+						   %>
+						<input type="submit" value="Trước đó" name="nuttruoc" class="btn btn-danger btnthaotac btntruoc">
+						   <%
+							} else
+							{
+								System.out.println("Zo dis");
+						   %>
+						<input type="submit" value="Trước đó" name="nuttruoc" class="btn btn-danger btnthaotac btntruoc" disabled>
+						   <%  } %>
+						</div>
+						   <%
+							 } 
+						   %>
+					</form> 
 					
 				</div>
 			</div>

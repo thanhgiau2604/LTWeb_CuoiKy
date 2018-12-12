@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.VaoThidao"%>
+<%@ page import="java.sql.ResultSet" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -32,7 +35,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Student.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="TS_ChonDeThi.jsp">Vào Thi</a>
@@ -69,22 +72,30 @@
 			<div class="nenslide" >
 			
 		</div>
+		<%
+				VaoThidao vt = new VaoThidao();
+				String madt = (String)session.getAttribute("MaDT");
+				ResultSet rs = vt.LayDeThi(madt);
+		%>
 		<!-- content -->
 		<div class="container">
 			<div class="phanhoi">
-				<h4 class="text-center">Bài thi môn: Lịch sử</h2>
-				<h4 class="text-center">Mã đề: GV01_HIS1 </h2>
+			<% while (rs.next()){ 
+			%>
+				<h4 class="text-center">Bài thi môn: <%=rs.getString(3)%></h2>
+				<h4 class="text-center">Mã đề: <%=rs.getString(1)%> </h2>
 				<h3 class="text-center">PHẢN HỒI</h3>
 				<div class="col-md-8 col-sm-12 col-xs-12 col-md-push-2">
-					<form method="post" id="formtlph">
+					<form method="post" id="formtlph" action="ServletPhanHoiThiSinh">
 						<div class="form-group ">
 							<label class="control-label " for="text">
 								Gửi đến:
 								<span class="asteriskField">
 									*
 								</span>
+	
 							</label>
-							<input class="form-control" id="text" name="nguoigui" type="text"/>
+							<input class="form-control" id="text" name="nguoinhan" type="text" value="<%=rs.getString(7)%>"/>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="textarea">
@@ -95,6 +106,7 @@
 							</label>
 							<textarea class="form-control" cols="40" id="textarea" name="noidungtl" placeholder="Nội dung" rows="10"></textarea>
 						</div>
+						<%} %>
 						<div class="form-group nutsubmit">
 							<div>
 								<button class="btn btn-danger nutgui" name="submit" type="submit">

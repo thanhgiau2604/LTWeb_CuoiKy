@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import dblayer.DBConnect;
 import model.NguoiDung;
+import dao.MD5Library;
 public class NDdao implements ObjectDAO{
 	public static Map<String, NguoiDung> mapNguoiDung = loadData();
  	public NDdao() {
@@ -39,7 +40,7 @@ public class NDdao implements ObjectDAO{
  		
  		if (nd!=null)
  		{
- 			if (nd.getMatKhau().equals(passWord)) {				
+ 			if (nd.getMatKhau().equals(MD5Library.MD5(passWord))) {				
  				return true;
  			}
  			{
@@ -90,7 +91,8 @@ public class NDdao implements ObjectDAO{
 	}
 	public boolean CapNhatMatKhau(String MatKhau, String TenDN)
 	{
-		String sql="EXECUTE CapNhatMatKhau '"+MatKhau+"','"+TenDN+"'";
+		String MatKhauMD5 = MD5Library.MD5(MatKhau);
+		String sql="EXECUTE CapNhatMatKhau '"+MatKhauMD5+"','"+TenDN+"'";
 		try {
 			new DBConnect().excuteSQL(sql);		
 			return true;
@@ -102,14 +104,16 @@ public class NDdao implements ObjectDAO{
 	}
 	public ResultSet KiemTraMatKhau(String TenDN, String MatKhau) throws Exception
 	{
-		String sql = "SELECT DBO.fn_KiemTraMatKhau('"+TenDN+"','"+MatKhau+"')";
+		String MatKhauMD5 = MD5Library.MD5(MatKhau);
+		String sql = "SELECT DBO.fn_KiemTraMatKhau('"+TenDN+"','"+MatKhauMD5+"')";
 		DBConnect dbc = new DBConnect();
 		ResultSet rs = dbc.selectData(sql);
 		return rs;
 	}
 	public ResultSet KiemTraMatKhauC2(String TenDN, String MatKhauC2) throws Exception
 	{
-		String sql = "SELECT DBO.fn_KiemTraMatKhauC2('"+TenDN+"','"+MatKhauC2+"')";
+		String MatKhauC2MD5 = MD5Library.MD5(MatKhauC2);
+		String sql = "SELECT DBO.fn_KiemTraMatKhauC2('"+TenDN+"','"+MatKhauC2MD5+"')";
 		DBConnect dbc = new DBConnect();
 		ResultSet rs = dbc.selectData(sql);
 		return rs;
@@ -117,11 +121,11 @@ public class NDdao implements ObjectDAO{
 	@Override
 	public boolean add(Object obj) {
 		NguoiDung nd = (NguoiDung) obj;
-		String sql = "EXECUTE ThemNguoiDung'"+nd.getTenDN()+"','"+nd.getMatKhau()+"','"+nd.getMatKhauC2()+"','"+nd.getHoTen()+"','"
+		
+		String sql = "EXECUTE ThemNguoiDung'"+nd.getTenDN()+"','"+MD5Library.MD5(nd.getMatKhau())+"','"+MD5Library.MD5(nd.getMatKhauC2())+"','"+nd.getHoTen()+"','"
 		+nd.getEmail()+"','"+nd.getsDT()+"','"+nd.getDiaChi()+"',"+String.valueOf(nd.getLaGiaoVien())+","+String.valueOf(nd.getLaAdmin());
 		try {
-			System.out.println(sql);
-			System.out.println(mapNguoiDung);
+			//System.out.println(mapNguoiDung);
 			new DBConnect().excuteSQL(sql);
 			
 			return true;
@@ -134,10 +138,9 @@ public class NDdao implements ObjectDAO{
 	@Override
 	public boolean edit(Object obj, String id) {
 		NguoiDung nd = (NguoiDung) obj;
-		String sql = "EXECUTE SuaNguoiDung'"+nd.getTenDN()+"','"+nd.getMatKhauC2()+"','"+nd.getHoTen()+"','"
+		String sql = "EXECUTE SuaNguoiDung'"+nd.getTenDN()+"','"+MD5Library.MD5(nd.getMatKhauC2())+"','"+nd.getHoTen()+"','"
 		+nd.getEmail()+"','"+nd.getsDT()+"','"+nd.getDiaChi()+"'";
 		try {
-			System.out.println(sql);
 			new DBConnect().excuteSQL(sql);
 			return true;
 		} catch (Exception e) {
@@ -148,6 +151,14 @@ public class NDdao implements ObjectDAO{
 	}
 	@Override
 	public boolean delete(String id) {
+		String sql = "DELETE [USER] WHERE TenDN='"+id+"'";
+		try {
+			new DBConnect().excuteSQL(sql);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
 		return false;
 	}
 

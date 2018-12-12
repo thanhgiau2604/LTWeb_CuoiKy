@@ -104,8 +104,7 @@
 						</div>
 					<%
 					while (rs.next())
-					{
-						
+					{				
 					%>
 					<ul class="thongtin">
 							<li class="dm">
@@ -249,7 +248,6 @@
 						   <%
 							} else
 							{
-								System.out.println("Zo dis");
 						   %>
 						<input type="submit" value="Trước đó" name="nuttruoc" class="btn btn-danger btnthaotac btntruoc" disabled>
 						   <%  } %>
@@ -257,7 +255,6 @@
 						   <%
 							 } 
 						   %>
-					</div>
 					<div> 
 						<input id="nutnop" type="submit" value="Nộp bài thi" name="nutnop" class="btn btn-warning nutnop" style="margin-left:50%">
 					</div>

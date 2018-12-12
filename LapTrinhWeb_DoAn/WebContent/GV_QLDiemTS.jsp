@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.QLyDiemdao"%>
+<%@ page import="java.sql.ResultSet" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -30,7 +33,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Teacher.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="GV_ThayDoiTT.jsp">Thay Đổi Thông Tin</a>
@@ -63,7 +66,11 @@
 				<div class="duongke"></div>
 			</div> 
 		</nav>
-
+		<%
+				QLyDiemdao qld = new QLyDiemdao();
+				String TenDN = (String)session.getAttribute("tenDN");
+				ResultSet rs = qld.ThongTinAllDeThi(TenDN);
+		%>
 			<div class="container">
 			<div class="qlybd text-center">
 				<h3>QUẢN LÝ ĐIỂM</h3>
@@ -84,24 +91,17 @@
 								</tr>
 							</thead>
 							<tbody>
+							<% while (rs.next()){ %>
 								<tr>
-									<td>HIS01</td>
-									<td>Kiểm tra giữa kỳ</td>
-									<td>Lịch sử</td>
-									<td>10</td>
-									<td>20 phút</td>
-									<td>10</td>
-									<td><div class="btn btn-warning nutSua"><a href="GV_DSDiemTS.jsp">Xem bảng điểm</a></div></td>
+									<td><%=rs.getString(1)%></td>
+									<td><%=rs.getString(2)%></td>
+									<td><%=rs.getString(3)%></td>
+									<td><%=rs.getString(4)%></td>
+									<td><%=rs.getString(5)%> phút</td>
+									<td><%=rs.getString(6)%></td>
+									<td><div class="btn btn-warning nutSua"><a href="GV_DSDiemTS.jsp?id=<%=rs.getString(1)%>">Xem bảng điểm</a></div></td>
 								</tr>
-								<tr class="chan">
-									<td>HIS01</td>
-									<td>Kiểm tra 15 phút</td>
-									<td>Lịch sử</td>
-									<td>15</td>
-									<td>15 phút</td>
-									<td>10</td>
-									<td><div class="btn btn-warning nutSua"><a href="GV_DSDiemTS.jsp">Xem bảng điểm</a></div></td>
-								</tr>
+							<%} %>
 							</tbody>
 						</table>
 					</div>
@@ -110,7 +110,7 @@
 		</div>
 		
 		  <!-- Footer -->
-
+			<% session.setAttribute("tieuchi","None");%>
    <!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">

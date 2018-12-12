@@ -81,10 +81,9 @@
 					{
 				%>
                 <p class="ThongtinDT">Đề thi môn:<%=rs.getString(1)%></br>
-                	Thời gian đã làm bài: <%=rs.getString(2)%> giây </br>
-                	Mã đề thi:<%=rs.getString(3)%> </br>
-                	Số câu hỏi:<%=rs.getString(4)%> câu </br>
-                	Điểm thi đạt được: <strong style="color: red"><%=rs.getString(5)%></strong> 
+                	Mã đề thi:<%=rs.getString(2)%> </br>
+                	Số câu hỏi:<%=rs.getString(3)%> câu </br>
+                	Điểm thi đạt được: <strong style="color: red"><%=rs.getString(4)%></strong> 
                 </p>
                 <%} %>
 			</div>
@@ -93,6 +92,7 @@
 				<a href="TrangChuTS.jsp">Về trang chủ</a></div> 
 			
 		</div> <!-- end nội dung -->
+		<%session.setAttribute("stt",1);%>
 	  <!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">

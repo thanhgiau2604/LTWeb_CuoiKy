@@ -58,7 +58,7 @@ public class ServletDangKyTaiKhoan extends HttpServlet {
 			out.println("<script type=\"text/javascript\" src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>");
 			out.println("<script>");
 			out.println("$(document).ready(function(){");
-			out.println("swal(\"Thông báo\",\"Đăng ký tài khoản thành công!!\",\"error\")");
+			out.println("swal(\"Thông báo\",\"Đăng ký tài khoản thành công!!\",\"success\")");
 			out.println("});");
 			out.println("</script>");
 			RequestDispatcher rd = request.getRequestDispatcher("Guest_DangNhap.jsp");
@@ -69,5 +69,4 @@ public class ServletDangKyTaiKhoan extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }

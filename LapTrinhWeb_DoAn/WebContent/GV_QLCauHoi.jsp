@@ -68,7 +68,8 @@
 		</nav>
 		<%
 				CauHoidao ch = new CauHoidao();
-				ResultSet rs = ch.LayDanhSachCauHoi();
+				String TenDN = (String)session.getAttribute("tenDN");
+				ResultSet rs = ch.LayCauHoiTheoTenDN(TenDN);
 		%>
 
 			<div class="container">
@@ -98,8 +99,7 @@
 									<td><div class="btn btn-success nutXem"><a href="GV_XemCauHoi.jsp?id=<%=rs.getString(1)%>">Xem</a></div></td>
 									<td><div class="btn btn-warning nutSua"><a href="GV_SuaCauHoi.jsp?id=<%=rs.getString(1)%>">Sửa</a></div></td>
 									<td>
-										<div class="btn btn-danger nutXoa" data-toggle="modal"
-										><a href="ThemSuaXoa?id=<%=rs.getString(1)%>&chucNang=Xoa">Xóa</a></div>
+										<div class="btn btn-danger nutXoa"><a href="ThemSuaXoa?id=<%=rs.getString(1)%>&chucNang=Xoa">Xóa</a></div>
 									</td>
 								</tr>
 								<%
@@ -174,6 +174,7 @@
 
 
      <!-- modal xoa -->
+    <!-- modal xoa -->
     <div class="modal fade" id="ModalXoa" tabindex="-1" role="dialog" aria-labelledby="ModalXoaLabel" aria-hidden="true">
     	<div class="modal-dialog" role="document">
     		<div class="modal-content">
@@ -187,7 +188,7 @@
     				<p>Bạn có chắc chắn muốn xóa câu hỏi này không?</p>
     			</div>
     			<div class="modal-footer">
-    				<button type="button" class="btn btn-secondary" data-dismiss="modal">Có</button>
+    				<button type="button" class="btn btn-secondary" data-dismiss="modal"><a href="ThemSuaXoa?id=<%=rs.getString(1)%>&chucNang=Xoa">Có</a></button>
     				<button type="button" class="btn btn-primary" data-dismiss="modal">Không</button>
     			</div>
     		</div>

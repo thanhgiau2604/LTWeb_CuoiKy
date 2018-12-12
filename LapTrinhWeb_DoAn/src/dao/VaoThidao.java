@@ -87,6 +87,13 @@ public class VaoThidao {
 		ResultSet rs = dbc.selectData(sql);
 		return rs;
 	}
+	public ResultSet LayDeThiNguoiTao(String TenDN) throws Exception
+	{
+		String sql = "EXECUTE pr_LayDeThiNguoiTao '"+TenDN+"'";
+		DBConnect dbc = new DBConnect();
+		ResultSet rs = dbc.selectData(sql);
+		return rs;
+	}
 	
 	public boolean ResetDaLay()
 	{
@@ -141,6 +148,32 @@ public class VaoThidao {
 	public boolean ResetCauHoi(String MaDT)
 	{
 		String sql="EXECUTE pr_ResetCauHoi '"+MaDT+"'";
+		try {
+			new DBConnect().excuteSQL(sql);		
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
+	
+	public boolean ResetAll()
+	{
+		String sql="EXECUTE pr_ResetAll";
+		try {
+			new DBConnect().excuteSQL(sql);		
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
+	
+	public boolean CapNhatPhanHoiTS(String TenDNGui, String TenDNNhan, String MaDT, String NDPhanHoi)
+	{
+		String sql="EXECUTE pr_CapNhatPhanHoiTS '"+TenDNGui+"','"+TenDNNhan+"','"+MaDT+"','"+NDPhanHoi+"'";
 		try {
 			new DBConnect().excuteSQL(sql);		
 			return true;

@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.QLyDiemdao"%>
+<%@ page import="java.sql.ResultSet" %>
+<%
+	String MaDT=null;
+	MaDT = request.getParameter("id");
+	if (MaDT==null)
+		MaDT = (String)session.getAttribute("MaDT");
+	session.setAttribute("MaDT", MaDT);
+	ResultSet RsDT = new QLyDiemdao().LayDeThi(MaDT);
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -29,7 +40,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Teacher.png" alt="avatar" class="ava">
-						luyen tran
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="GV_ThayDoiTT.jsp">Thay Đổi Thông Tin</a>
@@ -62,34 +73,81 @@
 				<div class="duongke"></div>
 			</div> 
 		</nav>
-
 		<div class="container">
 		<div class="qlyd text-center">
+		<%
+		while (RsDT.next())
+		{
+		%>
 			<h3>DANH SÁCH ĐIỂM THÍ SINH</h3>
-			<h4>Mã đề thi: HIS02</h4>
-			<h4>Đề thi: Khảo sát môn lịch sử</h4>
-			<h4>Thời gian làm bài: 12 phút</h4>
+			<h4>Mã đề thi: <%=RsDT.getString(1)%></h4>
+			<h4>Kì thi: <%=RsDT.getString(2)%></h4>
+			<h4>Môn thi: <%=RsDT.getString(3)%></h4>
+			<h4>Thời gian làm bài: <%=RsDT.getString(5)%> phút</h4>
+		<%} %>
+		<%
+			String TieuChi = (String)session.getAttribute("tieuchi");
+		System.out.println("ma dt==="+MaDT);
+			ResultSet rsDiem = null;
+		if (TieuChi==null) TieuChi="None";
+		    if (TieuChi.equals("None"))
+				rsDiem = new QLyDiemdao().LayDanhSachDiemTheoDeThi(MaDT);
+		    else
+		    	 if (TieuChi.equals("LuotThi"))
+						rsDiem = new QLyDiemdao().DSDiem_LuotThi(MaDT);
+		    	 else 
+		    		 if (TieuChi.equals("DiemCaoNhat"))
+		 				rsDiem = new QLyDiemdao().DSDiem_Max(MaDT);
+		    		 else
+		    			 if (TieuChi.equals("DiemThapNhat"))
+		    					rsDiem = new QLyDiemdao().DSDiem_Min(MaDT);
+		    			 else
+		    				 if (TieuChi.equals("TrenTrungBinh"))
+		    						rsDiem = new QLyDiemdao().DSDiem_TrenTB(MaDT);
+		    				 else
+		    					 if (TieuChi.equals("DuoiTrungBinh"))
+		    							rsDiem = new QLyDiemdao().DSDiem_DuoiTB(MaDT);
+		    					 else
+		    						 if (!TieuChi.equals(""))
+		    						 {
+		    							 System.out.println("zooroiii");
+		    							    String TenDN = (String)session.getAttribute("tieuchi");
+		    							    System.out.println("TeDN=="+TenDN);
+		    								rsDiem = new QLyDiemdao().DSDiem_Search(TenDN, MaDT);
+		    						 }
+		    						 else
+		    							 rsDiem = new QLyDiemdao().DSDiem_LuotThi("None");
+		%>
 			<div class="row">
 				<div class="col-xs-0 col-sm-0 col-md-1 col-lg-1"></div>
 				<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+				<form action="ServletQLDiem" > 
 					<h4 class="chu pull-left">Lọc</h4>
-					<div class="dr dropdown pull-left">
-						<button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Lọc điểm
-							<span class="caret"></span></button>
-							<ul class="dropdown-menu">
-								<li><a href="#">Điểm cao nhât</a></li>
-								<li><a href="#">Điểm thấp nhât</a></li>
-								<li><a href="#">Trên trung bình</a></li>
-								<li><a href="#">Dưới trung bình</a></li>
-								<li><a href="#">Xuất sắc</a></li>
-								<li><a href="#">Giỏi</a></li>
-								<li><a href="#">Khá</a></li>
-								<li><a href="#">Trung bình</a></li>
-							</ul>
-						</div>
-						<form class="sr example" action="" style="margin:auto;max-width:300px">
-							<input type="text" placeholder="Search.." name="search2">
-							<button class="nutsearch"><i class="fa fa-search"></i></button>
+					<select name="danhmuc" style="float:left; margin-left:10px; margin-top:10px">
+					<% if (TieuChi.equals("None")) {%>
+						<option value="None" selected>None</option> <% } else {%>
+						<option value="None">None</option> <%} %>
+					    <% if (TieuChi.equals("LuotThi")) {%>
+						<option value="LuotThi" selected>Lượt thi</option> <% } else {%>
+						<option value="LuotThi">Lượt thi</option> <%} %>
+						<% if (TieuChi.equals("DiemCaoNhat")) {%>
+						<option value="DiemCaoNhat" selected>Điểm cao nhất</option> <% } else {%>
+						<option value="DiemCaoNhat">Điểm cao nhất</option> <%} %>
+						<% if (TieuChi.equals("DiemThapNhat")) {%>
+						<option value="DiemThapNhat" selected>Điểm thấp nhất</option> <% } else {%>
+						<option value="DiemThapNhat">Điểm thấp nhất</option> <%} %>
+						<% if (TieuChi.equals("TrenTrungBinh")) {%>
+						<option value="TrenTrungBinh" selected>Trên trung bình</option> <% } else {%>
+						<option value="TrenTrungBinh">Trên trung bình</option> <%} %>
+						<% if (TieuChi.equals("DuoiTrungBinh")) {%>
+						<option value="DuoiTrungBinh" selected>Dưới trung bình</option> <% } else {%>
+						<option value="DuoiTrungBinh">Dưới trung bình</option> <%} %>	
+					 </select>
+					 <input type="submit" value="Lọc" style="float:left; margin-top:10px; margin-left:20px">
+					</form>
+						<form class="sr example" action="ServletQLDiem" style="margin:auto;max-width:300px">
+							<input type="text" placeholder="type" name="searchbox">
+							<button class="nutsearch" type="submit"><i class="fa fa-search"></i></button>
 						</form>
 						
 						<table class="table table-bordered">
@@ -97,35 +155,21 @@
 								<tr>
 									<th>Tên đăng nhập</th>
 									<th>Họ và tên</th>
+									<th>Lượt thi</th>
 									<th>Điểm</th>
-									<th>Hạng</th>
 								</tr>
 							</thead>
 							<tbody>
+							<%
+								while (rsDiem.next()){
+							%>
 								<tr>
-									<td>Anguyen123</td>
-									<td>Nguyễn Thành A</td>
-									<td>8</td>
-									<td>02</td>
+									<td><%=rsDiem.getString(1)%></td>
+									<td><%=rsDiem.getString(2)%></td>
+									<td><%=rsDiem.getString(3)%></td>
+									<td><%=rsDiem.getString(4)%></td>
 								</tr>
-								<tr class="chan">
-									<td>tuyetlee</td>
-									<td>Lê thị hồng Tuyết</td>
-									<td>10</td>
-									<td>01</td>
-								</tr>
-								<tr>
-									<td>phamkhang</td>
-									<td>Phạm Minh Khang</td>
-									<td>8</td>
-									<td>02</td>
-								</tr>
-								<tr class="chan">
-									<td>hanhnguyen56</td>
-									<td>Nguyễn Thị Hồng Hạnh</td>
-									<td>06</td>
-									<td>04</td>
-								</tr>
+							<%} %>
 							</tbody>
 						</table>
 					</div>
@@ -134,7 +178,6 @@
 		</div>
 	</div>			
        <!-- end table -->
-
 
 		  <!-- Footer -->
     <footer class="text-center">
