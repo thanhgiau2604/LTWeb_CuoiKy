@@ -3,6 +3,8 @@
 <%@ page import="java.sql.ResultSet" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -98,9 +100,7 @@
 									<td><%=rs.getString(2) %></td>
 									<td><div class="btn btn-success nutXem"><a href="GV_XemCauHoi.jsp?id=<%=rs.getString(1)%>">Xem</a></div></td>
 									<td><div class="btn btn-warning nutSua"><a href="GV_SuaCauHoi.jsp?id=<%=rs.getString(1)%>">Sửa</a></div></td>
-									<td>
-										<div class="btn btn-danger nutXoa"><a href="ThemSuaXoa?id=<%=rs.getString(1)%>&chucNang=Xoa">Xóa</a></div>
-									</td>
+									<td><div class="btn btn-danger nutXoa"><a href="ThemSuaXoa?id=<%=rs.getString(1)%>&chucNang=Xoa">Xóa</a></div></td>
 								</tr>
 								<%
 									}

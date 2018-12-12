@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@page import="dblayer.DBConnect"%>
+<%@page import="dao.PhanHoiDAO"%>
+<%@ page import="java.sql.ResultSet" %>
+ <%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>   
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -24,6 +29,8 @@
 	<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="file/css/GV_TLPH.css">
+	<link rel="stylesheet" type="text/css" href="file/css/Ad_QLDeThi.css">
+		<link rel="stylesheet" type="text/css" href="file/css/GV_SuaDT_TT.css">
 </head>
 <body>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -32,7 +39,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Teacher.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="GV_ThayDoiTT.jsp">Thay Đổi Thông Tin</a>
@@ -74,15 +81,19 @@
 				</div>
 				<div class="col-md-1 col-sm-0 col-xs-0"></div>
 				<div class="col-md-10 col-sm-12 col-xs-12">
-					<form method="post" id="formtlph">
+					<form  method="post" id="formtlph">
 						<div class="form-group ">
+							<%
+					String mats=request.getParameter("mats");
+					String madt=request.getParameter("madt");					
+					%>
 							<label class="control-label " for="text">
 								Mã thí sinh
 								<span class="asteriskField">
 									*
 								</span>
 							</label>
-							<input class="form-control" id="text" name="text" type="text"/>
+							<input class="form-control" id="text" name="mathisinh" type="text " value="<%=mats%>"/>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="text1">
@@ -91,7 +102,7 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="text1" name="text1" placeholder="" type="text"/>
+							<input class="form-control" id="text1" name="madethi" placeholder="" type="text" value="<%=madt%>"/>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="textarea">
@@ -103,11 +114,8 @@
 							<textarea class="form-control" cols="40" id="textarea" name="noidungtl" placeholder="Nội dung" rows="10"></textarea>
 						</div>
 						<div class="form-group nutsubmit">
-							<div>
-								<button class="btn btn-primary btnsubmit" name="submit" type="submit">
-									Gửi
-								</button>
-							</div>
+							<input type="submit" value="Gửi" name="gui" class="nutsua" style="background: orange;"
+							formaction="TraLoiPhanHoi">
 						</div>
 					</form>
 				</div>

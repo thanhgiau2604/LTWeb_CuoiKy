@@ -309,12 +309,12 @@ table th.text-center, table td.text-center {
     text-align: center;
 }
 table.table-bordered{
-    border:1px solid white;
+    border:1px solid #63d20c;
     margin-top:20px;
     text-align: center;
   }
 table.table-bordered > thead > tr > th{
-    border:1px solid white;
+    border:1px solid #63d20c;
     text-align: center;
     background: #3db103;
     color: white;

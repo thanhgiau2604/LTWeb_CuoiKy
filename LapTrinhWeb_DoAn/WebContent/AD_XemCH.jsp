@@ -4,6 +4,8 @@
 <%@page import="dao.CauHoidao"%>
 <%@ page import="java.sql.ResultSet" %>
 <%@page import="javax.servlet.*" %>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
 <%
 	getServletContext().setAttribute("id",request.getParameter("id"));
 	getServletContext().setAttribute("chucNang", "Xem");
@@ -64,7 +66,7 @@
 						<li ><a class="btnTC" href="Ad_QLDeThi.jsp">QLDT</a></li>
 						<li ><a class="btnTC" href="Ad_QLDiem.jsp">QLĐIỂM</a></li>
 						<li ><a class="btnTC" href="Ad_QLTB.jsp">QLTB</a></li>
-						<li ><a class="btnTC" href="AD_QLND.jsp">QLUSER</a></li>
+						<li ><a class="btnTC" href="AD_QLND_DS.jsp">QLUSER</a></li>
 						<li ><a class="btnTC" href="AD_NhanPhanHoi.jsp">PHẢN HỒI</a></li>
 						<li ><a class="btnTC" href="Ad_QLBaiDang.jsp">BÀI ĐĂNG</a></li>
 						<li ><a class="btnGT" href="TrangChuAdmin.jsp#gioithieu">GIỚI THIỆU</a></li>					

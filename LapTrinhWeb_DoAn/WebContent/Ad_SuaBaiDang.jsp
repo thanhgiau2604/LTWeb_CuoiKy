@@ -1,5 +1,13 @@
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.BaiDangdao"%>
+<%@ page import="java.sql.ResultSet" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
+    <%
+    	getServletContext().setAttribute("chucNang", "Sua");
+	%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -34,7 +42,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Admin.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="Ad_TDTT.jsp">Thay Đổi Thông Tin</a>
@@ -59,7 +67,7 @@
 						<li ><a class="btnTC" href="Ad_QLDeThi.jsp">QLDT</a></li>
 						<li ><a class="btnTC" href="Ad_QLDiem.jsp">QLĐIỂM</a></li>
 						<li ><a class="btnTC" href="Ad_QLTB.jsp">QLTB</a></li>
-						<li ><a class="btnTC" href="AD_QLND.jsp">QLUSER</a></li>
+						<li ><a class="btnTC" href="AD_QLND_DS.jsp">QLUSER</a></li>
 						<li ><a class="btnTC" href="AD_NhanPhanHoi.jsp">PHẢN HỒI</a></li>
 						<li ><a class="btnTC" href="Ad_QLBaiDang.jsp">BÀI ĐĂNG</a></li>
 						<li ><a class="btnGT" href="TrangChuAdmin.jsp#gioithieu">GIỚI THIỆU</a></li>					
@@ -76,13 +84,20 @@
 					<h2>QUẢN LÝ BÀI ĐĂNG</h2>
 					<h3>SỬA BÀI ĐĂNG</h3>
 				</div>
+				<%
+					String id = request.getParameter("id");
+					BaiDangdao bddao = new BaiDangdao();
+					ResultSet rs = bddao.LayDanhSachBaiDangTheoMa(id);
+					while(rs.next()){
+				%>
 				<div class="col-md-10 col-sm-10 col-xs-12 col-md-push-1">
-					<form method="post" id="formtlph">
+					<form method="post" id="formtlph" action="ServletBaiDang">
 						<div class="form-group ">
 							<label class="control-label " for="text">
 								M&atilde; b&agrave;i đăng:
 							</label>
-							<input class="form-control" id="text" name="text" type="text" value="BD_01" readonly="true" />
+							<input class="form-control" id="text" name="maBD" type="text" readonly="true" value="<%out.print(rs.getString(1));%>"/>
+							
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="text1">
@@ -91,7 +106,7 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="text1" name="text1" placeholder="Mời bạn viết ti&ecirc;u đề b&agrave;i đăng" type="text" value="Phương pháp học tập hiệu quả" />
+							<input class="form-control" id="text1" name="tieudeBD" placeholder="Mời bạn viết ti&ecirc;u đề b&agrave;i đăng" type="text" value="<%out.print(rs.getString(2));%>" />
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="textarea">
@@ -100,13 +115,22 @@
 									*
 								</span>
 							</label>
-							<textarea class="form-control" cols="40" id="textarea" name="noidungtl" placeholder="Nội dung" rows="10"
-							style="text-align: left;">
-								Phương pháp  đi kèm với sự kiên trì, nhẫn nại.
-								Việc học không đơn giản là việc ngồi vào bàn ghi ghi chép chép hay cầm quyển sách lên đọc… Để có được những kiến thức hay, bổ ích bạn phải có phương pháp học khoa học, tuy nhiên phương pháp học của mỗi người mỗi khác, đừng cố áp dụng phương pháp của người khác vào mình rồi ép bản thân phải làm được như vậy.
-								Hãy tìm ra phương pháp phù hợp với bản thân để việc học không gây khó khăn và chán nản cho bạn. Hãy kiên trì và nhẫn nại thay đổi các phương pháp học nếu thấy không mang lại hiệu quả. Dần dần bạn sẽ tìm thấy phương pháp học đúng đắn và phù hợp với mình thôi.
-							</textarea>
+							<textarea class="form-control" cols="40" id="textarea" name="noidungBD" placeholder="Nội dung" rows="10"
+							
+							><%out.print(rs.getString(3));%></textarea>
 						</div>
+						<div class="form-group ">
+							<label class="control-label requiredField" for="text1">
+								Tác giả:
+								<span class="asteriskField">
+									*
+								</span>
+							</label>
+							<input class="form-control" id="text1" name="tacgia" type="text" value="<%out.print(rs.getString(4));%>" />
+						</div>
+						<%
+							}
+						%>
 						<div class="form-group nutsubmit">
 							<div>
 								<button class="btn btn-primary btnsubmit" name="submit" type="submit">

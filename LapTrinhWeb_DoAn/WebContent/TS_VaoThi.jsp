@@ -3,6 +3,8 @@
 <%@page import="dblayer.DBConnect"%>
 <%@page import="dao.VaoThidao"%>
 <%@ page import="java.sql.ResultSet" %>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>

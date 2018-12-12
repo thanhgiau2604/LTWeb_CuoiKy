@@ -1,5 +1,10 @@
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.ThongBaodao"%>
+<%@ page import="java.sql.ResultSet" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -31,7 +36,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Student.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="TS_ChonDeThi.jsp">Vào Thi</a>
@@ -68,8 +73,8 @@
 			<div class="tbTB">
 				<h3>THÔNG BÁO TỪ NGƯỜI QUẢN TRỊ</h3>
 				<div class="row tableTB">
-					<div class="col-xs-0 col-sm-0 col-md-2 col-lg-2"></div>
-					<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+					<div class="col-xs-0 col-sm-0 col-md-1 col-lg-1"></div>
+					<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
 						<table class="table table-bordered">
 							<thead>
 								<tr>
@@ -79,37 +84,35 @@
 									<th>Ngày nhận</th>
 								</tr>
 							</thead>
+							<%
+								ThongBaodao tb = new ThongBaodao();
+								ResultSet rs = tb.LayDanhSachThongBaoTuAD();
+							%>
 							<tbody>
+							<%
+								while(rs.next()){
+							%>
 								<tr>
-									<td>TB01</td>
-									<td>Đề thi ngày 10/10/2018</td>
+									<td><%=rs.getString(1) %></td>
+									<td><%=rs.getString(2) %></td>
 									<td>
 										<div class="btn btn-primary nutxemct">
-											<a href="#myModal" class="detail" data-toggle="modal" style="text-decoration: none; color: white">
-											Xem chi tiết</a>
+											<a href="TS_XemTB.jsp?id=<%=rs.getString(1)%>" style="text-decoration:none; color:white">Xem chi tiết</a>
 										</div> 
 									</td>
-									<td>18/3/2017</td>
+									<td><%=rs.getString(6) %></td>
 								</tr>
-								<tr class="chan">
-									<td>TB02</td>
-									<td>Đề thi ngày 10/10/2018</td>
-									<td>
-										<div class="btn btn-primary nutxemct">
-											<a href="#myModal" class="detail" data-toggle="modal" style="text-decoration: none; color: white">
-											Xem chi tiết</a>
-										</div> 
-									</td>
-									<td>20/9/2018</td>
-								</tr>
+								<%
+									}
+								%>
 							</tbody>
 						</table>
 					</div>
 				</div>
 				<h3>THÔNG BÁO TỪ GIÁO VIÊN</h3>
 				<div class="row tableTB">
-					<div class="col-xs-0 col-sm-0 col-md-2 col-lg-2"></div>
-					<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+					<div class="col-xs-0 col-sm-0 col-md-1 col-lg-1"></div>
+					<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
 						<table class="table table-bordered text-center table-hover">
 							<thead>
 								<tr>
@@ -119,30 +122,28 @@
 									<th class="text-center">Ngày nhận</th>
 								</tr>
 							</thead>
+							<%
+								ThongBaodao tb1 = new ThongBaodao();
+								ResultSet rs1 = tb1.LayDanhSachThongBaoTuGV();
+							%>
 							<tbody>
+							<%
+								while(rs1.next()){
+							%>
 								<tr>
-									<td class="text-center">TB01_GV</td>
-									<td class="text-center">Bảo trì hệ thống ngày 31/12/2018</td>
+									<td><%=rs1.getString(1) %></td>
+									<td><%=rs1.getString(2) %></td>
 									<td class="text-center">
 										<div class="btn btn-primary nutxemct">
-											<a href="#myModal" class="detail" data-toggle="modal" style="text-decoration: none; color: white">
-											Xem chi tiết</a>
+											<a href="TS_XemTB.jsp?id=<%=rs1.getString(1)%>" style="text-decoration:none; color:white">Xem chi tiết</a>
 										</div> 
 									</td class="text-center">
-									<td>18/3/2017</td>
-								</tr>
-								<tr class="chan">
-									<td>TB02_GV</td>
-									<td>Đề thi ngày 20/10/2018</td>
-									<td>
-										<div class="btn btn-primary nutxemct">
-											<a href="#myModal" class="detail" data-toggle="modal" style="text-decoration: none; color: white">
-											Xem chi tiết</a>
-										</div> 
-									</td>
-									<td>22/12/2018</td>
+									<td><%=rs1.getString(6) %></td>
 								</tr>
 							</tbody>
+							<%
+								}
+							%>
 						</table>
 					</div>
 				</div>

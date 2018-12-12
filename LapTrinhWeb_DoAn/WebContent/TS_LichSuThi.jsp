@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@page import="dblayer.DBConnect"%>
+<%@page import="dao.LichSuThiDAO"%>
+<%@ page import="java.sql.ResultSet" %>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -31,7 +36,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Student.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="TS_ChonDeThi.jsp">Vào Thi</a>
@@ -74,53 +79,54 @@
 					<div class="col-xs-5 col-sm-5 col-md-6 col-lg-6 anhdaidien">
 						<img src="file/Images/Student.png" alt="">
 					</div>
+						<%
+					String tendn=(String)session.getAttribute("tenDN");
+					LichSuThiDAO lst = new LichSuThiDAO();
+					ResultSet rs =lst.LayThongTinTS(tendn);
+					while(rs.next())
+					{
+					%>
 					<div class="col-xs-7 col-sm-7 col-md-6 col-lg-6 ttcanhan">
-						<h4>Nguyễn Thanh Giàu</h4>
-						<p>Username: giaunguyen</p>
-						<p>Email: thanhgiau2604@gmail.com</p>
-						<p>Số điện thoại: 0969315430</p>
-						<p>Địa chỉ: Thủ Đức, HCM</p>
+						<h4><%=rs.getString(4) %></h4>
+						<p>Username: <%=rs.getString(1) %></p>
+						<p>Email: <%=rs.getString(5) %></p>
+						<p>Số điện thoại:<%=rs.getString(6) %></p>
+						<p>Địa chỉ: <%=rs.getString(7) %></p>
 					</div>
 				</div>
 				<div class="row tableLS">
 					<div class="col-xs-0 col-0 sm- col-md-2 col-lg-2"></div> 
 					<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 ">
 						<table class="table table-bordered">
+
 							<thead>
 								<tr>
 									<th>Mã đề thi</th>
-									<th>Môn</th>
-									<th>Thời gian làm bài</th>
+									<th>Kỳ Thi</th>
+									<th>Môn Thi</th>
+									<th>Lượt Thi</th>
 									<th>Điểm</th>
 								</tr>
 							</thead>
 							<tbody>
+					<%
+					}
+					ResultSet rslst =lst.LayLichSuThiTS(tendn);
+					while(rslst.next())
+					{
+					%>
 								<tr>
-									<td>TO1</td>
-									<td>Toán</td>
-									<td>10:00</td>
-									<td>7</td>
-								</tr>
-								<tr class="chan">
-									<td>AVO1</td>
-									<td>Tiếng Anh</td>
-									<td>15:00</td>
-									<td>9</td>
-								</tr>
-								<tr>
-									<td>TO2</td>
-									<td>Toán</td>
-									<td>19:52</td>
-									<td>8</td>
-								</tr>
-								<tr class="chan">
-									<td>HO1</td>
-									<td>Hóa</td>
-									<td>15:00</td>
-									<td>8.5</td>
-								</tr>
+									<td><%=rslst.getString(1) %></td>
+									<td><%=rslst.getString(2) %></td>
+									<td><%=rslst.getString(3) %></td>
+									<td><%=rslst.getString(4) %></td>
+									<td><%=rslst.getString(5) %></td>
+								</tr>							
 							</tbody>
+						<%
+						}%>
 						</table>
+
 					</div>
 				</div>
 			</div>

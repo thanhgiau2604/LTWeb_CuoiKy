@@ -3,6 +3,8 @@
 <%@page import="dblayer.DBConnect"%>
 <%@page import="dao.QLyDiemdao"%>
 <%@ page import="java.sql.ResultSet" %>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
 <%
 	String MaDT=null;
 	MaDT = request.getParameter("id");

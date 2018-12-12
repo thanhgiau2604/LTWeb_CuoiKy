@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@page import="dblayer.DBConnect"%>
+<%@page import="dao.PhanHoiDAO"%>
+<%@ page import="java.sql.ResultSet" %>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -29,7 +34,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Teacher.png" alt="avatar" class="ava">
-						luyen tran
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="GV_ThayDoiTT.jsp">Thay Đổi Thông Tin</a>
@@ -66,6 +71,12 @@
 			<div class="container">
 			<div class="tbDeThi_GV text-center">
 				<h3>DANH SÁCH PHẢN HỒI</h3>
+				  <%
+				 String nguoitao=(String)session.getAttribute("tenDN");
+				PhanHoiDAO ph = new PhanHoiDAO();
+				ResultSet rs =ph.LayDanhSachPhanHoiTheoTaiKhoan(nguoitao);
+				
+		%>
 				<div class="row tbDTGV">
 					<div class="col-xs-0 col-sm-0 col-md-2 col-lg-2"> </div>
 					<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
@@ -77,58 +88,23 @@
 									<th>Môn thi</th>
 									<th>Nội dung phản hồi</th>
 									<th>Thao tác</th>
-									<th>Thao tác</th>
 								</tr>
 							</thead>
 							<tbody>
+								<%
+								while(rs.next()){
+							%>
+							
 								<tr>
-									<td>TS_1001</td>
-									<td>TO03_GV</td>
-									<td>Toán</td>
-									<td>Câu số 10 có vấn đề về đáp án!</td>
+									<td><%=rs.getString(1) %></td>
+									<td><%=rs.getString(2) %></td>
+									<td><%=rs.getString(3) %></td>
+									<td><%=rs.getString(4) %></td>
 									<td><div class="btn btn-default nutvaothi">
-										<a href="#" style="text-decoration: none">Chi tiết</a></div>
-									</td>
-									<td><div class="btn btn-default nutvaothi">
-										<a href="GV_TraLoiPH.jsp" style="text-decoration: none">Trả lời</a></div>
+										<a href="GV_ChiTietPH.jsp?madt=<%=rs.getString(2) %>&mats=<%=rs.getString(1) %>" style="text-decoration: none">Chi tiết</a></div>
 									</td>
 								</tr>
-								<tr class="chan">
-									<td>TS_1002</td>
-									<td>TO03_GV</td>
-									<td>Toán</td>
-									<td>Câu số 10 có vấn đề về đáp án!</td>
-									<td><div class="btn btn-default nutvaothi">
-										<a href="#" style="text-decoration: none">Chi tiết</a></div>
-									</td>
-									<td><div class="btn btn-default nutvaothi">
-										<a href="#" style="text-decoration: none">Trả lời</a></div>
-									</td>
-								</tr>
-								<tr>
-									<td>TS_1003</td>
-									<td>TO03_GV</td>
-									<td>Toán</td>
-									<td>Câu số 10 có vấn đề về đáp án!</td>
-									<td><div class="btn btn-default nutvaothi">
-										<a href="#" style="text-decoration: none">Chi tiết</a></div>
-									</td>
-									<td><div class="btn btn-default nutvaothi">
-										<a href="#" style="text-decoration: none">Trả lời</a></div>
-									</td>
-								</tr>
-								<tr class="chan">
-									<td>TS_1005</td>
-									<td>TO03_GV</td>
-									<td>Toán</td>
-									<td>Câu số 10 có vấn đề về đáp án!</td>
-									<td><div class="btn btn-default nutvaothi">
-										<a href="#" style="text-decoration: none">Chi tiết</a></div>
-									</td>
-									<td><div class="btn btn-default nutvaothi">
-										<a href="#" style="text-decoration: none">Trả lời</a></div>
-									</td>
-								</tr>
+								<%} %>
 							</tbody>
 						</table>
 					</div>

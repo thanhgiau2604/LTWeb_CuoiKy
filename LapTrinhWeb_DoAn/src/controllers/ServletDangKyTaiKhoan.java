@@ -1,4 +1,4 @@
-package controllers;
+﻿package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,12 +32,11 @@ public class ServletDangKyTaiKhoan extends HttpServlet {
 		String email = request.getParameter("email");
 		String sDT = request.getParameter("telenum");
 		String diaChi = request.getParameter("address");
-		String laGV = request.getParameter("radiogv");
-		String laTS = request.getParameter("radiots");
-		System.out.println(tenDN+"|"+matKhau+"|"+matKhauC2+"|"+hoTen+"|"+email+"|"+sDT+"|"+diaChi+"|"+laGV+"|"+laTS); 
+		String laAi = request.getParameter("role");
+		System.out.println(tenDN+"|"+matKhau+"|"+matKhauC2+"|"+hoTen+"|"+email+"|"+sDT+"|"+diaChi+"|"+laAi); 
 		int isGV = 0,isAd=0;
-		if (laGV==null)
-			isGV=0; else isGV=1;
+		if (laAi.equals("gv"))
+			isGV=1; else isAd=1;
 		NguoiDung nd = new NguoiDung(tenDN,matKhau,matKhauC2,hoTen,email,sDT,diaChi,isGV,isAd);
 		boolean sucess= new NDdao().add(nd);
 		if (sucess==false)

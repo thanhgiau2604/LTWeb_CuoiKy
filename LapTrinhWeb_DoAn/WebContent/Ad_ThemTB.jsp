@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
+<%
+	getServletContext().setAttribute("chucNang", "Them");
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -33,7 +38,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Admin.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="Ad_TDTT.jsp">Thay Đổi Thông Tin</a>
@@ -58,7 +63,7 @@
 						<li ><a class="btnTC" href="Ad_QLDeThi.jsp">QLDT</a></li>
 						<li ><a class="btnTC" href="Ad_QLDiem.jsp">QLĐIỂM</a></li>
 						<li ><a class="btnTC" href="Ad_QLTB.jsp">QLTB</a></li>
-						<li ><a class="btnTC" href="AD_QLND.jsp">QLUSER</a></li>
+						<li ><a class="btnTC" href="AD_QLND_DS.jsp">QLUSER</a></li>
 						<li ><a class="btnTC" href="AD_NhanPhanHoi.jsp">PHẢN HỒI</a></li>
 						<li ><a class="btnTC" href="Ad_QLBaiDang.jsp">BÀI ĐĂNG</a></li>
 						<li ><a class="btnGT" href="TrangChuAdmin.jsp#gioithieu">GIỚI THIỆU</a></li>					
@@ -76,7 +81,7 @@
 					<h3>THÊM THÔNG BÁO</h3>
 				</div>
 				<div class="col-md-10 col-sm-12 col-xs-12 col-md-push-1">
-					<form method="post" id="formthemtb">
+					<form method="post" id="formthemtb" action ="ServletThBao">
 						<div class="form-group ">
 							<label class="control-label " for="text">
 								Mã thông báo
@@ -84,7 +89,7 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="text" name="text" type="text"/>
+							<input class="form-control" id="text" name="maTB" placeholder="Mã thông báo" type="text"/>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="textarea">
@@ -93,7 +98,7 @@
 									*
 								</span>
 							</label>
-							<textarea class="form-control" cols="40" id="textarea" name="noidungtb" placeholder="Nội dung" rows="10"></textarea>
+							<textarea class="form-control" cols="40" id="textarea" name="noidungTB" placeholder="Nội dung" rows="10"></textarea>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="textarea">
@@ -103,22 +108,24 @@
 								</span>
 							</label>
 							<div class="radio">
-								<label><input type="radio" name="optradio" value="">Giáo viên</label>
+								<label><input type="radio" name="optradio" value="1">Giáo viên</label>
 							</div>
 							<div class="radio">
-								<label><input type="radio" name="optradio" value="">Thí sinh</label>
+								<label><input type="radio" name="optradio" value="2">Thí sinh</label>
 							</div>
 							<div class="radio">
-								<label><input type="radio" name="optradio" value="">Giáo viên, thí sinh</label>
-							</div>
-							<div class="radio">
-								<label>
-									<input type="radio" name="optradio" value="">
-									Nhập mã người nhận:
-									<input class="form-control" id="text" name="text" type="text"/>
-								</label>
+								<label><input type="radio" name="optradio" value="3">Giáo viên, thí sinh</label>
 							</div>
 							
+						</div>
+						<div class="form-group ">
+							<label class="control-label requiredField" for="text1">
+								Người Tạo:
+								<span class="asteriskField">
+									*
+								</span>
+							</label>
+							<input readonly="true" class="form-control" id="text1" name="nguoitao" placeholder="Người tạo" type="text" value="${sessionScope.tenDN}"/>
 						</div>
 						<div class="form-group nutsubmit">
 							<div>

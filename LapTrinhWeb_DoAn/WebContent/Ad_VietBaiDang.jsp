@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
+<%
+	getServletContext().setAttribute("chucNang", "Them");
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -34,7 +39,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Admin.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="Ad_TDTT.jsp">Thay Đổi Thông Tin</a>
@@ -59,7 +64,7 @@
 						<li ><a class="btnTC" href="Ad_QLDeThi.jsp">QLDT</a></li>
 						<li ><a class="btnTC" href="Ad_QLDiem.jsp">QLĐIỂM</a></li>
 						<li ><a class="btnTC" href="Ad_QLTB.jsp">QLTB</a></li>
-						<li ><a class="btnTC" href="AD_QLND.jsp">QLUSER</a></li>
+						<li ><a class="btnTC" href="AD_QLND_DS.jsp">QLUSER</a></li>
 						<li ><a class="btnTC" href="AD_NhanPhanHoi.jsp">PHẢN HỒI</a></li>
 						<li ><a class="btnTC" href="Ad_QLBaiDang.jsp">BÀI ĐĂNG</a></li>
 						<li ><a class="btnGT" href="TrangChuAdmin.jsp#gioithieu">GIỚI THIỆU</a></li>					
@@ -77,12 +82,12 @@
 					<h3>ĐĂNG BÀI</h3>
 				</div>
 				<div class="col-md-10 col-sm-10 col-xs-12 col-md-push-1">
-					<form method="post" id="formtlph">
+					<form method="post" id="formtlph" action ="ServletBaiDang">
 						<div class="form-group ">
 							<label class="control-label " for="text">
 								M&atilde; b&agrave;i đăng:
 							</label>
-							<input class="form-control" id="text" name="text" type="text"/>
+							<input class="form-control" id="text" name="maBD" placeholder="Mã bài đăng" type="text"/>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="text1">
@@ -91,7 +96,7 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="text1" name="text1" placeholder="Mời bạn viết ti&ecirc;u đề b&agrave;i đăng" type="text"/>
+							<input class="form-control" id="text1" name="tieudeBD" placeholder="Tiêu đề" type="text"/>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="textarea">
@@ -100,7 +105,16 @@
 									*
 								</span>
 							</label>
-							<textarea class="form-control" cols="40" id="textarea" name="noidungtl" placeholder="Nội dung" rows="10"></textarea>
+							<textarea class="form-control" cols="40" id="textarea" name="noidungBD" placeholder="Nội dung" rows="10"></textarea>
+						</div>
+						<div class="form-group ">
+							<label class="control-label requiredField" for="text1">
+								Tác giả:
+								<span class="asteriskField">
+									*
+								</span>
+							</label>
+							<input class="form-control" id="text1" name="tacgia" placeholder="Tác giả" type="text"/>
 						</div>
 						<div class="form-group nutsubmit">
 							<div>

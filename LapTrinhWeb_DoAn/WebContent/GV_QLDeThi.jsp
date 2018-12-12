@@ -3,6 +3,8 @@
 <%@page import="dblayer.DBConnect"%>
 <%@page import="dao.VaoThidao"%>
 <%@ page import="java.sql.ResultSet" %>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
 <%
 	new VaoThidao().ResetAll(); 
 %>
@@ -108,10 +110,10 @@
 									<td><%=rs.getString(5)%> phút</td>
 									<td><%=rs.getString(6)%></td>
 									<td><div class="btn btn-success nutXem"><a href="GV_XemDeThi.jsp?id=<%=rs.getString(1)%>">Xem</a></div></td>
-									<td><div class="btn btn-warning nutSua"><a href="GV_SuaDeThi_TT.jsp?id=<%=rs.getString(1)%>">Sửa</a></div></td>
+									<td><div class="btn btn-warning nutSua"><a href="GV_SuaDeThi_TT.jsp?madethi=<%=rs.getString(1)%>">Sửa</a></div></td>
 									<td>
-										<div class="btn btn-danger nutXoa" data-toggle="modal" data-target="#ModalXoa"
-										><a href="#"">Xóa</a></div>
+										<div class="btn btn-danger nutXoa" 
+										><a href="ThemXoaSuaDeThi?madethi=<%=rs.getString(1)%>&chucNang=Xoa">Xóa</a></div>
 									</td>
 								</tr>
 								<%} %>
@@ -189,25 +191,6 @@
 
 
 
-     <!-- modal xoa -->
-    <div class="modal fade" id="ModalXoa" tabindex="-1" role="dialog" aria-labelledby="ModalXoaLabel" aria-hidden="true">
-    	<div class="modal-dialog" role="document">
-    		<div class="modal-content">
-    			<div class="modal-header">
-    				<h5 class="modal-title" id="ModalXoaLabel">Thông báo</h5>
-    				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    					<span aria-hidden="true">&times;</span>
-    				</button>
-    			</div>
-    			<div class="modal-body">
-    				<p>Bạn có chắc chắn muốn xóa đề thi này không?</p>
-    			</div>
-    			<div class="modal-footer">
-    				<button type="button" class="btn btn-secondary" data-dismiss="modal">Có</button>
-    				<button type="button" class="btn btn-primary" data-dismiss="modal">Không</button>
-    			</div>
-    		</div>
-    	</div>
-    </div>
+     
 </body>
 </html>

@@ -101,8 +101,8 @@
 					<span class="icon1"><i class="fa fa-address-book"></i></span>
 				</div>
 				<div class="pom-agile" style="padding-left: 20%; font-size: 17px">
-					<input class="Infor" type="radio" name="radiogv">Giáo viên
-					<input class="Infor" type="radio" name="radiots">Thí sinh
+					<input class="Infor" type="radio" name="role" value="gv">Giáo viên
+					<input class="Infor" type="radio" name="role" value="ad">Thí sinh
 				</div>
 				<div class="sub-w3l">
 					<h6>Đã có tài khoản? <a href="Guest_DangNhap.jsp" class="dky">Đăng nhập</a></h6> 

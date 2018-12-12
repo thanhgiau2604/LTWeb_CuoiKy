@@ -1,7 +1,10 @@
 $(function(){
 	$("#formthemtb").validate({
             rules: {
-                noidungtb: {
+            	 maTB: {
+                     required: true
+                 },
+                noidungTB: {
                     required: true,
                     minlength: 10
                 },
@@ -11,7 +14,10 @@ $(function(){
 
             },
             messages: {
-                noidungtb: {
+            	maTB: {
+                    required: "Nhập mã thông báo"
+                },
+                noidungTB: {
                     required: "Bạn không được bỏ trống nội dung!",
                     minlength: "Nội dung thông báo ít nhất 10 ký tự"
                 },

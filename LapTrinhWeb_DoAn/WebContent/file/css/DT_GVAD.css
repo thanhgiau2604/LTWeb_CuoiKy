@@ -314,18 +314,18 @@ img .imglogo {
 
 
 table.table-bordered{
-    border:2px solid white;
+    border:2px solid #63d20c;
     margin-top:20px;
     text-align: center;
   }
 table.table-bordered > thead > tr > th{
-    border:2px solid white;
+    border:2px solid #63d20c;
     text-align: center;
     background: #1e1ef7e0;
     color: white;
 }
 table.table-bordered > tbody > tr > td{
-    border:2px solid white;
+    border:2px solid #63d20c;
     text-align: center;
     color: black;
 }

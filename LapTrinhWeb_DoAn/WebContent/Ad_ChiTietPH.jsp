@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@page import="dblayer.DBConnect"%>
+<%@page import="dao.PhanHoiDAO"%>
+<%@ page import="java.sql.ResultSet" %>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>    
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -19,11 +24,12 @@
 	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
 	<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i" rel="stylesheet">
-	<script type="text/javascript" src="file/js/jqCauHoi.js"></script>
-	<script type="text/javascript" src="file/js/jqMenu.js"></script>
+	<!-- jquery -->
+	<script type="text/javascript" src="file/js/jqThemTB.js"></script>
 	<!-- Custom Fonts -->
 	<link href="file/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="file/css/AD_TLPH.css">
+	<link rel="stylesheet" type="text/css" href="file/css/GV_TLPH.css">
+	<link rel="stylesheet" type="text/css" href="file/css/Ad_QLDeThi.css">
 </head>
 <body>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -32,7 +38,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Admin.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="Ad_TDTT.jsp">Thay Đổi Thông Tin</a>
@@ -48,7 +54,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<img class="navbar-brand" src="file/file/Images/logo3.png" alt="" width="70%" height="50px">
+					<img class="navbar-brand" src="file/Images/logo3.png" alt="" width="70%" height="50px">
 				</div>
 				<div class="collapse navbar-collapse navbar-ex1-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-right menu">
@@ -57,7 +63,7 @@
 						<li ><a class="btnTC" href="Ad_QLDeThi.jsp">QLDT</a></li>
 						<li ><a class="btnTC" href="Ad_QLDiem.jsp">QLĐIỂM</a></li>
 						<li ><a class="btnTC" href="Ad_QLTB.jsp">QLTB</a></li>
-						<li ><a class="btnTC" href="AD_QLND.jsp">QLUSER</a></li>
+						<li ><a class="btnTC" href="AD_QLND_DS.jsp">QLUSER</a></li>
 						<li ><a class="btnTC" href="AD_NhanPhanHoi.jsp">PHẢN HỒI</a></li>
 						<li ><a class="btnTC" href="Ad_QLBaiDang.jsp">BÀI ĐĂNG</a></li>
 						<li ><a class="btnGT" href="TrangChuAdmin.jsp#gioithieu">GIỚI THIỆU</a></li>					
@@ -68,87 +74,69 @@
 			</div> 
 		</nav>
 
-		<div class="container-fluid">
+			<div class="container-fluid">
 			<div class="row formphanhoi">
 				<div class="text-center mucluachon">
-					<h2>QUẢN LÝ CÂU HỎI</h2>
-					<h3>THÊM CÂU HỎI</h3>
+					<h2>PHẢN HỒI</h2>
+					<h3>CHI TIẾT</h3>
 				</div>
 				<div class="col-md-1 col-sm-0 col-xs-0"></div>
 				<div class="col-md-10 col-sm-12 col-xs-12">
 					<form method="post" id="formtlph">
+					<%
+					String mats=request.getParameter("mats");
+					System.out.println(mats);
+					String madt=request.getParameter("madt");
+					String tendn=(String)session.getAttribute("tenDN");
+					PhanHoiDAO ph = new PhanHoiDAO();
+					new PhanHoiDAO().CapNhatPhanHoi(mats, madt,tendn);
+					ResultSet rs =ph.LayChiTietPhanHoi(mats,madt,tendn);
+					%>
+						<%
+								while(rs.next()){
+							%>
 						<div class="form-group ">
 							<label class="control-label " for="text">
-								Mã câu hỏi
+								Mã thí sinh
 								<span class="asteriskField">
 									*
 								</span>
 							</label>
-							<input class="form-control" id="text" name="text" type="text"/>
+							<input class="form-control" id="text" name="mathisinh" type="text" value="<%=rs.getString(1) %>"/>
+						</div>
+						<div class="form-group ">
+							<label class="control-label requiredField" for="text1">
+								Mã đề thi
+								<span class="asteriskField">
+									*
+								</span>
+							</label>
+							<input class="form-control" id="text1" name="madethi" placeholder="" type="text"value="<%=rs.getString(2) %>"/>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="textarea">
-								Nội dung câu hỏi
+								Nội dung phản hồi
 								<span class="asteriskField">
 									*
 								</span>
 							</label>
-							<textarea class="form-control" cols="40" id="textarea" name="noidung" placeholder="Nội dung" rows="10"></textarea>
+							<textarea class="form-control" cols="40" id="textarea" name="noidungtl" placeholder="Nội dung" rows="10" ><%=rs.getString(3) %></textarea>
 						</div>
-						<div class="form-group ">
-							<label class="control-label requiredField" for="text1">
-								Nội dung đáp án A
-								<span class="asteriskField">
-									*
-								</span>
-							</label>
-							<input class="form-control" id="textA" name="textA" placeholder="" type="text"/>
-						</div>
-						<div class="form-group ">
-							<label class="control-label requiredField" for="text1">
-								Nội dung đáp án B
-								<span class="asteriskField">
-									*
-								</span>
-							</label>
-							<input class="form-control" id="textB" name="textB" placeholder="" type="text"/>
-						</div>
-						<div class="form-group ">
-							<label class="control-label requiredField" for="text1">
-								Nội dung đáp án C
-								<span class="asteriskField">
-									*
-								</span>
-							</label>
-							<input class="form-control" id="textC" name="textC" placeholder="" type="text"/>
-						</div>
-						<div class="form-group ">
-							<label class="control-label requiredField" for="text1">
-								Nội dung đáp án D
-								<span class="asteriskField">
-									*
-								</span>
-							</label>
-							<input class="form-control" id="textD" name="textD" placeholder="" type="text"/>
-						</div>
-						<div class="form-group nutsubmit">
-							<div>
-								<button class="btn btn-primary btnsubmit" name="submit" type="submit">
-									Thêm câu hỏi
-								</button>
-							</div>
+						<%} %>
+						<div class="form-group">
+							<div class="btn btn-default nutsubmit"><a href="AD_NhanPhanHoi.jsp" style="text-decoration:none; color:white">Quay lại</a></div> 
 						</div>
 					</form>
 				</div>
 			</div>
 		</div> 
 		<!-- end -->
-		
-		 <!-- Footer -->
-    <footer class="text-center">
+
+  <!-- Footer -->
+     <footer class="text-center">
         <div class="footer-above">
         	<div class="logofooter">
-            		<img class="imglogo" src="file/file/Images/logo3.png" alt="">
+            		<img class="imglogo" src="file/Images/logo3.png" alt="">
             	</div>
             <div class="container">
                 <div class="row">
@@ -172,21 +160,20 @@
                     </div>
                     <div class="footer-col col-md-4">
                         <h3>WEBSITE</h3>
-                        <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2"></div>
-                        <div class="col-xs-4 col-sm-4 col-md-5 col-lg-5">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         	<ul class="shortlink">
-                        		<li><a href="TrangChuAdmin.jsp">Trang chủ</a></li>
-                        		<li><a href="TrangChuAdmin.jsp#baidang">Bài đăng</a></li>
-                        		<li><a href="TrangChuAdmin.jsp#gioithieu">Giới thiệu</a></li>
-                        		<li><a href="TrangChuAdmin.jsp#chucnang">Chức năng</a></li>
+                        		<li><a href="TrangChuGV.jsp">Trang chủ</a></li>
+                        		<li><a href="TrangChuGV.jsp#baidang">Bài đăng</a></li>
+                        		<li><a href="TrangChuGV.jsp#gioithieu">Giới thiệu</a></li>
+                        		<li><a href="TrangChuGV.jsp#chucnang">Chức năng</a></li>
                         	</ul>
                         </div>
-                         <div class="col-xs-4 col-sm-4 col-md-5 col-lg-5">
+                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                          	<ul class="shortlink">
-                         		<li><a href="Ad_QLCauHoi.jsp">Câu hỏi</a></li>
-                         		<li><a href="Ad_QLDeThi.jsp">Đề thi</a></li>
-                         		<li><a href="Ad_QLDiem.jsp">Điểm</a></li>
-                         		<li><a href="Ad_QLTB.jsp">Thông báo</a></li>
+                         		<li><a href="GV_QLCauHoi.jsp">Câu hỏi</a></li>
+                         		<li><a href="GV_QLDeThi.jsp">Đề thi</a></li>
+                         		<li><a href="GV_QLDiemTS.jsp">Điểm</a></li>
+                         		<li><a href="GV_QLTB.jsp">Thông báo</a></li>
                          	</ul>
                         </div>
                     </div>
@@ -203,26 +190,5 @@
             </div>
         </div>
     </footer> <!-- end footer -->
-
-    <!-- modal xoa -->
-    <div class="modal fade" id="ModalXoa" tabindex="-1" role="dialog" aria-labelledby="ModalXoaLabel" aria-hidden="true">
-    	<div class="modal-dialog" role="document">
-    		<div class="modal-content">
-    			<div class="modal-header">
-    				<h5 class="modal-title" id="ModalXoaLabel">Thông báo</h5>
-    				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    					<span aria-hidden="true">&times;</span>
-    				</button>
-    			</div>
-    			<div class="modal-body">
-    				<p>Bạn có chắc chắn muốn xóa bài đăng này không?</p>
-    			</div>
-    			<div class="modal-footer">
-    				<button type="button" class="btn btn-secondary" data-dismiss="modal">Có</button>
-    				<button type="button" class="btn btn-primary" data-dismiss="modal">Không</button>
-    			</div>
-    		</div>
-    	</div>
-    </div>
 </body>
 </html>

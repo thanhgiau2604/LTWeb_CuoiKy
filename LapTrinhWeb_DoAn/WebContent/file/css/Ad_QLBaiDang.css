@@ -260,13 +260,13 @@ table.table-bordered{
     text-align: center;
   }
 table.table-bordered > thead > tr > th{
-    border:1px solid white;
+    border:1px solid #63d20c;
     text-align: center;
     background: #49930e;
     color: white;
 }
 table.table-bordered > tbody > tr > td{
-    border:1px solid white;
+    border:1px solid #63d20c;
     text-align: center;
     line-height: 35px;
     color: black;

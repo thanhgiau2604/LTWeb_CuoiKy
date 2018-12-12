@@ -1,5 +1,15 @@
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.ThongBaodao"%>
+<%@ page import="java.sql.ResultSet" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
+    <%
+    	if (session.getAttribute("tenDN")==null)
+    		response.sendRedirect("Guest_DangNhap.jsp");
+    	getServletContext().setAttribute("chucNang", "Xem");
+	%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -33,7 +43,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Admin.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="Ad_TDTT.jsp">Thay Đổi Thông Tin</a>
@@ -58,7 +68,7 @@
 						<li ><a class="btnTC" href="Ad_QLDeThi.jsp">QLDT</a></li>
 						<li ><a class="btnTC" href="Ad_QLDiem.jsp">QLĐIỂM</a></li>
 						<li ><a class="btnTC" href="Ad_QLTB.jsp">QLTB</a></li>
-						<li ><a class="btnTC" href="AD_QLND.jsp">QLUSER</a></li>
+						<li ><a class="btnTC" href="AD_QLND_DS.jsp">QLUSER</a></li>
 						<li ><a class="btnTC" href="AD_NhanPhanHoi.jsp">PHẢN HỒI</a></li>
 						<li ><a class="btnTC" href="Ad_QLBaiDang.jsp">BÀI ĐĂNG</a></li>
 						<li ><a class="btnGT" href="TrangChuAdmin.jsp#gioithieu">GIỚI THIỆU</a></li>					
@@ -75,6 +85,13 @@
 					<h2>QUẢN LÝ THÔNG BÁO</h2>
 					<h3>XEM THÔNG BÁO</h3>
 				</div>
+				<%
+					String id = request.getParameter("id");
+					ThongBaodao tbdao = new ThongBaodao();
+					ResultSet rs = tbdao.LayThongBaoTheoMa(id);
+					while(rs.next()){
+							
+				%>
 				<div class="col-md-10 col-sm-12 col-xs-12 col-md-push-1">
 					<form method="post" id="formthemtb">
 						<div class="form-group ">
@@ -84,7 +101,7 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="text" name="text" type="text" value="TB01" readonly="true" />
+							<input class="form-control" id="text" name="maTB" type="text" value="<%out.print(rs.getString(1));%>" readonly="true" />
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="textarea">
@@ -93,9 +110,8 @@
 									*
 								</span>
 							</label>
-							<textarea class="form-control" cols="40" id="textarea" name="noidungtb" placeholder="Nội dung" rows="10"readonly="true">
-								Thông báo V/v thi THPT quốc gia 2019
-								Kì thi THPT quốc gia 2019 sẽ không có nhiều thay đổi, dự kiến sẽ giữ nguyên hình thức thi của năm 2018.
+							<textarea class="form-control" cols="40" id="textarea" name="noidungTB" placeholder="Nội dung" rows="10"readonly="true">
+								<%out.print(rs.getString(2));%>
 							</textarea>
 						</div>
 						<div class="form-group ">
@@ -106,23 +122,63 @@
 								</span>
 							</label>
 							<div class="radio">
-								<label><input type="radio" name="optradio" value="" checked="true">Giáo viên</label>
+							<%
+								int a = rs.getInt("guiGV");
+							    int b = rs.getInt("guiTS");
+								if(a==1&&b==0){
+							%>
+								<label><input type="radio" name="guiGV" value="<%out.print(rs.getString(4));%>" checked>Giáo viên</label>
+								<%
+									}
+								else{
+								%>
+								<label><input type="radio" name="guiGV" value="<%out.print(rs.getString(4));%>">Giáo viên</label>
+								<%
+									}
+								%>
 							</div>
 							<div class="radio">
-								<label><input type="radio" name="optradio" value="">Thí sinh</label>
+							<%
+								if(b==1&&a==0){
+							%>
+								<label><input type="radio" name="guiTS" value="<%out.print(rs.getString(5));%>" checked>Thí sinh</label>
+								<%
+									}
+									else{
+								%>
+								<label><input type="radio" name="guiTS" value="<%out.print(rs.getString(5));%>">Thí sinh</label>
+								<%
+									}
+								%>
 							</div>
 							<div class="radio">
-								<label><input type="radio" name="optradio" value="">Giáo viên, thí sinh</label>
-							</div>
-							<div class="radio">
-								<label>
-									<input type="radio" name="optradio" value="">
-									Nhập mã người nhận:
-									<input class="form-control" id="text" name="text" type="text" readonly="true" />
-								</label>
-							</div>
-							
+							<%
+								if(a==1&b==1)
+								{
+							%>
+								<label><input type="radio" name="" checked>Giáo viên, thí sinh</label>
+								<%
+									}else{
+										
+								%>
+								<label><input type="radio" name="">Giáo viên, thí sinh</label>
+								<%
+									}
+								%>
+							</div> 				
 						</div>
+						<div class="form-group ">
+							<label class="control-label requiredField" for="text1">
+								Người Tạo:
+								<span class="asteriskField">
+									*
+								</span>
+							</label>
+							<input class="form-control" id="text1" name="nguoitao" placeholder="Người tạo" type="text" value="<%out.print(rs.getString(8));%>"/>
+						</div>
+						<%
+							}
+						%>
 						<div class="form-group nutsubmit">
 							<div>
 								<button class="btn btn-primary btnsubmit" name="submit" type="submit" formaction="Ad_QLTB.jsp">

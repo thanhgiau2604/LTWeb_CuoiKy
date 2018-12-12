@@ -118,12 +118,19 @@ public class NDdao implements ObjectDAO{
 		ResultSet rs = dbc.selectData(sql);
 		return rs;
 	}
+	public ResultSet TimKiemNguoiDung(String strSearch) throws Exception
+	{
+		String sql = "EXECUTE pr_TimKiemNguoiDung N'"+strSearch+"'";
+		DBConnect dbc = new DBConnect();
+		ResultSet rs = dbc.selectData(sql);
+		return rs;
+	}
 	@Override
 	public boolean add(Object obj) {
 		NguoiDung nd = (NguoiDung) obj;
 		
-		String sql = "EXECUTE ThemNguoiDung'"+nd.getTenDN()+"','"+MD5Library.MD5(nd.getMatKhau())+"','"+MD5Library.MD5(nd.getMatKhauC2())+"','"+nd.getHoTen()+"','"
-		+nd.getEmail()+"','"+nd.getsDT()+"','"+nd.getDiaChi()+"',"+String.valueOf(nd.getLaGiaoVien())+","+String.valueOf(nd.getLaAdmin());
+		String sql = "EXECUTE ThemNguoiDung'"+nd.getTenDN()+"','"+MD5Library.MD5(nd.getMatKhau())+"','"+MD5Library.MD5(nd.getMatKhauC2())+"',N'"+nd.getHoTen()+"','"
+		+nd.getEmail()+"','"+nd.getsDT()+"',N'"+nd.getDiaChi()+"',"+String.valueOf(nd.getLaGiaoVien())+","+String.valueOf(nd.getLaAdmin());
 		try {
 			//System.out.println(mapNguoiDung);
 			new DBConnect().excuteSQL(sql);
@@ -138,8 +145,8 @@ public class NDdao implements ObjectDAO{
 	@Override
 	public boolean edit(Object obj, String id) {
 		NguoiDung nd = (NguoiDung) obj;
-		String sql = "EXECUTE SuaNguoiDung'"+nd.getTenDN()+"','"+MD5Library.MD5(nd.getMatKhauC2())+"','"+nd.getHoTen()+"','"
-		+nd.getEmail()+"','"+nd.getsDT()+"','"+nd.getDiaChi()+"'";
+		String sql = "EXECUTE SuaNguoiDung'"+nd.getTenDN()+"','"+MD5Library.MD5(nd.getMatKhauC2())+"',N'"+nd.getHoTen()+"','"
+		+nd.getEmail()+"','"+nd.getsDT()+"',N'"+nd.getDiaChi()+"'";
 		try {
 			new DBConnect().excuteSQL(sql);
 			return true;

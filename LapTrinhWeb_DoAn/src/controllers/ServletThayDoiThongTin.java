@@ -21,7 +21,6 @@ public class ServletThayDoiThongTin extends HttpServlet {
     public ServletThayDoiThongTin() {
         super();
     }
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
@@ -36,7 +35,7 @@ public class ServletThayDoiThongTin extends HttpServlet {
 		String diaChi = request.getParameter("address");
 		int laGV = (Integer)getServletContext().getAttribute("laGiaoVien");
 		int laAdmin = (Integer)getServletContext().getAttribute("laAdmin");
-		System.out.println(tenDN+"|"+matKhauC2+"|"+hoTen+"|"+email+"|"+sDT+"|"+diaChi);
+		//System.out.println(tenDN+"|"+matKhauC2+"|"+hoTen+"|"+email+"|"+sDT+"|"+diaChi);
 		NguoiDung nd = new NguoiDung(tenDN,"",matKhauC2,hoTen,email,sDT,diaChi,0,0);
 		new NDdao().edit(nd, tenDN);
 		if (laGV==1)

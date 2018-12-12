@@ -173,7 +173,7 @@ public class VaoThidao {
 	
 	public boolean CapNhatPhanHoiTS(String TenDNGui, String TenDNNhan, String MaDT, String NDPhanHoi)
 	{
-		String sql="EXECUTE pr_CapNhatPhanHoiTS '"+TenDNGui+"','"+TenDNNhan+"','"+MaDT+"','"+NDPhanHoi+"'";
+		String sql="EXECUTE pr_CapNhatPhanHoiTS '"+TenDNGui+"','"+TenDNNhan+"','"+MaDT+"',N'"+NDPhanHoi+"'";
 		try {
 			new DBConnect().excuteSQL(sql);		
 			return true;

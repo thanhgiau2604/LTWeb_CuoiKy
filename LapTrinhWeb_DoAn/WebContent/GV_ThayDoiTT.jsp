@@ -4,6 +4,8 @@
 <%@page import="dao.NDdao"%>
 <%@ page import="java.sql.ResultSet" %>
 <%@page import="javax.servlet.*" %>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -90,7 +92,7 @@
 					</div>
 					<div class="pom-agile">
 						<span class="field">Mật khẩu C2:</span>
-						<input  name="mkc2" class="Infor" type="text" value="<%out.print(rs.getString(3));%>" style="margin-left:60px">
+						<input  name="mkc2" class="Infor" type="password" value="<%out.print(rs.getString(3));%>" style="margin-left:60px">
 						<span class="icon2"><i class="fa fa-unlock" aria-hidden="true"></i></span>
 					</div>
 					<!-- Họ tên -->

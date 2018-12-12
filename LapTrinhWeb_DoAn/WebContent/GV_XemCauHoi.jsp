@@ -4,6 +4,8 @@
 <%@page import="dao.CauHoidao"%>
 <%@ page import="java.sql.ResultSet" %>
 <%@page import="javax.servlet.*" %>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
 <%
 	getServletContext().setAttribute("id",request.getParameter("id"));
 	getServletContext().setAttribute("chucNang", "Xem");

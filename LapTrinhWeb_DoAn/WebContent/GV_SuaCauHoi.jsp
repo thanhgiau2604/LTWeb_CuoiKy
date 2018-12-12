@@ -4,6 +4,8 @@
 <%@page import="javax.servlet.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
 <%
     getServletContext().setAttribute("id",request.getParameter("id"));
     getServletContext().setAttribute("chucNang", "Sua");

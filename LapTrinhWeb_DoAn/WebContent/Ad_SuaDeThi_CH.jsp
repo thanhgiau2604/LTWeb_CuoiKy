@@ -1,5 +1,11 @@
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.DeThiCauHoiDAO"%>
+<%@ page import="java.sql.ResultSet" %>
+<%@page import="javax.servlet.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -31,7 +37,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Admin.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="Ad_TDTT.jsp">Thay Đổi Thông Tin</a>
@@ -56,7 +62,7 @@
 						<li ><a class="btnTC" href="Ad_QLDeThi.jsp">QLDT</a></li>
 						<li ><a class="btnTC" href="Ad_QLDiem.jsp">QLĐIỂM</a></li>
 						<li ><a class="btnTC" href="Ad_QLTB.jsp">QLTB</a></li>
-						<li ><a class="btnTC" href="AD_QLND.jsp">QLUSER</a></li>
+						<li ><a class="btnTC" href="AD_QLND_DS.jsp">QLUSER</a></li>
 						<li ><a class="btnTC" href="AD_NhanPhanHoi.jsp">PHẢN HỒI</a></li>
 						<li ><a class="btnTC" href="Ad_QLBaiDang.jsp">BÀI ĐĂNG</a></li>
 						<li ><a class="btnGT" href="TrangChuAdmin.jsp#gioithieu">GIỚI THIỆU</a></li>					
@@ -80,48 +86,56 @@
 									<th>Nội dung</th>
 									<th>Thao tác</th>
 								</tr>
-							</thead>
+							</thead>								
+				<%
+				String nguoitao=(String)session.getAttribute("tenDN");
+				ResultSet rs=new DeThiCauHoiDAO().LayDanhSachCauHoiTheoTaiKhoan(nguoitao);;
+				%>
 							<tbody>
+							<%
+								while(rs.next()){
+							%>
 								<tr>
-									<td>GV01_CH01</td>
-									<td>Lịch sử</td>
-									<td>Năm châu phi là năm nào?</td>
-									<td>
-										<div class="btn btn-danger nutXoa" data-toggle="modal" data-target="#ModalXoa"
-										><a href="#"">Xóa khỏi đề thi</a></div>
+									<td><%=rs.getString(1) %></td>
+									<td>${sessionScope.MonThi}</td>
+									<td><%=rs.getString(2) %></td>
+									
+				<%
+				String strMaDT= (String)session.getAttribute("MaDT");	
+				boolean kt=new DeThiCauHoiDAO().KiemTraCauHoiTonTai(rs.getString(1),strMaDT);
+				if(kt==false)
+				{
+				%>
+					<td>
+										<div class="btn btn-danger nutXoa"  >
+										<a href="ThemXoaSuaDeThi_CauHoi?mach=<%=rs.getString(1)%>&madt=${sessionScope.MaDT}&chucNang=ThemchdtAdmin">Thêm câu hỏi vào đề thi</a>
+										
+										
+										</div>
 									</td>
-								</tr>
-								<tr class="chan">
-									<td>GV01_CH02</td>
-									<td>Lịch sử</td>
-									<td>ASEAN là tổ chức gì?</td>
-									<td>
-										<div class="btn btn-danger nutXoa" data-toggle="modal" data-target="#ModalXoa"
-										><a href="#"">Xóa khỏi đề thi</a></div>
+				<%
+				}				
+				else
+				{				
+				%>
+									  <td>
+										<div class="btn btn-danger nutXoa"  >
+										<a href="ThemXoaSuaDeThi_CauHoi?mach=<%=rs.getString(1)%>&madt=${sessionScope.MaDT}&chucNang=XoachdtAdmin">Xóa câu hỏi khỏi đề thi</a>
+										</div>
 									</td>
+				<%
+								
+				} %>
 								</tr>
-								<tr>
-									<td>GV01_CH03</td>
-									<td>Lịch sử</td>
-									<td>Chiến dịch biên giới diễn ra vào năm nào?</td>
-									<td>
-										<div class="btn btn-danger nutXoa" data-toggle="modal" data-target="#ModalXoa"
-										><a href="#"">Xóa khỏi đề thi</a></div>
-									</td>
-								</tr>
-								<tr class="chan">
-									<td>GV01_CH04</td>
-									<td>Lịch sử</td>
-									<td>Ai là người ban chiếu Cần Vương?</td>
-									<td>
-										<div class="btn btn-danger nutXoa" data-toggle="modal" data-target="#ModalXoa"
-										><a href="#"">Xóa khỏi đề thi</a></div>
-									</td>
-								</tr>
+				<%
+								
+				} %>
+								
 							</tbody>
 						</table>
 					</div>
 				</div>
+				<div class="btn btn-default nutwrite"><a href="Ad_QLDeThi.jsp">Lưu đề thi</a></div>
 			</div>
 		</div>
 		

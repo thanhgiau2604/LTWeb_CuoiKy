@@ -3,6 +3,8 @@
 <%@ page import="java.sql.ResultSet" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>    
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -36,7 +38,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Admin.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="Ad_TDTT.jsp">Thay Đổi Thông Tin</a>
@@ -61,7 +63,7 @@
 						<li ><a class="btnTC" href="Ad_QLDeThi.jsp">QLDT</a></li>
 						<li ><a class="btnTC" href="Ad_QLDiem.jsp">QLĐIỂM</a></li>
 						<li ><a class="btnTC" href="Ad_QLTB.jsp">QLTB</a></li>
-						<li ><a class="btnTC" href="AD_QLND.jsp">QLUSER</a></li>
+						<li ><a class="btnTC" href="AD_QLND_DS.jsp">QLUSER</a></li>
 						<li ><a class="btnTC" href="AD_NhanPhanHoi.jsp">PHẢN HỒI</a></li>
 						<li ><a class="btnTC" href="Ad_QLBaiDang.jsp">BÀI ĐĂNG</a></li>
 						<li ><a class="btnGT" href="TrangChuAdmin.jsp#gioithieu">GIỚI THIỆU</a></li>					
@@ -72,42 +74,49 @@
 			</div> 
 		</nav>
 
+			
 
 	
 		<div class="container">
 			<div class="qldsnd text-center">
 				<h3>QUẢN LÝ NGƯỜI DÙNG</h3>
-				<h4>THÍ SINH</h4>
+				<h4>DANH SÁCH NGƯỜI DÙNG</h4>
 				 <div class="content">
 				 	<div class="row selectRadio">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="radio radiochon">
-							<label><input type="radio" name="optradio" checked>Họ tên</label>
+							<label><input type="radio" name="optradio">Họ tên</label>
 						</div>
 						<div class="radio radiochon">
-							<label><input type="radio" name="optradio">Tên đăng nhập</label>
+							<label><input type="radio" name="optradio" checked>Tên đăng nhập</label>
 						</div>
 					</div>
 				</div>
 				<div class="row">	
 					<div class="col-xs-10 col-sm-10 col-md-4 col-lg-4 col-md-push-3">
-						<form action="" class="search-form">
+						<form action="ServletQLUser" class="search-form">
 							<div class="form-group has-feedback">
 								<label for="search" class="sr-only">Mời bạn nhập</label>
 								<input type="text" class="form-control" name="search" id="search" placeholder="search">
 								<span class="glyphicon glyphicon-search form-control-feedback"></span>
 							</div>
+							<div class="col-xs-10 col-sm-10 col-md-4 col-lg-4 col-md-push-5">
+						    <input class="btn btn-warning nutsearch" type="submit" value="Tìm kiếm"></div> 
+					</div>
 						</form>		
 					</div>
-					<div class="col-xs-10 col-sm-10 col-md-4 col-lg-4 col-md-push-3">
-						<div class="btn btn-warning nutsearch">Tìm kiếm</div> 
-					</div>
+					
 				</div>
 				 </div>
 				 
 			<%
+			    String searchcontent = (String)session.getAttribute("conSearch");
 				NDdao nd = new NDdao();
-				ResultSet rs = nd.LayDanhSachNguoiDung();
+				ResultSet rs = null;
+				if (searchcontent==null || searchcontent.equals(""))
+					rs=nd.LayDanhSachNguoiDung();
+				else
+					rs=nd.TimKiemNguoiDung(searchcontent);
 			%>
 			<div class="row tbDTGV">
 					<div class="col-xs-0 col-sm-0 col-md-1 col-lg-1"></div>
@@ -129,11 +138,11 @@
 									<td><%=rs.getString(1) %></td>
 									<td><%=rs.getString(4) %></td>
 									<td><div class="btn btn-success nutTDTT">
-											<a href="Ad_TDTT.jsp">Thay đổi thông tin</a>
+											<a href="Ad_TDTT_ND.jsp?id=<%=rs.getString(1)%>">Thay đổi thông tin</a>
 										</div></td>
 									<td><div class="btn btn-danger nutXoaAcc"
 											data-toggle="modal" data-target="#ModalXoa">
-											<a href="#">Xóa tài khoản</a>
+											<a href="ServletQLUser?id=<%=rs.getString(1)%>&chucNang=Del">Xóa tài khoản</a>
 										</div></td>
 								</tr>
 								<%
@@ -206,27 +215,5 @@
         </div>
     </footer> <!-- end footer -->
 
-
-
-    <!-- modal xoa -->
-    <div class="modal fade" id="ModalXoa" tabindex="-1" role="dialog" aria-labelledby="ModalXoaLabel" aria-hidden="true">
-    	<div class="modal-dialog" role="document">
-    		<div class="modal-content">
-    			<div class="modal-header">
-    				<h5 class="modal-title" id="ModalXoaLabel">Thông báo</h5>
-    				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    					<span aria-hidden="true">&times;</span>
-    				</button>
-    			</div>
-    			<div class="modal-body">
-    				<p>Bạn có chắc chắn muốn xóa tài khoản này không?</p>
-    			</div>
-    			<div class="modal-footer">
-    				<button type="button" class="btn btn-secondary" data-dismiss="modal">Có</button>
-    				<button type="button" class="btn btn-primary" data-dismiss="modal">Không</button>
-    			</div>
-    		</div>
-    	</div>
-    </div>
 </body>
 </html>

@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.QLyDiemdao"%>
+<%@ page import="java.sql.ResultSet"%> 
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>    
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -31,7 +36,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Admin.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="Ad_TDTT.jsp">Thay Đổi Thông Tin</a>
@@ -56,7 +61,7 @@
 						<li ><a class="btnTC" href="Ad_QLDeThi.jsp">QLDT</a></li>
 						<li ><a class="btnTC" href="Ad_QLDiem.jsp">QLĐIỂM</a></li>
 						<li ><a class="btnTC" href="Ad_QLTB.jsp">QLTB</a></li>
-						<li ><a class="btnTC" href="AD_QLND.jsp">QLUSER</a></li>
+						<li ><a class="btnTC" href="AD_QLND_DS.jsp">QLUSER</a></li>
 						<li ><a class="btnTC" href="AD_NhanPhanHoi.jsp">PHẢN HỒI</a></li>
 						<li ><a class="btnTC" href="Ad_QLBaiDang.jsp">BÀI ĐĂNG</a></li>
 						<li ><a class="btnGT" href="TrangChuAdmin.jsp#gioithieu">GIỚI THIỆU</a></li>					
@@ -66,7 +71,11 @@
 				<div class="duongke"></div>
 			</div> 
 		</nav>
-
+		<%
+				QLyDiemdao qld = new QLyDiemdao();
+				String TenDN = (String)session.getAttribute("tenDN");
+				ResultSet rs = qld.ThongTinAllDeThi(TenDN);
+		%>
 		<div class="container">
 			<div class="qlybd text-center">
 				<h3>QUẢN LÝ ĐIỂM</h3>
@@ -86,31 +95,24 @@
 								</tr>
 							</thead>
 							<tbody>
+							<% while (rs.next()){ %>
 								<tr>
-									<td>HIS01</td>
-									<td>Kiểm tra giữa kỳ</td>
-									<td>Lịch sử</td>
-									<td>10</td>
-									<td>20 phút</td>
-									<td>10</td>
-									<td><div class="btn btn-warning nutSua"><a href="AD_DSDiemTS.jsp">Xem bảng điểm</a></div></td>
+									<td><%=rs.getString(1)%></td>
+									<td><%=rs.getString(2)%></td>
+									<td><%=rs.getString(3)%></td>
+									<td><%=rs.getString(4)%></td>
+									<td><%=rs.getString(5)%> phút</td>
+									<td><%=rs.getString(6)%></td>
+									<td><div class="btn btn-warning nutSua"><a href="AD_DSDiemTS.jsp?id=<%=rs.getString(1)%>">Xem bảng điểm</a></div></td>
 								</tr>
-								<tr class="chan">
-									<td>HIS01</td>
-									<td>Kiểm tra 15 phút</td>
-									<td>Lịch sử</td>
-									<td>15</td>
-									<td>15 phút</td>
-									<td>10</td>
-									<td><div class="btn btn-warning nutSua"><a href="#"">Xem bảng điểm</a></div></td>
-								</tr>
+							<%} %>
 							</tbody>
 						</table>
 					</div>
 				</div>
 			</div>
 		</div>
-		
+		<% session.setAttribute("tieuchi","None");%>
 		<!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">
@@ -171,25 +173,5 @@
         </div>
     </footer> <!-- end footer -->
 
-    <!-- modal xoa -->
-    <div class="modal fade" id="ModalXoa" tabindex="-1" role="dialog" aria-labelledby="ModalXoaLabel" aria-hidden="true">
-    	<div class="modal-dialog" role="document">
-    		<div class="modal-content">
-    			<div class="modal-header">
-    				<h5 class="modal-title" id="ModalXoaLabel">Thông báo</h5>
-    				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    					<span aria-hidden="true">&times;</span>
-    				</button>
-    			</div>
-    			<div class="modal-body">
-    				<p>Bạn có chắc chắn muốn xóa bài đăng này không?</p>
-    			</div>
-    			<div class="modal-footer">
-    				<button type="button" class="btn btn-secondary" data-dismiss="modal">Có</button>
-    				<button type="button" class="btn btn-primary" data-dismiss="modal">Không</button>
-    			</div>
-    		</div>
-    	</div>
-    </div>
 </body>
 </html>

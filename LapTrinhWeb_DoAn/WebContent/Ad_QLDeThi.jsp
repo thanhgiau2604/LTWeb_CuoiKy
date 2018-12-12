@@ -3,6 +3,8 @@
 <%@page import="dblayer.DBConnect"%>
 <%@page import="dao.VaoThidao"%>
 <%@ page import="java.sql.ResultSet" %>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>    
 <%
 	new VaoThidao().ResetAll(); 
 %>
@@ -62,7 +64,7 @@
 						<li ><a class="btnTC" href="Ad_QLDeThi.jsp">QLDT</a></li>
 						<li ><a class="btnTC" href="Ad_QLDiem.jsp">QLĐIỂM</a></li>
 						<li ><a class="btnTC" href="Ad_QLTB.jsp">QLTB</a></li>
-						<li ><a class="btnTC" href="AD_QLND.jsp">QLUSER</a></li>
+						<li ><a class="btnTC" href="AD_QLND_DS.jsp">QLUSER</a></li>
 						<li ><a class="btnTC" href="AD_NhanPhanHoi.jsp">PHẢN HỒI</a></li>
 						<li ><a class="btnTC" href="Ad_QLBaiDang.jsp">BÀI ĐĂNG</a></li>
 						<li ><a class="btnGT" href="TrangChuAdmin.jsp#gioithieu">GIỚI THIỆU</a></li>					
@@ -110,10 +112,10 @@
 									<td><%=rs.getString(5)%> phút</td>
 									<td><%=rs.getString(6)%></td>
 									<td><div class="btn btn-success nutXem"><a href="GV_XemDeThi.jsp?id=<%=rs.getString(1)%>">Xem</a></div></td>
-									<td><div class="btn btn-warning nutSua"><a href="GV_SuaDeThi_TT.jsp?id=<%=rs.getString(1)%>">Sửa</a></div></td>
+									<td><div class="btn btn-warning nutSua"><a href="GV_SuaDeThi_TT.jsp?madethi=<%=rs.getString(1)%>">Sửa</a></div></td>
 									<td>
 										<div class="btn btn-danger nutXoa" data-toggle="modal" data-target="#ModalXoa"
-										><a href="#"">Xóa</a></div>
+										><a href="ThemXoaSuaDeThi?madethi=<%=rs.getString(1)%>&chucNang=Xoa">Xóa</a></div>
 									</td>
 								</tr>
 								<%} %>

@@ -119,7 +119,7 @@
 							</li>
 						<%} %>
 						</ul>
-						<div class="btn btn-warning" style="margin-left:23%; margin-bottom:10px;"><a href="GV_SuaDeThi_TT.jsp?id=<%=MaDT%>" style="color:white; text-decoration:none">Sửa</a></div> 
+						<div class="btn btn-warning" style="margin-left:23%; margin-bottom:10px;"><a href="GV_SuaDeThi_TT.jsp?madethi=<%=MaDT%>" style="color:white; text-decoration:none">Sửa</a></div> 
 						<div class="btn btn-warning" style="margin-bottom:10px"><a href="GV_QLDeThi.jsp" style="color:white; text-decoration:none">QL đề thi</a></div> 
 					</div>
 				</div>

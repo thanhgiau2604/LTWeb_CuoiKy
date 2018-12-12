@@ -1,17 +1,17 @@
 $(function(){
-	jQuery.validator.addMethod("notEqual", function(value, element, param) {
-		return this.optional(element) || value != $(param).val();
-	}, "This has to be different...");
+    jQuery.validator.addMethod("notEqual", function(value, element, param) {
+        return this.optional(element) || value != $(param).val();
+    }, "This has to be different...");
 
-	$.validator.methods.email = function( value, element ) {
-		return this.optional( element ) || /[a-z]+@[a-z]+\.[a-z]+/.test( value );
-	}
-	$("#formdangky").validate({
+    $.validator.methods.email = function( value, element ) {
+        return this.optional( element ) || /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/.test( value );
+    }
+    $("#formdangky").validate({
             rules: {
-            	username: {
-            		required: true,
-            		minlength: 6
-            	},
+                username: {
+                    required: true,
+                    minlength: 6
+                },
                 password: {
                     required: true,
                     minlength: 6
@@ -29,8 +29,8 @@ $(function(){
                     email: true
                 },
                 fullname: {
-                	required: true,
-                	minlength: 6
+                    required: true,
+                    minlength: 6
                 },
                 telenum: {
                     required: true,
@@ -41,9 +41,9 @@ $(function(){
             },
             messages: {
                 username: {
-            		required: "Tên đăng nhập là bắt buộc!",
-            		minlength: "Ít nhất 6 ký tự!"
-            	},
+                    required: "Tên đăng nhập là bắt buộc!",
+                    minlength: "Ít nhất 6 ký tự!"
+                },
                 password: {
                     required: "Mật khẩu là bắt buộc!",
                     minlength: "Ít nhất 6 ký tự!"
@@ -61,8 +61,8 @@ $(function(){
                     email: "Chưa đúng định dạng Email"
                 },
                 fullname: {
-                	required: "Bạn quên nhập họ và tên!",
-                	minlength: "Ít nhất 6 ký tự!"
+                    required: "Bạn quên nhập họ và tên!",
+                    minlength: "Ít nhất 6 ký tự!"
                 },
                 telenum: {
                     required: "Hãy nhập số điện thoại của bạn!",

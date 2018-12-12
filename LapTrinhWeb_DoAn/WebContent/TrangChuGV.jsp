@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.BaiDangdao"%>
+<%@ page import="java.sql.ResultSet" %>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -158,39 +163,32 @@
 							</div>
 						</div> <!-- About Content end -->
 					</div> <!-- Col end -->
-					<div class="col-lg-4 wow fadeInRight">
+					<%
+				BaiDangdao bd = new BaiDangdao();
+				ResultSet rs = bd.LayDanhSachBaiDang();
+		%>  
+					<div class="col-lg-4 wow fadeInRight" id="baidanggd">
 						<div class="about-event">
 							<h2 class="event-title">Bài đăng gần đây</h2>
+							<% 
+							int count=0;
+							while (rs.next()){ 						
+							if (count==3) return;
+							count++;	
+							%>
+							<%-- <c:set var="string1" value=""/> 
+							<c:set var="string2" value="${fn:substring(string1,5,15)}"/> --%>
 							<div class="event-box-wrapper">
 								<div class="event-time">
-									<span class="event-date">20</span>
-									<span class="event-month">July</span>
+									<span class="event-date" style="font-size:25px">New</span>
+									<span class="event-month"></span>
 								</div> <!-- Event Time End -->
 								<div class="event-info">
-									<h5 class="event-name"><a href="">Phương pháp học tập hiệu quả</a></h5>
-									<p class="event-desc">We ever undertakes laborious physical exercise, except to obtain some..</p>
+									<h5 class="event-name"><a href="Guest_XemBaiDang.jsp?id=<%=rs.getString(1)%>"><%=rs.getString(2)%></a></h5>
+									<p class="event-desc"></p>
 								</div> <!-- Event Info end -->
 							</div> <!-- Event Box End -->
-							<div class="event-box-wrapper">
-								<div class="event-time">
-									<span class="event-date">10</span>
-									<span class="event-month">Aug</span>
-								</div> <!-- Event Time End -->
-								<div class="event-info">
-									<h5 class="event-name"><a href="">Kì thi THPT quốc gia 2019</a></h5>
-									<p class="event-desc">We ever undertakes laborious physical exercise, except to obtain some..</p>
-								</div> <!-- Event Info end -->
-							</div> <!-- Event Box End -->
-							<div class="event-box-wrapper"">
-								<div class="event-time">
-									<span class="event-date">04</span>
-									<span class="event-month">Sep</span>
-								</div> <!-- Event Time End -->
-								<div class="event-info">
-									<h5 class="event-name"><a href="">Bảo trì nâng cấp Server</a></h5>
-									<p class="event-desc">We ever undertakes laborious physical exercise, except to obtain some..</p>
-								</div> <!-- Event Info end -->
-							</div> <!-- Event Box End -->
+						<%} %>
 						</div> <!-- About Event End -->
 					</div><!-- Col End -->
 				</div> <!-- Row End -->

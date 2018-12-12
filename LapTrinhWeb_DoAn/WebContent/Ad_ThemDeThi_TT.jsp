@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -33,7 +35,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Admin.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="Ad_TDTT.jsp">Thay Đổi Thông Tin</a>
@@ -58,7 +60,7 @@
 						<li ><a class="btnTC" href="Ad_QLDeThi.jsp">QLDT</a></li>
 						<li ><a class="btnTC" href="Ad_QLDiem.jsp">QLĐIỂM</a></li>
 						<li ><a class="btnTC" href="Ad_QLTB.jsp">QLTB</a></li>
-						<li ><a class="btnTC" href="AD_QLND.jsp">QLUSER</a></li>
+						<li ><a class="btnTC" href="AD_QLND_DS.jsp">QLUSER</a></li>
 						<li ><a class="btnTC" href="AD_NhanPhanHoi.jsp">PHẢN HỒI</a></li>
 						<li ><a class="btnTC" href="Ad_QLBaiDang.jsp">BÀI ĐĂNG</a></li>
 						<li ><a class="btnGT" href="TrangChuAdmin.jsp#gioithieu">GIỚI THIỆU</a></li>					
@@ -75,9 +77,10 @@
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
 					<div class="boxtt">
 						<div class="boxlist">
-							<p class="td text-center">THÔNG TIN BÀI THI</p>
+							<p class="td text-center">THÔNG ĐỀ THI</p>
 						</div>
-						<form action="" method="post" id="formnhaplieu">
+						<form action="ThemXoaSuaDeThi" method="post" id="formnhaplieu">
+							
 							<div class="tt">
 								 <img src="file/Images/id.svg" alt="" height="30" class="anhicon">
 								<div class="col-3 input-effect dulieu">
@@ -118,9 +121,20 @@
 									</span>
 								</div>
 							</div>
-								
+							
 							<div class="tt">
 								<img src="file/Images/time.svg" alt="" height="30" class="anhicon">
+								<div class="col-3 input-effect dulieu">
+									<input class="effect-21" type="text" placeholder="Thời Gian" name="thoigian">
+									<label>Thời Gian</label>
+									<span class="focus-border">
+										<i></i>
+									</span>
+								</div>
+							</div>
+								
+							<div class="tt">
+								<img src="file/Images/cQuestion.png" alt="" height="30" class="anhicon">
 								<div class="col-3 input-effect dulieu">
 									<input class="effect-21" type="text" placeholder="Điểm" name="diem">
 									<label>Điểm</label>
@@ -128,9 +142,9 @@
 										<i></i>
 									</span>
 								</div>
-							</div>
+							</div>							
 							<input type="submit" value="Lưu và tiếp tục" class="nutsua" style="background: orange"
-							formaction="Ad_SuaDeThi_CH.jsp">		
+							formaction="ThemXoaSuaDeThi?chucNang=ThemdtAdmin&nguoitao=${sessionScope.tenDN}">																		
 						</form>
 						
 					</div>

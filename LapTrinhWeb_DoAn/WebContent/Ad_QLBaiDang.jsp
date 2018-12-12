@@ -1,5 +1,16 @@
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.BaiDangdao"%>
+<%@ page import="java.sql.ResultSet" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>    
+<%
+	getServletContext().setAttribute("id",request.getParameter("id"));
+%>
+<%
+	getServletContext().setAttribute("chucNang", "");
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -31,10 +42,10 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Admin.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
-						<a href="Ad_TDTT.jsp">Thay Đổi Thông Tin</a>
+						<a href="Ad_TDTT.jsp">Thay Đổi Thông Tin</a> 
 						<a href="Ad_DoiMatKhau.jsp">Đổi Mật Khẩu</a>
 						<a href="TrangChu.jsp">Đăng Xuất</a>
 					</div>
@@ -56,7 +67,7 @@
 						<li ><a class="btnTC" href="Ad_QLDeThi.jsp">QLDT</a></li>
 						<li ><a class="btnTC" href="Ad_QLDiem.jsp">QLĐIỂM</a></li>
 						<li ><a class="btnTC" href="Ad_QLTB.jsp">QLTB</a></li>
-						<li ><a class="btnTC" href="AD_QLND.jsp">QLUSER</a></li>
+						<li ><a class="btnTC" href="AD_QLND_DS.jsp">QLUSER</a></li>
 						<li ><a class="btnTC" href="AD_NhanPhanHoi.jsp">PHẢN HỒI</a></li>
 						<li ><a class="btnTC" href="Ad_QLBaiDang.jsp">BÀI ĐĂNG</a></li>
 						<li ><a class="btnGT" href="TrangChuAdmin.jsp#gioithieu">GIỚI THIỆU</a></li>					
@@ -66,7 +77,10 @@
 				<div class="duongke"></div>
 			</div> 
 		</nav>
-
+        <%
+				BaiDangdao bd = new BaiDangdao();
+				ResultSet rs = bd.LayDanhSachBaiDang();
+		%>
 		<div class="container">
 			<div class="qlybd text-center">
 				<h3>DANH SÁCH BÀI ĐĂNG</h3>
@@ -85,37 +99,25 @@
 								</tr>
 							</thead>
 							<tbody>
+							<%
+								while(rs.next()){
+							%>
 								<tr>
-									<td>BD01</td>
-									<td>Phương pháp học tập hiệu quả</td>
-									<td><div class="btn btn-success nutXem"><a href="#">Xem</a></div></td>
-									<td><div class="btn btn-warning nutSua"><a href="Ad_SuaBaiDang.jsp">Sửa</a></div></td>
+								
+									<td><%=rs.getString(1) %></td>
+									<td><%=rs.getString(2) %></td>
+									<td><div class="btn btn-success nutXem"><a href="Ad_XemBaiDang.jsp?id=<%=rs.getString(1)%>">Xem</a></div></td>
+									<td><div class="btn btn-warning nutSua"><a href="Ad_SuaBaiDang.jsp?id=<%=rs.getString(1)%>">Sửa</a></div></td>
 									<td>
-										<div class="btn btn-danger nutXoa" data-toggle="modal" data-target="#ModalXoa"
-										><a href="#"">Xóa</a></div>
+										<div class="btn btn-danger nutXoa" ><!-- data-toggle="modal" data-target="#ModalXoa" -->
+										<a href="ServletBaiDang?id=<%=rs.getString(1)%>">Xóa</a></div>
 									</td>
 								</tr>
-								<tr class="chan">
-									<td>BD02</td>
-									<td>Thông báo V/v bảo trì hệ thống vào ngày 20/9/2018</td>
-									<td><div class="btn btn-success nutXem"><a href="#"">Xem</a></div></td>
-									<td><div class="btn btn-warning nutSua"><a href="#"">Sửa</a></div></td>
-									<td>
-										<div class="btn btn-danger nutXoa" data-toggle="modal" data-target="#ModalXoa"
-										><a href="#"">Xóa</a></div>
-									</td>
-								</tr>
-								<tr>
-									<td>BD03</td>
-									<td>Thông báo V/v thi THPT quốc gia 2019</td>
-									<td><div class="btn btn-success nutXem"><a href="#">Xem</a></div></td>
-									<td><div class="btn btn-warning nutSua"><a href="#">Sửa</a></div></td>
-									<td>
-										<div class="btn btn-danger nutXoa" data-toggle="modal" data-target="#ModalXoa"
-										><a href="#"">Xóa</a></div>
-									</td>
-								</tr>
+								<%
+									}
+								%>
 							</tbody>
+							
 						</table>
 					</div>
 				</div>

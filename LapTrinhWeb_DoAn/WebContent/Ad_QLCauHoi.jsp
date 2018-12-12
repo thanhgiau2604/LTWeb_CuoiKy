@@ -3,6 +3,8 @@
 <%@ page import="java.sql.ResultSet" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>    
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -59,7 +61,7 @@
 						<li ><a class="btnTC" href="Ad_QLDeThi.jsp">QLDT</a></li>
 						<li ><a class="btnTC" href="Ad_QLDiem.jsp">QLĐIỂM</a></li>
 						<li ><a class="btnTC" href="Ad_QLTB.jsp">QLTB</a></li>
-						<li ><a class="btnTC" href="AD_QLND.jsp">QLUSER</a></li>
+						<li ><a class="btnTC" href="AD_QLND_DS.jsp">QLUSER</a></li>
 						<li ><a class="btnTC" href="AD_NhanPhanHoi.jsp">PHẢN HỒI</a></li>
 						<li ><a class="btnTC" href="Ad_QLBaiDang.jsp">BÀI ĐĂNG</a></li>
 						<li ><a class="btnGT" href="TrangChuAdmin.jsp#gioithieu">GIỚI THIỆU</a></li>					
@@ -102,8 +104,7 @@
 									<td><div class="btn btn-success nutXem"><a href="AD_XemCH.jsp?id=<%=rs.getString(1)%>">Xem</a></div></td>
 									<td><div class="btn btn-warning nutSua"><a href="Ad_SuaCauHoi.jsp?id=<%=rs.getString(1)%>">Sửa</a></div></td>
 									<td>
-										<div class="btn btn-danger nutXoa"> 
-									<a href="ThemSuaXoa?id=<%=rs.getString(1)%>&chucNang=Xoa">Xóa</a></div>
+										<div class="btn btn-danger nutXoa"><a href="ThemSuaXoa?id=<%=rs.getString(1)%>&chucNang=Xoa">Xóa</a></div>
 									</td>
 								</tr>
 								<%

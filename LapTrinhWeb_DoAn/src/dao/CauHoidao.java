@@ -62,8 +62,8 @@ public class CauHoidao implements ObjectDAO {
 	@Override
 	public boolean add(Object obj) {
 		CauHoi ch = (CauHoi) obj;
-		String sql = "EXECUTE ThemCauHoi'"+ch.getMaCH()+"','"+ch.getNoiDungCH()+"','"+ch.getLuaChonA()+"','"+ch.getLuaChonB()+
-				"','"+ch.getLuaChonC()+"','"+ch.getLuaChonD()+"','"+ch.getDapAn()+"','"+ch.getNguoiTao()+"'";
+		String sql = "EXECUTE ThemCauHoi '"+ch.getMaCH()+"',N'"+ch.getNoiDungCH()+"',N'"+ch.getLuaChonA()+"',N'"+ch.getLuaChonB()+
+				"',N'"+ch.getLuaChonC()+"',N'"+ch.getLuaChonD()+"','"+ch.getDapAn()+"','"+ch.getNguoiTao()+"'";
 		try {
 			new DBConnect().excuteSQL(sql);
 			return true;
@@ -77,8 +77,8 @@ public class CauHoidao implements ObjectDAO {
 	@Override
 	public boolean edit(Object obj, String id) {
 		CauHoi ch = (CauHoi) obj;
-		String sql="EXECUTE SuaCauHoi '"+ch.getMaCH()+"','"+ch.getNoiDungCH()+"','"+ch.getLuaChonA()+"','"+ch.getLuaChonB()+"','"
-		+ch.getLuaChonC()+"','"+ch.getLuaChonD()+"','"+ch.getDapAn()+"','"+ch.getNguoiTao()+"'";
+		String sql="EXECUTE SuaCauHoi '"+ch.getMaCH()+"',N'"+ch.getNoiDungCH()+"',N'"+ch.getLuaChonA()+"',N'"+ch.getLuaChonB()+"',N'"
+		+ch.getLuaChonC()+"',N'"+ch.getLuaChonD()+"','"+ch.getDapAn()+"','"+ch.getNguoiTao()+"'";
 		try {
 			new DBConnect().excuteSQL(sql);
 			return true;

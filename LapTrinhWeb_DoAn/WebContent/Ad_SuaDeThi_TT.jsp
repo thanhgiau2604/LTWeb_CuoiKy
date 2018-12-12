@@ -1,5 +1,11 @@
+<%@page import="dblayer.DBConnect"%>
+<%@page import="dao.DeThiDAO"%>
+<%@ page import="java.sql.ResultSet" %>
+<%@page import="javax.servlet.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -33,7 +39,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Admin.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="Ad_TDTT.jsp">Thay Đổi Thông Tin</a>
@@ -58,7 +64,7 @@
 						<li ><a class="btnTC" href="Ad_QLDeThi.jsp">QLDT</a></li>
 						<li ><a class="btnTC" href="Ad_QLDiem.jsp">QLĐIỂM</a></li>
 						<li ><a class="btnTC" href="Ad_QLTB.jsp">QLTB</a></li>
-						<li ><a class="btnTC" href="AD_QLND.jsp">QLUSER</a></li>
+						<li ><a class="btnTC" href="AD_QLND_DS.jsp">QLUSER</a></li>
 						<li ><a class="btnTC" href="AD_NhanPhanHoi.jsp">PHẢN HỒI</a></li>
 						<li ><a class="btnTC" href="Ad_QLBaiDang.jsp">BÀI ĐĂNG</a></li>
 						<li ><a class="btnGT" href="TrangChuAdmin.jsp#gioithieu">GIỚI THIỆU</a></li>					
@@ -75,13 +81,21 @@
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
 					<div class="boxtt">
 						<div class="boxlist">
-							<p class="td text-center">THAY ĐỔI THÔNG TIN BÀI THI</p>
+							<p class="td text-center">THÔNG TIN ĐỀ THI</p>
 						</div>
-						<form action="" method="post" id="formnhaplieu">
+						<%
+					String madt = request.getParameter("madethi");
+					System.out.println(madt);
+					DeThiDAO dt = new DeThiDAO();
+					ResultSet rs = dt.LayDeThiTheoMaDT(madt);
+					while (rs.next())
+					{
+				%>
+						<form action="ThemXoaSuaDeThi" method="post" id="formnhaplieu">
 							<div class="tt">
 								 <img src="file/Images/id.svg" alt="" height="30" class="anhicon">
 								<div class="col-3 input-effect dulieu">
-									<input class="effect-21" type="text" placeholder="Mã đề thi" name="madethi" value="DT_HIS_01">
+									<input class="effect-21" type="text" placeholder="Mã đề thi" name="madethi" value="<%=rs.getString(1)%>">
 									<label>Mã đề thi</label>
 									<span class="focus-border">
 										<i></i>
@@ -91,8 +105,8 @@
 							<div class="tt">
 								<img src="file/Images/kythi.svg" alt="" height="30" class="anhicon">
 								<div class="col-3 input-effect dulieu">
-									<input class="effect-21" type="text" placeholder="Kì thi" name="kithi" value="KT chất lượng">
-									<label>Kì thi</label>
+									<input class="effect-21" type="text" placeholder="Kì thi" name="kithi" value="<%=rs.getString(2)%>">
+									<label>Kỳ thi</label>
 									<span class="focus-border">
 										<i></i>
 									</span>
@@ -101,7 +115,7 @@
 							<div class="tt">
 								<img src="file/Images/monthi.svg" alt="" height="30" class="anhicon">
 								<div class="col-3 input-effect dulieu">
-									<input class="effect-21" type="text" placeholder="Môn thi" name="monthi" value="Lịch sử">
+									<input class="effect-21" type="text" placeholder="Môn thi" name="monthi" value="<%=rs.getString(3)%>">
 									<label>Môn thi</label>
 									<span class="focus-border">
 										<i></i>
@@ -111,7 +125,7 @@
 							<div class="tt">
 								<img src="file/Images/soluong.svg" alt="" height="30" class="anhicon">
 								<div class="col-3 input-effect dulieu">
-									<input class="effect-21" type="text" placeholder="Số câu hỏi" name="socauhoi" value="15">
+									<input class="effect-21" type="text" placeholder="Số câu hỏi" name="socauhoi" value="<%=rs.getString(4)%>">
 									<label>Số câu hỏi</label>
 									<span class="focus-border">
 										<i></i>
@@ -122,7 +136,18 @@
 							<div class="tt">
 								<img src="file/Images/time.svg" alt="" height="30" class="anhicon">
 								<div class="col-3 input-effect dulieu">
-									<input class="effect-21" type="text" placeholder="Điểm" name="diem" value="10">
+									<input class="effect-21" type="text" placeholder="Thời Gian" name="thoigian" value="<%=rs.getString(5)%>">
+									<label>Thời Gian</label>
+									<span class="focus-border">
+										<i></i>
+									</span>
+								</div>
+							</div>
+							
+							<div class="tt">
+								<img src="file/Images/cQuestion.png" alt="" height="30" class="anhicon">
+								<div class="col-3 input-effect dulieu">
+									<input class="effect-21" type="text" placeholder="Điểm" name="diem" value="<%=rs.getString(6)%>">
 									<label>Điểm</label>
 									<span class="focus-border">
 										<i></i>
@@ -130,7 +155,8 @@
 								</div>
 							</div>
 							<input type="submit" value="Lưu và tiếp tục" class="nutsua" style="background: orange"
-							formaction="Ad_SuaDeThi_CH.jsp">		
+							formaction="ThemXoaSuaDeThi?chucNang=SuadtAdmin&nguoitao=${sessionScope.tenDN}">		
+							<%} %>
 						</form>
 						
 					</div>

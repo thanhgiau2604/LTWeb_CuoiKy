@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
+<%
+	getServletContext().setAttribute("chucNang", "Them");
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -32,7 +37,7 @@
 				<div class="khung">
 					<button class="nuttt">
 						<img src="file/Images/Teacher.png" alt="avatar" class="ava">
-						Nguyen Giau
+						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
 						<a href="GV_ThayDoiTT.jsp">Thay Đổi Thông Tin</a>
@@ -74,7 +79,7 @@
 				</div>
 				<div class="col-md-1 col-sm-0 col-xs-0"></div>
 				<div class="col-md-10 col-sm-12 col-xs-12">
-					<form method="post" id="formthemtb">
+					<form method="post" id="formthemtb" action="ServletGV_ThongBao">
 						<div class="form-group ">
 							<label class="control-label " for="text">
 								Mã thông báo
@@ -82,7 +87,7 @@
 									*
 								</span>
 							</label>
-							<input class="form-control" id="text" name="" type="text"/>
+							<input class="form-control" id="text" name="maTB" type="text"/>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="textarea">
@@ -91,7 +96,7 @@
 									*
 								</span>
 							</label>
-							<textarea class="form-control" cols="40" id="textarea" name="noidungtb" placeholder="Nội dung" rows="10"></textarea>
+							<textarea class="form-control" cols="40" id="textarea" name="noidungTB" placeholder="Nội dung" rows="10"></textarea>
 						</div>
 						<div class="form-group ">
 							<label class="control-label requiredField" for="textarea">
@@ -101,16 +106,17 @@
 								</span>
 							</label>
 							<div class="radio">
-								<label><input type="radio" name="optradio" value="">Thí sinh</label>
-							</div>
-							<div class="radio">
-								<label>
-									<input type="radio" name="optradio" value="">
-									Nhập mã người nhận:
-									<input class="form-control" id="text" name="text" type="text"/>
-								</label>
-							</div>
-							
+								<label><input type="radio" name="optradio" value="1">Thí sinh</label>
+							</div>							
+						</div>
+						<div class="form-group ">
+							<label class="control-label requiredField" for="text1">
+								Người Tạo:
+								<span class="asteriskField">
+									*
+								</span>
+							</label>
+							<input readonly="true" class="form-control" id="text1" name="nguoitao" placeholder="Người tạo" type="text" value="${sessionScope.tenDN}"/>
 						</div>
 						<div class="form-group nutsubmit">
 							<div>

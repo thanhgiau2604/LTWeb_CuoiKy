@@ -3,6 +3,8 @@
 <%@page import="dblayer.DBConnect"%>
 <%@page import="dao.QLyDiemdao"%>
 <%@ page import="java.sql.ResultSet" %>
+<%if (session.getAttribute("tenDN")==null)
+	response.sendRedirect("Guest_DangNhap.jsp"); %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -170,27 +172,5 @@
             </div>
         </div>
     </footer> <!-- end footer -->
-
-
-     <!-- modal xoa -->
-    <div class="modal fade" id="ModalXoa" tabindex="-1" role="dialog" aria-labelledby="ModalXoaLabel" aria-hidden="true">
-    	<div class="modal-dialog" role="document">
-    		<div class="modal-content">
-    			<div class="modal-header">
-    				<h5 class="modal-title" id="ModalXoaLabel">Thông báo</h5>
-    				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    					<span aria-hidden="true">&times;</span>
-    				</button>
-    			</div>
-    			<div class="modal-body">
-    				<p>Bạn có chắc chắn muốn xóa bài đăng này không?</p>
-    			</div>
-    			<div class="modal-footer">
-    				<button type="button" class="btn btn-secondary" data-dismiss="modal">Có</button>
-    				<button type="button" class="btn btn-primary" data-dismiss="modal">Không</button>
-    			</div>
-    		</div>
-    	</div>
-    </div>
 </body>
 </html>
