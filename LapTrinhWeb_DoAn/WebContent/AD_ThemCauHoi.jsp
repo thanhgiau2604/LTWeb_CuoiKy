@@ -1,17 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="dblayer.DBConnect"%>
-<%@page import="dao.QLyDiemdao"%>
-<%@ page import="java.sql.ResultSet" %>
-<%if (session.getAttribute("tenDN")==null)
+<%@page import="dao.CauHoidao"%>
+    <%if (session.getAttribute("tenDN")==null)
 	response.sendRedirect("Guest_DangNhap.jsp"); %>
 <%
-	String MaDT=null;
-	MaDT = request.getParameter("id");
-	if (MaDT==null)
-		MaDT = (String)session.getAttribute("MaDT");
-	session.setAttribute("MaDT", MaDT);
-	ResultSet RsDT = new QLyDiemdao().LayDeThi(MaDT);
+	getServletContext().setAttribute("id",request.getParameter("id"));
+	getServletContext().setAttribute("chucNang", "Them");
 %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -28,20 +22,23 @@
 	<link href="file/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+	<!-- jquery -->
 	<script type="text/javascript" src="file/js/jqMenu.js"></script>
+	<script type="text/javascript" src="file/js/jqCauHoi.js"></script>
 	<!-- Custom Fonts -->
 	<link href="file/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="file/css/GV_DSDiemTS.css">
+	<link rel="stylesheet" type="text/css" href="file/css/AD_ThemTB.css">
 </head>
-<body data-spy="scroll" data-target=".navbar-fixed-top" data-offset="90">
+<body>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container dt" id="idtrangchu">
 				<!-- start khung -->
 				<div class="khung">
 					<button class="nuttt">
-						<img src="file/Images/Teacher.png" alt="avatar" class="ava">
+						<img src="file/Images/Admin.png" alt="avatar" class="ava">
 						${sessionScope.tenDN}
 					</button>	
 					<div class="danhmuctt">
@@ -62,126 +59,118 @@
 				</div>
 				<div class="collapse navbar-collapse navbar-ex1-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-right menu">
-						<li ><a class="btnTC" href="TrangChuGV.jsp">TRANG CHỦ</a></li>
-						<li ><a class="btnTC" href="GV_QLCauHoi.jsp">QL CÂU HỎI</a></li>
-						<li ><a class="btnTC" href="GV_QLDeThi.jsp">QL ĐỀ THI</a></li>
-						<li ><a class="btnTC" href="GV_QLDiemTS.jsp">QL ĐIỂM</a></li>
-						<li ><a class="btnTC" href="GV_QLTB.jsp">QL THÔNG BÁO</a></li>
-						<li ><a class="btnTC" href="GV_NhanPhanHoi.jsp">PHẢN HỒI</a></li>
-						<li ><a class="btnGT" href="TrangChuGV.jsp#gioithieu">GIỚI THIỆU</a></li>					
+						<li ><a class="btnTC" href="TrangChuAdmin.jsp#idtrangchu">TRANG CHỦ</a></li>
+						<li ><a class="btnTC" href="Ad_QLCauHoi.jsp">QLCH</a></li>
+						<li ><a class="btnTC" href="Ad_QLDeThi.jsp">QLDT</a></li>
+						<li ><a class="btnTC" href="Ad_QLDiem.jsp">QLĐIỂM</a></li>
+						<li ><a class="btnTC" href="Ad_QLTB.jsp">QLTB</a></li>
+						<li ><a class="btnTC" href="AD_QLND_DS.jsp">QLUSER</a></li>
+						<li ><a class="btnTC" href="AD_NhanPhanHoi.jsp">PHẢN HỒI</a></li>
+						<li ><a class="btnTC" href="Ad_QLBaiDang.jsp">BÀI ĐĂNG</a></li>
+						<li ><a class="btnGT" href="TrangChuAdmin.jsp#gioithieu">GIỚI THIỆU</a></li>					
 					</ul>
 				</div><!-- /.navbar-collapse -->
 				<!-- duong ke -->
 				<div class="duongke"></div>
 			</div> 
 		</nav>
-		<div class="container">
-		<div class="qlyd text-center">
-		<%
-		while (RsDT.next())
-		{
-		%>
-			<h3>DANH SÁCH ĐIỂM THÍ SINH</h3>
-			<h4>Mã đề thi: <%=RsDT.getString(1)%></h4>
-			<h4>Kì thi: <%=RsDT.getString(2)%></h4>
-			<h4>Môn thi: <%=RsDT.getString(3)%></h4>
-			<h4>Thời gian làm bài: <%=RsDT.getString(5)%> phút</h4>
-		<%} %>
-		<%
-			String TieuChi = (String)session.getAttribute("tieuchi");
-		System.out.println("ma dt==="+MaDT);
-			ResultSet rsDiem = null;
-		if (TieuChi==null) TieuChi="None";
-		    if (TieuChi.equals("None"))
-				rsDiem = new QLyDiemdao().LayDanhSachDiemTheoDeThi(MaDT);
-		    else
-		    	 if (TieuChi.equals("LuotThi"))
-						rsDiem = new QLyDiemdao().DSDiem_LuotThi(MaDT);
-		    	 else 
-		    		 if (TieuChi.equals("DiemCaoNhat"))
-		 				rsDiem = new QLyDiemdao().DSDiem_Max(MaDT);
-		    		 else
-		    			 if (TieuChi.equals("DiemThapNhat"))
-		    					rsDiem = new QLyDiemdao().DSDiem_Min(MaDT);
-		    			 else
-		    				 if (TieuChi.equals("TrenTrungBinh"))
-		    						rsDiem = new QLyDiemdao().DSDiem_TrenTB(MaDT);
-		    				 else
-		    					 if (TieuChi.equals("DuoiTrungBinh"))
-		    							rsDiem = new QLyDiemdao().DSDiem_DuoiTB(MaDT);
-		    					 else
-		    						 if (!TieuChi.equals(""))
-		    						 {
-		    							 System.out.println("zooroiii");
-		    							    String TenDN = (String)session.getAttribute("tieuchi");
-		    							    System.out.println("TeDN=="+TenDN);
-		    								rsDiem = new QLyDiemdao().DSDiem_Search(TenDN, MaDT);
-		    						 }
-		    						 else
-		    							 rsDiem = new QLyDiemdao().DSDiem_LuotThi("None");
-		%>
-			<div class="row">
-				<div class="col-xs-0 col-sm-0 col-md-1 col-lg-1"></div>
-				<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
-				<form action="ServletQLDiem" > 
-					<h4 class="chu pull-left">Lọc</h4>
-					<select name="danhmuc" style="float:left; margin-left:10px; margin-top:10px">
-					<% if (TieuChi.equals("None")) {%>
-						<option value="None" selected>None</option> <% } else {%>
-						<option value="None">None</option> <%} %>
-					    <% if (TieuChi.equals("LuotThi")) {%>
-						<option value="LuotThi" selected>Lượt thi</option> <% } else {%>
-						<option value="LuotThi">Lượt thi</option> <%} %>
-						<% if (TieuChi.equals("DiemCaoNhat")) {%>
-						<option value="DiemCaoNhat" selected>Điểm cao nhất</option> <% } else {%>
-						<option value="DiemCaoNhat">Điểm cao nhất</option> <%} %>
-						<% if (TieuChi.equals("DiemThapNhat")) {%>
-						<option value="DiemThapNhat" selected>Điểm thấp nhất</option> <% } else {%>
-						<option value="DiemThapNhat">Điểm thấp nhất</option> <%} %>
-						<% if (TieuChi.equals("TrenTrungBinh")) {%>
-						<option value="TrenTrungBinh" selected>Trên trung bình</option> <% } else {%>
-						<option value="TrenTrungBinh">Trên trung bình</option> <%} %>
-						<% if (TieuChi.equals("DuoiTrungBinh")) {%>
-						<option value="DuoiTrungBinh" selected>Dưới trung bình</option> <% } else {%>
-						<option value="DuoiTrungBinh">Dưới trung bình</option> <%} %>	
-					 </select>
-					 <input type="submit" value="Lọc" style="float:left; margin-top:10px; margin-left:20px">
+
+			<div class="container-fluid">
+			<div class="row formphanhoi">
+				<div class="text-center mucluachon">
+					<h2>QUẢN LÝ CÂU HỎI</h2>
+					<h3>THÊM CÂU HỎI</h3>
+				</div>
+				<div class="col-md-1 col-sm-0 col-xs-0"></div>
+				<div class="col-md-10 col-sm-12 col-xs-12">
+					<form method="post" id="formtlph" action="ThemSuaXoa">
+						<div class="form-group ">
+							<label class="control-label " for="text">
+								Mã câu hỏi
+								<span class="asteriskField">
+									*
+								</span>
+							</label>
+							<input class="form-control" id="text" name="maCH" type="text" value="<%=new CauHoidao().RandomMaCH((String)session.getAttribute("tenDN"))%>"/>
+						</div>
+						<div class="form-group ">
+							<label class="control-label requiredField" for="textarea">
+								Nội dung câu hỏi
+								<span class="asteriskField">
+									*
+								</span>
+							</label>
+							<textarea class="form-control" cols="40" id="textarea" name="noiDung" placeholder="Nội dung" rows="10"></textarea>
+						</div>
+						<div class="form-group ">
+							<label class="control-label requiredField" for="text1">
+								Nội dung đáp án A
+								<span class="asteriskField">
+									*
+								</span>
+							</label>
+							<input class="form-control" id="textA" name="luaChonA" placeholder="" type="text"/>
+						</div>
+						<div class="form-group ">
+							<label class="control-label requiredField" for="text1">
+								Nội dung đáp án B
+								<span class="asteriskField">
+									*
+								</span>
+							</label>
+							<input class="form-control" id="textB" name="luaChonB" placeholder="" type="text"/>
+						</div>
+						<div class="form-group ">
+							<label class="control-label requiredField" for="text1">
+								Nội dung đáp án C
+								<span class="asteriskField">
+									*
+								</span>
+							</label>
+							<input class="form-control" id="textC" name="luaChonC" placeholder="" type="text"/>
+						</div>
+						<div class="form-group ">
+							<label class="control-label requiredField" for="text1">
+								Nội dung đáp án D
+								<span class="asteriskField">
+									*
+								</span>
+							</label>
+							<input class="form-control" id="textD" name="luaChonD" placeholder="" type="text"/>
+						</div>
+						<div class="form-group ">
+							<label class="control-label requiredField" for="text1">
+								Đáp án
+								<span class="asteriskField">
+									*
+								</span>
+							</label>
+							<input class="form-control" id="textkey" name="dapAn" placeholder="" type="text"/>
+						</div>
+						<div class="form-group ">
+							<label class="control-label requiredField" for="text1">
+								Người tạo
+								<span class="asteriskField">
+									*
+								</span>
+							</label>
+							<input class="form-control" id="textkey" name="nguoiTao" placeholder="" type="text"/>
+						</div>
+						<div class="form-group nutsubmit">
+							<div>
+								<button class="btn btn-primary btnsubmit" name="submit" type="submit">
+									Thêm câu hỏi
+								</button>
+							</div>
+						</div>
 					</form>
-						<form class="sr example" action="ServletQLDiem" style="margin:auto;max-width:300px">
-							<input type="text" placeholder="type" name="searchbox">
-							<button class="nutsearch" type="submit"><i class="fa fa-search"></i></button>
-						</form>
-						
-						<table class="table table-bordered">
-							<thead>
-								<tr>
-									<th>Tên đăng nhập</th>
-									<th>Họ và tên</th>
-									<th>Lượt thi</th>
-									<th>Điểm</th>
-								</tr>
-							</thead>
-							<tbody>
-							<%
-								while (rsDiem.next()){
-							%>
-								<tr>
-									<td><%=rsDiem.getString(1)%></td>
-									<td><%=rsDiem.getString(2)%></td>
-									<td><%=rsDiem.getString(3)%></td>
-									<td><%=rsDiem.getString(4)%></td>
-								</tr>
-							<%} %>
-							</tbody>
-						</table>
-					</div>
 				</div>
 			</div>
-		</div>
-	</div>			
-       <!-- end table -->
-<% session.removeAttribute("tieuchi"); %>
-		  <!-- Footer -->
+		</div> 
+		<!-- end -->
+
+
+	  <!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">
         	<div class="logofooter">
